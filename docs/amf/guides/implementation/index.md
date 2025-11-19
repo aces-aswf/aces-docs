@@ -208,8 +208,12 @@ This section outlines various scenarios related to the reading and writing of AM
 | Look Transform Support | If an AMF references a Look Transform with a format that the application does not support reading, consider notifying the user that the format is unsupported, so it is clear the error is unrelated to the AMF itself. | When producing a new Look Transform for an AMF export, consider defaulting to CLF, a format that ensures high interoperability,, especially for any operations other than ASC CDL. It’s important to consider what to do when using CDL operations vs other grading operations and how these should be reflected in the AMF document: in elaborated pipeline where CDL are “in between” other more sophisticated grading operations, it might be required to let the user identify and decide over what CDL operations should be treated as such and which ones can be baked with other operations into a consolidated CLF |
 | Cameras | Import AMF in-camera and apply pipeline settings for video and file output.<br>An AMF loaded in camera could specify over SDI how to treat the incoming signal (ie Output Transform)<br>There are reasonable expectations that any in-camera processing, for the foreseeable future, will be done utilizing small 3D LUTs at the highest complexity. Therefore, applications of an ACES pipeline in-camera may be limited in precision. | When should a camera generate an AMF?<br>If a camera generates an AMF, where should it be written?<br><br>#1 Preferred Method:<br>* Embedded in the OCF, e.g.REDCODE RAW R3D <br><br>#2 Preferred Method:<br>* AMF should live in the same directory as its associated clip<br><br>#3 Preferred Method:<br>* A single folder with all AMF files |
 | Metadata Population | Parse the AMF for its filename and `aces:uuid` and write these to the appropriate metadata fields for each clip. | If the AMF associated with a clip changes, the value relative to the AMF metadata fields within the editorial software should change and adopt the new values. So when writing<br>commonly used interchange files (e.g. EDL or ALE) the correspondent values are correct. |
-| Applied Tag | When reading an AMF file that has the `applied=true` attribute for a specific transform, the software should NOT apply the transform to the file, since it has already been applied to the image itself. Consider reporting it to the user if applicable (e.g. a “history” log of the transforms is accessible for each clip) | When exporting AMF’s from a timeline of clips that have not been rendered yet, each transform in the AMF should be tagged as `applied=false`.<br>However, when rendering new files, consider having the ability to export new AMF’s files simultaneously as part of the same deliverable and, in this case, each transform that is actually baked in should be tagged as `applied=true` in the AMF (e.g. the Input Transform if rendering OpenEXR ACES 2065-1 VFX pulls, or everything when exporting 709 proxies for editorial). |
-| Archived Pipelines | Consider allowing the user to toggle between different ACES pipelines that are recorded in the `aces:archivedPipeline` element.<br>Otherwise, `aces:archivedPipeline` elements should be preserved for any new AMF’s subsequently created for the same shots. | If the software is updating a pre-existing AMF, the written AMF should include the appropriate `aces:archivedPipeline` element. |
+| Applied Tag | When reading an AMF file that has the `applied=true` attribute for a specific transform, the software should NOT apply the transform to the file, since it has already been applied to the image itself. Consider reporting it to the user if applicable (e.g. a "history" log of the transforms is accessible for each clip) | When exporting AMF's from a timeline of clips that have not been rendered yet, each transform in the AMF should be tagged as `applied=false`.<br>However, when rendering new files, consider having the ability to export new AMF's files simultaneously as part of the same deliverable and, in this case, each transform that is actually baked in should be tagged as `applied=true` in the AMF (e.g. the Input Transform if rendering OpenEXR ACES 2065-1 VFX pulls, or everything when exporting 709 proxies for editorial). |
+| Optional Output Transform | If an AMF lacks an Output Transform, import the pipeline without it. Some tools may provide a default Output Transform or a user may have already selected one. | When creating AMFs for intermediate handoffs or pipeline setup (e.g., VFX pulls), it is valid to omit Output Transform and let downstream tools determine viewing output. |
+| Output Transform Applied Attribute | When `applied="true"` on Output Transform, the transform is already baked into the image and should not be re-applied. When `applied="false"` (default), it is the recipe to apply. | When rendering dailies, export with Output Transform marked `applied="true"` to document what was used. When exporting unrendered media with a viewing recipe, use `applied="false"`. |
+| Working Location | When reading an AMF, the optional `<workingLocation>` element marks the point in the pipeline where intermediate work (VFX, scene-referred operations like Reference Gamut Compression) occurs. Parse this and communicate to the user where work should be split between pre- and post-working-location stages. Tools should provide UI feedback showing this pipeline boundary. | When exporting AMFs for VFX workflows, populate `<workingLocation>` to clarify the working location. For example: "Apply Input Transform and scene-referred ops here → working location → Apply Looks + Output Transforms after this point." This is especially useful in VFX pipelines. |
+| CDL File Linking | When reading AMF with CDL using `<file>` + `<ColorCorrectionRef>` to reference external `.ccc` files, locate the specified CDL ID within the file. Support relative paths and HTTP URIs following existing external LMT rules. Provide clear error messages if file or CDL ID not found. | When exporting looks that reference facility color libraries, use the `<file>` + `<ColorCorrectionRef>` pattern instead of embedding CDL values. This is cleaner and avoids duplication when multiple AMFs reference the same grade. |
+| Archived Pipelines | Consider allowing the user to toggle between different ACES pipelines that are recorded in the `aces:archivedPipeline` element.<br>Otherwise, `aces:archivedPipeline` elements should be preserved for any new AMF's subsequently created for the same shots. | If the software is updating a pre-existing AMF, the written AMF should include the appropriate `aces:archivedPipeline` element. |
 
 
 Structure of AMF
@@ -500,12 +504,38 @@ that describe the configuration of the various color processing stages that
 exist in the ACES color processing framework. Below is the list of sub-elements
 that can be found in the `aces:pipeline` element:
 
-* `aces:pipelineInfo` 
-* `aces:inputTransform` 
-* `aces:lookTransform` 
-* `aces:outputTransform` 
+* `aces:pipelineInfo` (required)
+* `aces:inputTransform` (optional)
+* `aces:lookTransform` (optional, can appear multiple times)
+* `aces:workingLocation` (optional)
+* `aces:outputTransform` (optional)
 
-These elements must appear in this exact order.
+Elements that are present must appear in this exact order, but not all elements are required.
+Valid pipelines include:
+
+- Input only (VFX pull template)
+- Input + Look (VFX pull with linear / neutral grade)
+- Input + Look + Output (complete recipe)
+- Look + Output (ACES media with recipe)
+- Output only (viewing recipe for already-ACES media)
+- Input + workingLocation + Look + Output (complete recipe with working location)
+
+#### Working Location Element
+
+The optional `aces:workingLocation` element marks the point in the pipeline where intermediate
+work (such as VFX or color grading) should be applied. It specifies the boundary between
+scene-referred operations (Input Transform, Reference Gamut Compression, linear adjustments)
+and creative color adjustments (Look Transforms, Output Transform).
+
+This is particularly useful in VFX workflows where:
+
+1. Camera RAW is interpreted via Input Transform
+2. Scene-referred operations (RGC, exposure correction) are applied
+3. **Working location marker** indicates "VFX and intermediate work happens here"
+4. Creative looks and output transform applied after working location
+
+When reading an AMF with `workingLocation`, tools should communicate this split to the user
+and ensure work is applied in the correct sequence.
 
 Although these steps are described separately, this does not imply that a system
 has to process all pixels in a frame of visual material one step at a time. Some
@@ -545,15 +575,20 @@ framework or custom transforms.
 Custom transforms can be referenced by their transform ID or referenced as
 external files/resources.
 
-Standard transforms can only be referenced by their transform ID.
+Standard transforms can only be referenced by their transform ID. These include both camera-specific
+Input Transforms (IDTs) and Color Space Conversion (CSC) transforms.
+
+All Input Transforms should be validated against the official ACES Transform ID Registry
+to ensure interoperability.
 
 ```mermaid
 graph BT
-B1(ACES Input Transform ID)   --> A1(AMF Input Transform)
-B2("External Input Transform (e.g. CLF)") --> A1
+B1( IDT Transform ID)   --> A1(AMF Input Transform)
+B2("CSC Transform ID") --> A1
+B3("Custom IDT (e.g. CLF)") --> A1
 ```
 <figure markdown>
-  <figcaption>AMF Input Transform Support<br>AMF can describe one IDT as a transformID<br>or external IDT file (e.g. CLF)</figcaption>
+  <figcaption>AMF Input Transform Support<br>AMF can describe one IDT, CSC transform, or external IDT file (e.g. CLF)</figcaption>
 </figure>
 
 
@@ -590,9 +625,57 @@ If an `aces:lookTransform` element is present, then it must also define the
 transform is provided for information purposes only or if it needs to be
 executed.
 
-#### `aces:outputTransform` 
-Finally, this element closes the list and defines both the RRT and ODT (or a
-combined Output Transform) to use in order to produce a presentable result.
+##### CDL File Linking
+
+Look Transforms can reference CDL values from external `.ccc` files using the `<file>` element
+to specify the file and `<ColorCorrectionRef>` to identify the specific CDL within it:
+
+```xml
+<aces:lookTransform applied="false">
+  <aces:cdlWorkingSpace>
+    <aces:toCdlWorkingSpace>
+      <aces:transformId>urn:ampas:aces:transformId:v1.5:ACEScsc.Academy.ACES_to_ACEScct.a1.0.3</aces:transformId>
+    </aces:toCdlWorkingSpace>
+    <aces:fromCdlWorkingSpace>
+      <aces:transformId>urn:ampas:aces:transformId:v1.5:ACEScsc.Academy.ACEScct_to_ACES.a1.0.3</aces:transformId>
+    </aces:fromCdlWorkingSpace>
+  </aces:cdlWorkingSpace>
+  <aces:file>grades.ccc</aces:file>
+  <cdl:ColorCorrectionRef>cc001</cdl:ColorCorrectionRef>
+</aces:lookTransform>
+```
+
+This pattern is useful for facility workflows where color grades are stored in shared `.ccc`
+libraries. File paths follow the same URI resolution rules as other external LMTs.
+
+#### `aces:outputTransform`
+
+The optional `aces:outputTransform` element defines both the RRT and ODT (or a
+combined Output Transform) to use in order to produce a presentable result. When present,
+it can include an `applied` attribute:
+
+- `applied="false"` (default): describes a transform to be applied
+- `applied="true"`: indicates the transform is already baked into the image
+
+This supports two usage patterns:
+
+**Recipe Pattern** - Output Transform describes viewing pipeline to apply:
+
+```xml
+<aces:outputTransform applied="false">
+  <aces:transformId>urn:ampas:aces:transformId:v2.0:Output.Academy.P3D60_48nits.a1.v1</aces:transformId>
+</aces:outputTransform>
+```
+
+**Receipt Pattern** - Output Transform documents already-applied rendering (e.g., baked dailies):
+
+```xml
+<aces:outputTransform applied="true">
+  <aces:transformId>urn:ampas:aces:transformId:v2.0:Output.Academy.Rec2020_1000nits.a1.v1</aces:transformId>
+</aces:outputTransform>
+```
+
+When `applied="true"`, downstream tools should NOT reapply the transform.
 
 The RRT and ODT can be either specified independently of each other:
 

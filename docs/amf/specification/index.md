@@ -45,19 +45,19 @@ Images are formed at several stages of production and post-production, including
 * Virtual production
 * Editorial and color correction systems
 
-AMF can be compatible with any digital image, and is not restricted to those encoded in the ACES (SMPTE ST 2065-1). They may be camera native file formats or other encodings if they have associated Input Transforms (IDTs) (using the `<inputTransform>` element) so they may be displayed using an ACES viewing pipeline.
+AMF can be compatible with any digital image, and is not restricted to those encoded in the ACES (SMPTE ST 2065-1). They may be camera native file formats or other encodings if they have associated Input Transforms (IDTs) or Color Space Conversion (CSC) transforms (using the `<inputTransform>` element) so they may be displayed using an ACES viewing pipeline. CSC transforms enable workflows starting from intermediate color spaces such as ACEScct.
 
-AMFs may also embed creative look adjustments as one or more LMTs (using the `<lookTransform>` elements). These looks may be in the form of ASC CDL values, or a reference to an external look file, such as a CLF (Common LUT Format). Multiple `<lookTransform>` elements are allowed, and the order of operations in which they are applied shall be the order in which they appear in the AMF.
+AMFs may also embed creative look adjustments as one or more LMTs (using the `<lookTransform>` elements). These looks may be in the form of ASC CDL values (embedded directly or referenced from external `.ccc` files), or a reference to an external look file, such as a CLF (Common LUT Format). When referencing CDL values from external files, AMF v2.0 or newer allows specifying both the file and the specific CDL ID within it. Multiple `<lookTransform>` elements are allowed, and the order of operations in which they are applied shall be the order in which they appear in the AMF.
 
 AMFs can also serve as effective archival elements. When paired with finished ACES image files, they form a complete archival record of how image content is intended to be viewed (for example, using the	`<outputTransform>` and `<systemVersion>` elements).
 
-AMFs do not contain “timeline” metadata such as edit points. Timeline management files such as Edit Decision Lists (EDLs) or Avid Log Exchange files (ALEs) may reference AMFs, attaching them to editing events and thus enable standardized color management throughout all stages of production.
+AMFs do not contain "timeline" metadata such as edit points. Timeline management files such as Edit Decision Lists (EDLs) or Avid Log Exchange files (ALEs) may reference AMFs, attaching them to editing events and thus enable standardized color management throughout all stages of production.
 
 <figure align="center" markdown>
   ![amfDiagram](./images/amfDiagram.png)
 <figcaption align="center">
 	<b>Figure 1.</b> Overall structure of an AMF in simplified form.
-</figcaption> 
+</figcaption>
 </figure>
 
 
@@ -112,6 +112,18 @@ One possible method for this could be the utilization of SMPTE standards such as
 
 Another method could be to use SMPTE ST.2067-9 (Sidecar Composition Map) which would allow linking of a single AMF to a CPL (Composition Playlist) in the case where there is a single AMF for an entire playlist.
 
+
+Working Location
+----------------
+
+AMF v2.0 introduced the optional `<workingLocation>` element to specify where creative work (such as VFX or color grading) occurs within the pipeline. This element marks the point after scene-referred operations such as Reference Gamut Compression or linear operations like exposure, white balance, and matrix corrections, but before creative color adjustments are applied. For example:
+
+- Input Transform: Converts camera RAW to ACES
+- Scene-referred operations: Reference Gamut Compression or linear operations (exposure, white balance, matrix corrections)
+- `workingLocation`: Marks where VFX and downstream color grading work should occur
+- Creative Look Transforms and Output Transform: Applied after working location
+
+This provides unambiguous guidance across departments on where creative adjustments should be applied within the pipeline.
 
 
 Data Model
@@ -171,6 +183,51 @@ The XSD for AMF is maintained on Github in the repository [[ampas/aces-amf](http
 Data types defined by the AMF schema can be explored interactively [[Explore Types](./schema-docs/acesMetadataFile.html)]
 
 
+What's New in v2.0
+------------------
+
+AMF v2.0 introduced several enhancements to support more flexible workflows:
+
+### UUID Requirement in amfInfo
+AMF v2.0 requires a UUID in the `<amfInfo>` element. This improves tracking and deduplication in large AMF libraries. Each AMF should have a unique identifier (UUID v4 format per RFC 4122).
+
+### Optional Output Transform
+The `<outputTransform>` element is now optional. This supports workflows where AMF serves as a pipeline setup document without specifying a final viewing display.
+
+### Applied Attribute on Output Transform
+When Output Transform is included, it may have an `applied` attribute:
+
+- `applied="true"`: The Output Transform is already baked into the image
+- `applied="false"` (default): The Output Transform is the recipe to apply
+
+AMF v2.0 enables AMF to serve dual roles: as a "recipe" (transforms to apply) or as a "receipt" (documenting transforms already applied to the image). The `applied` attribute clarifies this distinction, enabling documentation of both viewing pipelines and baked rendering workflows.
+
+### CDL File Linking
+Look Transform CDL now supports a `<file>` element to reference external `.ccc` files, enabling precise referencing of specific CDLs from multi-CDL libraries:
+
+```xml
+<aces:lookTransform applied="false">
+  <aces:cdlWorkingSpace>
+    <aces:toCdlWorkingSpace>
+      <aces:transformId>urn:ampas:aces:transformId:v1.5:ACEScsc.Academy.ACES_to_ACEScct.a1.0.3</aces:transformId>
+    </aces:toCdlWorkingSpace>
+    <aces:fromCdlWorkingSpace>
+      <aces:transformId>urn:ampas:aces:transformId:v1.5:ACEScsc.Academy.ACEScct_to_ACES.a1.0.3</aces:transformId>
+    </aces:fromCdlWorkingSpace>
+  </aces:cdlWorkingSpace>
+  <aces:file>grades.ccc</aces:file>
+  <cdl:ColorCorrectionRef>cc001</cdl:ColorCorrectionRef>
+</aces:lookTransform>
+```
+
+### Color Space Conversion (CSC) Transforms
+Input Transform regex has been expanded to support CSC transforms (e.g., `ACEScct`, `RWG-Log3G10`) in addition to camera-specific IDTs. This enables workflows that start from intermediate color spaces, such as ACEScct, as well as other colorspaces which had a CSC but no official IDT.
+
+### Working Location Marker
+The optional `<workingLocation>` element marks the point in the pipeline where VFX or additional color corrections should be applied. This clarifies pipeline splits for complex VFX workflows. See Working Location section for more detail.
+
+### Enhanced Email Format Support
+Email address format validation has been relaxed to support modern email standards, including subdomains and international domain names.
 
 References
 ----------
