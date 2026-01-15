@@ -196,7 +196,7 @@ Considerations on reading/writing AMF
 
 This section outlines various scenarios related to the reading and writing of AMF files.
 
-| Scenario | Read - An AMF is read when importing media and used to populate a color pipeline for viewing and rendering. | Write - A new AMF is written in order to be passed along to the next production stage. If a new AMF is done from a previous AMF, the previous pipeline might be archived in the <archived> section. |
+| Scenario | Read <br> An AMF is read when importing media and used to populate a color pipeline for viewing and rendering. | Write <br> A new AMF is written in order to be passed along to the next production stage. If a new AMF is done from a previous AMF, the previous pipeline might be archived in the <archived> section. |
 |---|---|---|
 | RAW Clips | AMF does not include any metadata for demosaic settings. Implementations need to ensure that the image is demosaicked to the appropriate color space before the Input Transform defined in the AMF is applied. User input may be required.<br>If software chooses to directly demosaic a RAW image to ACES, the Input Transform defined in the AMF must be ignored. | n/a |
 | Input Transform Conflict | A clip has already been loaded into the software, and an Input Transform is already applied. Default behaviour should be to override that Input Transform with what’s specified in the AMF, but the user should be prompted. | n/a |
@@ -609,7 +609,8 @@ in the ACES color space (e.g. color grading). There are 3 kinds of look
 transforms:
 
 1. Standard transforms defined within the ACES framework (such as Gamut
-Compression) ○ Standard transforms can only be referenced by their transform id.
+Compression)
+    * Standard transforms can only be referenced by their transform ID.
 2. Embedded ASC-CDL transforms
     * Embedded ASC-CDL transforms carry their parameters within the file and do
 not rely on any external information.
@@ -979,26 +980,27 @@ The AMF file name should use no more than 1024 characters.
 Since both `AMF_UUID` and `AMF_NAME` are optional, there are four possible
 combinations that can occur:
 
-`AMF_UUID` and `AMF_NAME` are both absent
+1. `AMF_UUID` and `AMF_NAME` are both absent
 
-In this case, no AMF file can be associated with the clip `AMF_UUID` is present
-and `AMF_NAME` is absent
+    In this case, no AMF file can be associated with the clip 
 
-In this case the host product must look for the corresponding AMF files into a
+2. `AMF_UUID` is present and `AMF_NAME` is absent
+
+    In this case the host product must look for the corresponding AMF files into a
 database, using the UUID as a key to match the AMF file and the corresponding
 clip. Please note that the word "database" does not imply any specific
 implementation. This feature many not be supported by the host product
 
-`AMF_UUID` is absent and `AMF_NAME` is present
+3. `AMF_UUID` is absent and `AMF_NAME` is present
 
-In this case, the `AMF_NAME` column contains file names for AMF files that should
+    In this case, the `AMF_NAME` column contains file names for AMF files that should
 be located at the same level in the file system (i.e. same folder) as the EDL
 file, or in a subfolder. The linkage is based on the file name and the UUID of
 the AMF files (if present) is ignored
 
-`AMF_UUID` and `AMF_NAME` are both present
+4. `AMF_UUID` and `AMF_NAME` are both present
 
-In this case, the host product can select between the methods described in 2)
+    In this case, the host product can select between the methods described in 2)
 and 3). However, it is recommended to rely on the UUID in priority. The host
 product can provide an option to select the matching rule (UUID or file name).
 It is desirable to also provide a matching rule that checks both the UUID and
