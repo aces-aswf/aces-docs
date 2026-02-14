@@ -2847,6 +2847,7 @@
 <p><code>TransformType</code> indicates the type, or category, of transform, and shall be equal to one of the values defined in Table 2.</p>
 <div align="center">
 <figcaption> <b>Table 2</b> - Options for TransformType</figcaption>
+</div>
 <table>
 <thead>
 <tr>
@@ -2857,43 +2858,48 @@
 <tbody>
 <tr>
 <td style="text-align: left;"><code>CSC</code></td>
-<td style="text-align: left;">"Color Space Conversion" <br> For converting between specified sets of color primary encodings and/or non-linear functions; original camera native data to ACES2065-1; also for converting between common color space representations such as Hellwig JMh.</td>
+<td style="text-align: left;">"Color Space Conversion" <br> A transform that converts between defined color encodings, color primary sets, and/or transfer functions. These include "white-paper" conversions between established camera encoding spaces and ACES2065-1. CSCs could also include conversions to and from other established color representation such as perceptual spaces.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Input</code></td>
+<td style="text-align: left;">"Input Transform", a.k.a. Input Device Transform (<abbr title="Input Transform (aka deprecated - Input Device Transform)">IDT</abbr>) <br> A transform intended to convert source camera data into ACES2065-1.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>Output</code></td>
-<td style="text-align: left;">“Output Transform” <br> For converting an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> scene-referred image to a display-referred output; applies the combined Reference Rendering Transform and Output Device Transform</td>
+<td style="text-align: left;">“Output Transform” <br> A transform that converts an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> scene-referred image to a display-referred output. An Output Transforms is equivalent to the combination of the Reference Rendering Transform and Output Device Transform on <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> engineering diagrams, and prior to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> 2 used the token RRTODT.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>InvOutput</code></td>
-<td style="text-align: left;">“Inverse direction of an Output Transform” <br> Used to convert display-referred image into equivalent <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values that will, upon application of the equivalent forward Output Transform, produce an output that is equal to the original input; useful for titles, pre-rendered logos/graphics, or incorporating archival video into an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> project</td>
+<td style="text-align: left;">“Inverse direction of an Output Transform” <br> A transform that converts display-referred imagery into <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values that reproduce the original display result when the corresponding forward Output Transform is applied.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>Look</code></td>
-<td style="text-align: left;">“Look Transform”, a.k.a. Look Modification Transform (<abbr title="Look Transform (aka deprecated - Look Modification Transform)">LMT</abbr>) <br> For applying preset creative or technical grades that modify <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> data so that the starting look is different than the default rendering associated with an Output Transform.</td>
+<td style="text-align: left;">“Look Transform”, a.k.a. Look Modification Transform (<abbr title="Look Transform (aka deprecated - Look Modification Transform)">LMT</abbr>) <br> A transform that applies modifications to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> data to alter the default rendering appearance for technical or creative reasons.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>InvLook</code></td>
-<td style="text-align: left;">“Inverse direction of a Look Transform” <br> For <abbr title="Visual Effects">VFX</abbr> to “undo” a modification of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> data, if the Look has an analytical inverse.</td>
+<td style="text-align: left;">“Inverse direction of a Look Transform” <br> The analytical inverse of a Look Transform, when such an inverse exists.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>Lib</code></td>
-<td style="text-align: left;">“Library Transform” <br> For “under-the-hood” transforms that are called and re-used by core transforms.</td>
+<td style="text-align: left;">“Library Transform” <br> A reusable internal transform intended for use by other core transforms.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>Util</code></td>
-<td style="text-align: left;">“Utility Transform” <br> For miscellaneous associated transforms that do not implement core <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Transforms but may be helpful when testing and or constructing pipelines. Examples: <code>Adjust_Exposure</code>, <code>Unity</code>, etc.</td>
+<td style="text-align: left;">“Utility Transform” <br> A non-core transform intended for testing, diagnostics, or pipeline construction (e.g., <code>Adjust_Exposure</code>, <code>Unity</code>).</td>
 </tr>
 </tbody>
 </table>
-</div>
 <div class="admonition note">
-<p class="admonition-title">Interchangeability of Input and Color Space Conversion Transforms</p>
-<p>In effect, all Input transforms are also Color Space Conversion transforms, but all Color Space Conversion transforms are not necessarily Input Transforms. Specifically, CSC Transforms that convert from a camera manufacturer’s encoding space to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> could also be labeled “Input” transforms. However, an Input Transform may sometimes include an extra step or steps that differ slightly from a “nominal” camera encoding transform. </p>
-<p>When the CSC and Input transform are otherwise identical, the Input and CSC tokens can be used interchangeably, and the CSC token is preferred. It is not required to provide duplicate transforms where the filename and Transform ID are the only differences. Providing only the CSC is sufficient.</p>
+<p class="admonition-title">Relationship between Input and Color Space Conversion Transforms</p>
+<p>An Input Transform and CSC may perform identical mathematical operations, but they typically differ in intent. </p>
+<p>Historically, an Input Transform describes the math used to bring camera values into <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> as the first step of an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> pipeline, and may include device-specific or use-specific considerations that are not intended for general or bi-directional use. These might include user-created or custom transforms intended for specific illuminants, or transforms derived empirically from prosumer devices where linear sensor data is not fully accessible.</p>
+<p>A CSC describes a general, reusable and often reversible conversion between two defined color encodings or color representations. This includes conversions between camera encodings and ACES2065-1, and can be identical in function to Input Transforms in cases where cameras already map native sensor data directly to their own colorimetric encoding.</p>
+<p>When an Input transform and a CSC are mathematically identical, they can be considered interchangeable. In such cases, the CSC token is preferred for the transform type. It is not required to maintain duplicate transforms that differ only by filename or Transform ID. </p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>CSC transforms that convert from <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <em>to</em> a camera manufacturer’s encoding space could be considered an "Inverse Input Transforms". However, a token of <code>InvInput</code> is not defined and so CSC is the appropriate value for transform type.</p>
+<p>A CSC transform that converts from <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <em>to</em> a camera manufacturer’s encoding space may be considered an "Inverse Input Transform". However, no <code>InvInput</code> TransformType is defined. Therefore, CSC is the appropriate substring value for transforms of this type.</p>
 </div>
 <h3 id="namespace">Namespace¶<a class="headerlink" href="#namespace" title="Permanent link">&para;</a></h3>
 <p><code>Namespace</code> shall identify the creator of the transform. This is usually the name of a manufacturer or facility but could also be the name of an individual. </p>
@@ -2973,7 +2979,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 10, 2025 18:41:26 PDT">September 10, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="February 13, 2026 17:39:53 PST">February 13, 2026</span>
   </span>
 
     
