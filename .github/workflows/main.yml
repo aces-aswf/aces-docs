@@ -1,65 +1,51 @@
-name: Build Mkdocs Site
+name: Build and Deploy MkDocs
 on:
   push:
     branches:
       - dev
       - main
 
+permissions:
+  contents: write
+
 jobs:
-  docker:
-    name: Build Mkdocs site
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
-            fetch-depth: 0
+          fetch-depth: 0
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build local docker image
-        uses: docker/build-push-action@v2
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          context: .
-          load: true
-          tags: app:latest
+          python-version: '3.10'
+          cache: 'pip'
 
-      - name: Run mkdocs build via docker
-        uses: addnab/docker-run-action@v3
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material 
+          pip install -r requirements.txt
+
+      - name: Build MkDocs
+        run: mkdocs build
+
+      - name: Deploy to Staging (from dev)
+        if: github.ref == 'refs/heads/dev'
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          image: app:latest
-          options: --rm -v ${{ github.workspace }}:/docs
-          run: |
-            git config --global --add safe.directory /docs
-            mkdocs build
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: site/staging
+          commit_message: "Deploy dev build to staging"
 
-      - name: Deploy to site/staging (from dev)
-        if: endsWith(github.ref, '/dev')
-        run: |
-          git config user.name "Github Actions Bot"
-          git config user.email "<>"
-          sudo chown -R $USER:$USER site
-          git fetch origin site/staging
-          git switch site/staging
-          rm -rf ./*
-          cp -r site/* .
-          rm -rf site
-          git add .
-          git commit -m "Deploy dev build to staging"
-          git push origin site/staging
-
-      - name: Deploy to site/production (from main)
-        if: endsWith(github.ref, '/main')
-        run: |
-          git config user.name "Github Actions Bot"
-          git config user.email "<>"
-          sudo chown -R $USER:$USER site
-          git fetch origin site/production
-          git switch site/production
-          rm -rf ./*
-          cp -r site/* .
-          rm -rf site
-          git add .
-          git commit -m "Deploy main build to production"
-          git push origin site/production
+      - name: Deploy to Production (from main)
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: site/production
+          commit_message: "Deploy main build to production"
