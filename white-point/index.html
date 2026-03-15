@@ -1,0 +1,3308 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive">
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../encodings/adx/">
+      
+      
+        <link rel="next" href="../amf/specification/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>Deriviation of the ACES White Point - ACES Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M17%2013h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pontano+Sans:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Pontano Sans";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#derivation-of-the-aces-white-point-cie-chromaticity-coordinates" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://www.acescentral.com" title="ACES Documentation" class="md-header__button md-logo" aria-label="ACES Documentation" data-md-component="logo">
+      
+  <img src="../assets/images/aces-acescentral-color.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ACES Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deriviation of the ACES White Point
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c3.87 0 7 3.13 7 7 0 2.38-1.19 4.47-3 5.74V17c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-2.26C3.19 13.47 2 11.38 2 9c0-3.87 3.13-7 7-7M6 21v-1h6v1c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1M9 4C6.24 4 4 6.24 4 9c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58 0-2.76-2.24-5-5-5m10 9h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="aces-light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  Introduction
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../home-technical/" class="md-tabs__link">
+          
+  
+  
+  Technical Details
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://www.acescentral.com" title="ACES Documentation" class="md-nav__button md-logo" aria-label="ACES Documentation" data-md-component="logo">
+      
+  <img src="../assets/images/aces-acescentral-color.png" alt="logo">
+
+    </a>
+    ACES Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Introduction
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview of ACES
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview of ACES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encodings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/input-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Output Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/look-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Look Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rgc/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../amf/guides/user/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Metadata File (AMF)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/organization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clf/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common LUT Format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About ACES 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About ACES 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/about-aces-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/about-rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Background Information
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Background Information
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/v1-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES 1 Feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background/listening-tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listening Tour
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Details
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technical Details
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../home-technical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encodings
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Encodings
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/aces2065-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES2065-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/acescg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScg
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/acescct/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScct
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/acescc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/acesproxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACESproxy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/apd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APD (Academy Printing Density)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encodings/adx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADX (Academy Density Exchange)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivation of the ACES White Point
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivation of the ACES White Point
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#derivation-of-cie-chromaticity-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation of CIE chromaticity coordinates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discussion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Discussion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparison-of-the-aces-white-point-and-cie-d60" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison of the ACES white point and CIE D60
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reasons-for-the-d60-like-white-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reasons for the “D60-like” white point
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reasons-why-the-aces-white-point-doesnt-match-the-cie-d60-chromaticity-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reasons why the ACES white point doesn’t match the CIE D60 chromaticity coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_1" id="__nav_2_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Metadata File (AMF)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ACES Metadata File (AMF)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../amf/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../amf/guides/implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_2" id="__nav_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common LUT Format
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Common LUT Format
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clf/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clf/guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_1" id="__nav_2_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Input Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.dropbox.com/scl/fi/o0az9azz833t1sde8apfz/P-2013-001.pdf?rlkey=j7eqd4l0wpvbhpi72ayjvflka&e=1&dl=0" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procedure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/input-transforms/capture-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Output Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Output Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_2_1" id="__nav_2_4_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_4_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Structure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/technical-details/rendering-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/technical-details/tone-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tone Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/technical-details/chroma-compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chroma Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/technical-details/gamut-compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/technical-details/white-limiting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    White Limiting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/technical-details/display-encoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Display Encoding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preset Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/output-transforms/implementer-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementor Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_3" id="__nav_2_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Look Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Look Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/look-transforms/use-cases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/look-transforms/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_4" id="__nav_2_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference Gamut Compression
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rgc/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rgc/guides/rgc-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rgc/guides/rgc-user/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../system-components/transform-id-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transform IDs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.smpte.org/standards/aces-standards" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Standards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#derivation-of-cie-chromaticity-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation of CIE chromaticity coordinates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discussion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Discussion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comparison-of-the-aces-white-point-and-cie-d60" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison of the ACES white point and CIE D60
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reasons-for-the-d60-like-white-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reasons for the “D60-like” white point
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reasons-why-the-aces-white-point-doesnt-match-the-cie-d60-chromaticity-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reasons why the ACES white point doesn’t match the CIE D60 chromaticity coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright Contributors to the ACES Documentation -->
+
+<h1 id="derivation-of-the-aces-white-point-cie-chromaticity-coordinates">Derivation of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> White Point CIE Chromaticity Coordinates<a class="headerlink" href="#derivation-of-the-aces-white-point-cie-chromaticity-coordinates" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The primary color encoding in the Academy Color Encoding System (<abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>) is the Academy Color Encoding Specification (ACES2065-1), which is standardized in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1:2021<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. The encoding primaries and white point are specified as CIE xy chromaticity coordinates to allow for the transformation of ACES2065-1 <abbr title="Red, Green, and Blue">RGB</abbr> values to and from other color spaces including CIE XYZ. Though the CIE xy chromaticity coordinates of encoding red, green, blue and white primaries are only one factor important to unambiguous color interchange<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>, their specification is required for the calculation of a normalized primary matrix used in color space transformations<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>.</p>
+<p>The white point used in ACES2065-1 was later adopted for use in other <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encodings such as ACEScg and ACEScct. For brevity and inclusiveness, the white point used in the various encodings will be referred to as ”the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point” throughout the remainder of this document unless more specificity is required.</p>
+<p>The derivation of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticity coordinates outlined in this document is intended to help technical users of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> system calculate transformations to and from the various <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encodings in as accurate a manner as possible. </p>
+<p>The white point of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encodings does not limit the choice of sources that may be used to photograph or generate source images, nor does it dictate the white point of the reproduction. Using various techniques beyond the scope of this document, the chromaticity of the reproduction of equal ACES2065-1 red, green and blue values (ACES2065-1 R=G=B) may match the chromaticity of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point, the display calibration white point, or any other white point preferred for technical or aesthetic reasons.</p>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p>This document describes the derivation of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point CIE chromaticity coordinates and details why the chromaticity coordinates were chosen. This document includes links to an example Python implementation of the derivation and an iPython notebook intended to help readers reproduce the referenced values.</p>
+<p>This document is primarily intended for those interested in understanding the details of the technical specification of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> and the history of its development. The definition of a color space encoding’s white point chromaticity coordinates is one important factor in the definition of a color managed system. The white point used in various <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encodings does not dictate the creative white point of images created or mastered using the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> system. It exists to enable accurate conversion to and from other color encodings such as CIE XYZ. The proper usage of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point in conversion, mastering, or reproduction are beyond the scope of this document. </p>
+<h2 id="derivation-of-cie-chromaticity-coordinates">Derivation of CIE chromaticity coordinates<a class="headerlink" href="#derivation-of-cie-chromaticity-coordinates" title="Permanent link">&para;</a></h2>
+<p>The CIE xy chromaticity coordinates of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point are specified in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1 as:</p>
+<center> 
+$x$ = 0.32168     $\quad\quad y$ = 0.33767
+</center>
+
+<p>The <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticity coordinates are derived using the following procedure:</p>
+<ol>
+<li>
+<p>Calculate the CIE Daylight spectral power distribution for a Correlated Color Temperature (CCT) of 6000 K over the wavelength intervals 300 nm to 830 nm in 1 nm increments as specified in CIE 15 Section 3.1.</p>
+</li>
+<li>
+<p>Calculate the CIE 1931 XYZ tristimulus values of the spectral power distribution as specified in CIE 15 Section 7.1.</p>
+</li>
+<li>
+<p>Convert the CIE XYZ values to CIE xy chromaticity coordinates as specified in CIE 15 Section 7.3.</p>
+</li>
+<li>
+<p>Round the CIE xy chromaticity coordinates to 5 decimal places.</p>
+</li>
+</ol>
+<details class="example">
+<summary>Calculating <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticities in python</summary>
+<p>A python implementation of the above procedure can be found at:<br> <a href="https://github.com/ampas/aces-docs/blob/dev/docs/white-point/python/aces_wp.py">https://github.com/ampas/aces-docs/blob/dev/docs/white-point/python/aces_wp.py</a></p>
+</details>
+<h2 id="discussion">Discussion<a class="headerlink" href="#discussion" title="Permanent link">&para;</a></h2>
+<h3 id="comparison-of-the-aces-white-point-and-cie-d60">Comparison of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point and CIE D<sub>60</sub><a class="headerlink" href="#comparison-of-the-aces-white-point-and-cie-d60" title="Permanent link">&para;</a></h3>
+<p>Frequently, the white point associated with various <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encodings is said to be ‘D60’<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup><sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. This short-hand notation has sometimes led to confusion for those familiar with the details of how the chromaticity coordinates of the CIE D series illuminants are calculated<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. The chromaticity coordinates of any CIE D series illuminant can be calculated using the equations found in Section 3 of CIE 15:2004 and reproduced in <a href="#eq-1">Equation 1</a>.</p>
+<p><a name="eq-1"></a></p>
+<div class="arithmatex">\[
+y_{D} = −3.000x^{2}_{D} + 2.870x_{D} − 0.275 
+\]</div>
+<div class="arithmatex">\[
+x_D=\begin{cases}
+0.244063 + 0.09911 \frac{10^3}{T} + 2.9678 \frac{10^6}{T^2}  - 4.6070 \frac{10^9}{T^3} &amp; 4000 K \le T \le 7000 K \\ 
+0.237040 + 0.24748 \frac{10^3}{T} + 1.9018 \frac{10^6}{T^2}  - 2.0064 \frac{10^9}{T^3} &amp; 7000 K \lt T \le 25000 K 
+\end{cases}
+\]</div>
+<figcaption>
+<p><b>Equation 1.</b> Calculation of CIE xy from CCT for CIE Daylight</p>
+</figcaption>
+<p><br></p>
+<p>The CIE has specified four canonical daylight illuminants (D<sub>50</sub>, D<sub>55</sub>, D<sub>65</sub> and D<sub>75</sub>). Contrary to what the names might imply, the correlated color temperature (CCT) values of these four canonical illuminants are not the nominal CCT values of 5000 K, 5500 K, 6500 K, and 7500 K. For instance, CIE D<sub>65</sub> does not have a CCT of 6500 K but rather a CCT temperature of approximately 6504 K<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>. The exact CCT values differ from the nominal CCT values due to a 1968 revision to <span class="arithmatex">\(c2\)</span>, the second radiation constant in Planck’s blackbody radiation formula<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>. When the value of <span class="arithmatex">\(c2\)</span> was changed from 0.014380 to 0.014388, it altered the CIE xy location of the Planckian locus for a blackbody. This small change to the Planckian locus’s position relative to the chromaticity coordinates of the established CIE daylight locus had the effect of changing the correlated color temperature of the CIE D series illuminants ever so slightly. The precise CCT values for the established canonical CIE D series illuminants can be determined by applying <a href="#eq-2">Equation 2</a> to the nominal CCT values implied by the illuminant name. The exact CCT values of the canonical daylight illuminants are not whole numbers after the correction factor is applied, but it is common to round their values to the nearest Kelvin. The CCT values of the CIE canonical daylight illuminants before the 1968 change to <span class="arithmatex">\(c2\)</span>, after the 1968 change, and rounded to the nearest Kelvin can be found in <a href="#t-1">Table 1</a>.</p>
+<p><a name="eq-2"></a></p>
+<div class="arithmatex">\[
+CCT_{new} = CCT \times \frac{1.4388}{1.4380}
+\]</div>
+<figcaption align="center">
+<p><b>Equation 2.</b> Conversion of nominal pre-1968 CCT to post-1968 CCT </p>
+</figcaption>
+<p><br></p>
+<p><a name="t-1"></a></p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">CIE D Illuminant</th>
+<th style="text-align: center;">CCT before 1968</th>
+<th style="text-align: center;">CCT current <br>(rounded to 3 decimal places)</th>
+<th style="text-align: center;">CCT current <br>(round to 0 decimal places)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">D<sub>50</sub></td>
+<td style="text-align: center;">5000 K</td>
+<td style="text-align: center;">5002.782 K</td>
+<td style="text-align: center;">5003 K</td>
+</tr>
+<tr>
+<td style="text-align: center;">D<sub>55</sub></td>
+<td style="text-align: center;">5500 K</td>
+<td style="text-align: center;">5503.060 K</td>
+<td style="text-align: center;">5503 K</td>
+</tr>
+<tr>
+<td style="text-align: center;">D<sub>65</sub></td>
+<td style="text-align: center;">6500 K</td>
+<td style="text-align: center;">6503.616 K</td>
+<td style="text-align: center;">6504 K</td>
+</tr>
+<tr>
+<td style="text-align: center;">D<sub>75</sub></td>
+<td style="text-align: center;">7500 K</td>
+<td style="text-align: center;">7504.172 K</td>
+<td style="text-align: center;">7504 K</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption align="center">
+<p><b>Table 1.</b> CCT of canonical CIE daylight illuminants</p>
+</figcaption>
+<p><br></p>
+<p>D<sub>60</sub> is not one of the four CIE canonical daylight illuminants so the exact CCT of such a daylight illuminant could be interpreted to be either approximately 6003 K (<span class="arithmatex">\(6000 \times \frac{1.4388}{1.4380}\)</span>) or 6000 K. Regardless, the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticity coordinates derived using the method specified in [Section 3] differs from both the chromaticity coordinates of CIE daylight with a CCT of 6003 K and CIE daylight with a CCT of 6000 K. The chromaticity coordinates of each, rounded to 5 decimal places, can be found in <a href="#t-2">Table 2</a>. As illustrated in Figure 1, the chromaticity coordinates of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point do not fall on the daylight locus nor do they match those of any CIE daylight spectral power distribution. The positions of the chromaticity coordinates in CIE Uniform Color Space (<span class="arithmatex">\({u^′}{v^′}\)</span>) and the differences from the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> chromaticity coordinates in <span class="arithmatex">\(\Delta {u^′}{v^′}\)</span> can be found in <a href="#t-3">Table 3</a>.</p>
+<p><a name="t-2"></a></p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"></th>
+<th style="text-align: center;">CIE <span class="arithmatex">\(x\)</span></th>
+<th style="text-align: center;">CIE <span class="arithmatex">\(y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> White Point</td>
+<td style="text-align: center;">0.32168</td>
+<td style="text-align: center;">0.33767</td>
+</tr>
+<tr>
+<td style="text-align: left;">CIE Daylight 6000K</td>
+<td style="text-align: center;">0.32169</td>
+<td style="text-align: center;">0.33780</td>
+</tr>
+<tr>
+<td style="text-align: left;">CIE Daylight 6003K</td>
+<td style="text-align: center;">0.32163</td>
+<td style="text-align: center;">0.33774</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption align="center">
+<p><b>Table 2.</b> CIE xy chromaticity coordinates rounded to 5 decimal places</p>
+</figcaption>
+<p><br></p>
+<p><a name="t-3"></a></p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"></th>
+<th style="text-align: center;">CIE <span class="arithmatex">\({u^′}\)</span></th>
+<th style="text-align: center;">CIE <span class="arithmatex">\({v^′}\)</span></th>
+<th style="text-align: center;"><span class="arithmatex">\(\Delta {u^′}{v^′}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> White Point</td>
+<td style="text-align: center;">0.20078</td>
+<td style="text-align: center;">0.47421</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;">CIE Daylight 6000K</td>
+<td style="text-align: center;">0.20074</td>
+<td style="text-align: center;">0.47427</td>
+<td style="text-align: center;">0.00008</td>
+</tr>
+<tr>
+<td style="text-align: left;">CIE Daylight 6003K</td>
+<td style="text-align: center;">0.20072</td>
+<td style="text-align: center;">0.47423</td>
+<td style="text-align: center;">0.00007</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption align="center">
+<p><b>Table 3.</b> CIE <span class="arithmatex">\({u^′}{v^′}\)</span> chromaticity coordinates and  <span class="arithmatex">\(\Delta {u^′}{v^′}\)</span> from the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point rounded to 5 decimal places</p>
+</figcaption>
+<p><br></p>
+<p>Although the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticity is not on either the Planckian locus or the daylight locus, the CCT of its chromaticity can still be estimated. There are a number of methods for estimating the CCT of any particular set of chromaticity coordinates [16]–[19]. The results of four popular methods can be found in <a href="#t-4">Table 4</a>. Each of the methods estimates the CCT of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point to be very close to 6000 K.</p>
+<p><a name="fig-1"></a></p>
+<figure align="center">
+<p><img alt="CIE diagram" src="images/cieuv-dark.png#only-dark" width="700" />
+  <img alt="CIE diagram" src="images/cieuv-light.png#only-light" width="700" />
+  </p>
+<figcaption><b>Figure 1.</b> CIE UCS diagram with chromaticity </figcaption>
+</figure>
+<p><br></p>
+<p><a name="t-4"></a></p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">CCT Estimation Method</th>
+<th style="text-align: center;"><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point CCT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Robertson<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup></td>
+<td style="text-align: center;">5998.98 K</td>
+</tr>
+<tr>
+<td style="text-align: center;">Hernandez-Andres<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup></td>
+<td style="text-align: center;">5997.26 K</td>
+</tr>
+<tr>
+<td style="text-align: center;">Ohno<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup></td>
+<td style="text-align: center;">6000.04 K</td>
+</tr>
+<tr>
+<td style="text-align: center;">McCamy<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+<td style="text-align: center;">6000.41 K</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption align="center">
+<p><b>Table 4.</b> Estimation of the CCT of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point rounded to 2 decimal places</p>
+</figcaption>
+<p><br></p>
+<h3 id="reasons-for-the-d60-like-white-point">Reasons for the “D<sub>60</sub>-like” white point<a class="headerlink" href="#reasons-for-the-d60-like-white-point" title="Permanent link">&para;</a></h3>
+<p>The <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point was first specified by the Academy’s <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Project Committee in 2008 in Academy Specification S-2008-001. The details in S-2008-001 were later standardized in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1:2012. Prior to the release of the Academy specification the Project Committee debated various aspects of the ACES2065-1 encoding, including the exact white point, for many months. The choice of the “D<sub>60</sub>-like” white point was influenced heavily by discussions centered around viewer adaptation, dark surround viewing conditions, “cinematic look”, and preference. In the end, the Committee decided to go with a white point that was close to that of a daylight illuminant but also familiar to those with a film heritage. The white point would later be adopted for use in other encodings used in the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> system. </p>
+<p>It is important to note that the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point does not dictate the chromaticity of the reproduction neutral axis. Using various techniques beyond the scope of this document the chromaticity of the equal red, green and blue (ACES2065-1 <span class="arithmatex">\(R=G=B\)</span>) may match the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point, the display calibration white point, or any other white point preferred for technical or aesthetic reasons.</p>
+<p>The Committee felt that a white point with a chromaticity similar to that of daylight was appropriate for ACES2065-1. However, the exact CCT of the daylight was in question. Some felt D<sub>55</sub> was a reasonable choice given its historical use as the design illuminant for daylight color negative films. Others felt D<sub>65</sub> would be good choice given its use in television and computer graphics as a display calibration white point. </p>
+<p>Because the exact white point chromaticity would not prohibit users from achieving any reproduction white point, the Committee ultimately decided to use the less common CCT of 6000 K. This choice was based on an experiment to determine the reproduction chromaticity of projected color print film, the relative location of the white point compared to other white points commonly used in digital systems, and the general belief that imagery reproduced with the white point felt aesthetically “cinematic”.</p>
+<p>The projected color print film experiment involved simulating the exposure of a spectrally non-selective (neutral) gray scale onto color negative film, printing that negative onto a color print film, then projecting the color film onto a motion picture screen with a xenon-based film projector and measuring the colorimetry off the screen. The result of the experiment found that the CIE xy chromaticity coordinates of a projected LAD patch<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup><sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup> through a film system were approximately <span class="arithmatex">\(x = 0.32170\)</span> <span class="arithmatex">\(y = 0.33568\)</span>. <a href="#fig-2">Figure 2</a> shows a plot of the CIE <span class="arithmatex">\({u^′}{v^′}\)</span> chromaticity coordinates of a scene neutral as reproduced by a film system compared to the CIE daylight locus and the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point. </p>
+<p><a name="fig-2"></a></p>
+<figure align="center">
+<p><img alt="Film System Print-Through Chromaticities" src="images/PrintThroughChromaticities-dark.png#only-dark" /><br />
+<img alt="Film System Print-Through Chromaticities" src="images/PrintThroughChromaticities-light.png#only-light" />
+  </p>
+<figcaption><b>Figure 2.</b>  Film system print-through color reproduction of original scene neutral scale </figcaption>
+</figure>
+<p>The chromaticity of the film system LAD reproduction was determined to be closest to CIE daylight with the CCT of 6000 K when the differences were calculated in CIE <span class="arithmatex">\({u^′}{v^′}\)</span>. A summary of the CIE <span class="arithmatex">\({u^′}{v^′}\)</span> differences between CIE daylight at various CCTs and the LAD patch chromaticity are summarized in <a href="#t-5">Table 5</a>.</p>
+<p><a name="t-5"></a></p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Daylight CCT</th>
+<th style="text-align: center;"><span class="arithmatex">\(\Delta {u^′}{v^′}\)</span> from LAD chromaticity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5500 K</td>
+<td style="text-align: center;">0.008183</td>
+</tr>
+<tr>
+<td style="text-align: center;">5600 K</td>
+<td style="text-align: center;">0.006619</td>
+</tr>
+<tr>
+<td style="text-align: center;">5700 K</td>
+<td style="text-align: center;">0.005112</td>
+</tr>
+<tr>
+<td style="text-align: center;">5800 K</td>
+<td style="text-align: center;">0.003676</td>
+</tr>
+<tr>
+<td style="text-align: center;">5900 K</td>
+<td style="text-align: center;">0.002354</td>
+</tr>
+<tr>
+<td style="text-align: center;">6000 K</td>
+<td style="text-align: center;">0.001360</td>
+</tr>
+<tr>
+<td style="text-align: center;">6100 K</td>
+<td style="text-align: center;">0.001448</td>
+</tr>
+<tr>
+<td style="text-align: center;">6200 K</td>
+<td style="text-align: center;">0.002442</td>
+</tr>
+<tr>
+<td style="text-align: center;">6300 K</td>
+<td style="text-align: center;">0.003627</td>
+</tr>
+<tr>
+<td style="text-align: center;">6400 K</td>
+<td style="text-align: center;">0.004836</td>
+</tr>
+<tr>
+<td style="text-align: center;">6500 K</td>
+<td style="text-align: center;">0.006035</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption align="center">
+<p><b>Table 5.</b> CIE <span class="arithmatex">\(\Delta {u^′}{v^′}\)</span> difference between projected LAD patch and CIE Daylight CCT chromaticity coordinates round to 6 decimal places</p>
+</figcaption>
+<p><br></p>
+<details class="example">
+<summary>Generating the table values with python</summary>
+<p>An ipython notebook used to generate the values in Tables 1-5 is available at:<br>  <a href="https://github.com/ampas/aces-docs/blob/dev/docs/white-point/python/table_values.ipynb">https://github.com/ampas/aces-docs/blob/dev/docs/white-point/python/table_values.ipynb</a></p>
+</details>
+<h3 id="reasons-why-the-aces-white-point-doesnt-match-the-cie-d60-chromaticity-coordinates">Reasons why the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point doesn’t match the CIE D<sub>60</sub> chromaticity coordinates<a class="headerlink" href="#reasons-why-the-aces-white-point-doesnt-match-the-cie-d60-chromaticity-coordinates" title="Permanent link">&para;</a></h3>
+<p>As discussed in Section 5.2, the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point was chosen to be very close to that of CIE Daylight with a CCT of 6000 K. This raises the question why the CIE chromaticity coordinates of <span class="arithmatex">\(x = 0.32169\)</span> <span class="arithmatex">\(y = 0.33780\)</span> were not used. The reasoning is somewhat precautionary; at the time, the exact chromaticity coordinates for the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point were being debated, the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Project Committee was concerned about the implications the choice of any particular set of chromaticity coordinates could suggest.</p>
+<p>Those new to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> can often misinterpret the specification of a set of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encoding white point chromaticity coordinates as a requirement that the final reproduction neutral axis chromaticity is limited to only that white point chromaticity. However, the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encoding white point does not dictate the chromaticity of the reproduction neutral axis. Therefore,  regardless of the chosen <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticity, the reproduction neutral axis may match the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point, the display calibration white point, or any other white point preferred for technical or aesthetic reasons. The <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticity coordinates serve to aid in the understanding and, if desired, conversion of the colorimetry of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encoded images to any other encoding including those with a different white point.</p>
+<p>Just as the implication of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encoding white point on reproduction can be misunderstood, the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Project Committee was also concerned that the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> encoding white point might have unintended implications for image creators. Specifically, the Committee was concerned that the choice of a set of chromaticity coordinates that corresponded to a source with a defined spectral power distribution might be misunderstood to suggest that only that source could be used to illuminate the scene. For example, the Committee was concerned if the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> white point chromaticity was chosen to match that of CIE Daylight with a CCT of 6000 K then <i>only</i> scenes photographed under CIE Daylight with a CCT of 6000 K would be compatible with the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> system. In reality, <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> does not dictate the source under which movies or television shows can be photographed. <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Input Transforms handle the re-encoding of camera images to ACES2065-1 and preserve all the technical and artistic intent behind on-set lighting choices.</p>
+<p>For these reasons as well as an abundance of caution, the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Project Committee decided it would be best to use a set of chromaticity coordinates very near those of CIE Daylight with a CCT of 6000 K but not exactly those of any easily calculated spectral power distribution.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://doi.org/10.5594/SMPTE.ST2065-1.2021">ST 2065-1:2021 - <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> Standard - Academy Color Encoding Specification (<abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>)</a>, Society of Motion Picture and Television Engineers, New York, US, Standard, 2021.</li>
+<li><a href="https://doi.org/10.5594/SMPTE.RP177.1993">RP 177:1993 - <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> Recommended Practice - Derivation of Basic Television Color Equations</a>, Society of Motion Picture and Television Engineers, New York, US, Standard, 1993.</li>
+<li><a href="https://cie.co.at/publications/colorimetry-4th-edition">CIE 015:2018 - Colorimetry, 4th Edition</a>, International Commission on Illumination (CIE), Vienna, Austria, Technical Report, 2018.</li>
+</ul>
+<!-- Include section numbering -->
+<style>
+    @import "../../stylesheets/sections.css"
+</style>
+
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright Contributors to the ACES Documentation -->
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>“<abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1:2012 – Academy Color Encoding Specification (<abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>),” Society of Motion Picture and Television Engineers, New York, US, Standard, 2012&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>E. J. Giorgianni and T. E. Madden, Digital Color Management: Encoding Solutions, Second Edition. Addison-Wesley Longman Publishing Co., Inc., 2008, ISBN: 978-0-470-51244-9&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>“<abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177-1993 – Derivation of Basic Television Color Equations,” Society of Motion Picture and Television Engineers, New York, US, Recommended Procedure, 1993
+Beverly Hills, CA, Academy Procedure, Mar. 2016&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>AutoDesk. (2016). The aces workflow, [Online]. Available: <a href="https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2016/ENU/Maya/files/GUID-24E4143D-6FD1-4210-B677-3D5EEF3D3F29-htm.html">https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2016/ENU/Maya/files/GUID-24E4143D-6FD1-4210-B677-3D5EEF3D3F29-htm.html</a> (visited on 04/30/2018)&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>BlackMagic Forum. (2014). Aces and color space transform white point shift problem, [Online]. Available: <a href="https://forum.blackmagicdesign.com/viewtopic.php?f=21&amp;t=66681">https://forum.blackmagicdesign.com/viewtopic.php?f=21&amp;t=66681</a> (visited on 04/30/2018)&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>ACEScentral Forum. (2017). D60 issue - dci white gamut violated by projectors with “use white clip” feature, [Online]. Available: <a href="http://acescentral.com/t/d60-issue-dci-white-gamut-violated-by-projectors-with-use-white-clip-feature/1306">http://acescentral.com/t/d60-issue-dci-white-gamut-violated-by-projectors-with-use-white-clip-feature/1306</a> (visited on 04/30/2018)&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Thomas Mansencal. (2018). ‘‘D60” chromaticity coordinates and spectral power distribution are incorrect., [Online]. Available: <a href="https://github.com/colour-science/colour/issues/394">https://github.com/colour-science/colour/issues/394</a> (visited on 04/30/2018)&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>G. Wyszecki and W. Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, 2nd Edition. Wiley New York, 2000&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>M. Durieux, “The international practical temperature scale of 1968,” Progress in Low Temperature Physics, vol. 6, no. C, pp. 405–425, 1970&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>A. R. Robertson, “Computation of correlated color temperature and distribution temperature,” Journal of the Optical Society of America, vol. 58, no. 11, pp. 1528–1535, 1968&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>C. S. McCamy, “Correlated color temperature as an explicit function of chromaticity coordinates,” Color Research &amp; Application, vol. 17, no. 2, pp. 142–144, 1992&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>J. Hernandez-Andres, R. L. Lee, and J. Romero, “Calculating correlated color temperatures across the entire gamut of daylight and skylight chromaticities,” Applied Optics, vol. 38, no. 27, pp. 5703–5709, 1999&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>Y. Ohno, “Practical use and calculation of CCT and Duv,” LEUKOS - Journal of the Illuminating Engi- neering Society of North America, vol. 10, no. 1, pp. 47–55, 2014, ISSN: 15502716. DOI: 10.1080/15502724.2014.839020&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>J. P. Pytlak and A. W. Fleischer, “A simplified motion-picture laboratory control method for improved color duplication,” <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> Journal, vol. 85, no. 10, pp. 781–786, 1976, ISSN: 0036-1682. DOI: 10.5594/J07544&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>Eastman Kodak Company. (2018). Laboratory aim density, [Online]. Available: <a href="https://www.kodak.com/en/motion/page/laboratory-tools-and-techniques">https://www.kodak.com/en/motion/page/laboratory-tools-and-techniques</a> (visited on 06/10/2022)&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 10, 2025 18:42:21 PDT">September 10, 2025</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Academy of Motion Picture Arts & Sciences
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.github.com/ampas" target="_blank" rel="noopener" title="www.github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="assets/pdfs/kodak-grey-card.pdf" target="_blank" rel="noopener" title="The Great Cod" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M180.5 141.5C219.7 108.5 272.6 80 336 80s116.3 28.5 155.5 61.5c39.1 33 66.9 72.4 81 99.8 4.7 9.2 4.7 20.1 0 29.3-14.1 27.4-41.9 66.8-81 99.8-39.2 33.1-92 61.5-155.5 61.5s-116.3-28.5-155.5-61.5c-16.2-13.7-30.5-28.5-42.7-43.1l-89.7 52.3c-12.5 7.3-28.4 5.3-38.7-4.9s-12.4-26-5.3-38.6L50 256 4.2 175.9c-7.2-12.6-5-28.4 5.3-38.6s26.1-12.2 38.7-4.9l89.7 52.3c12.2-14.6 26.5-29.4 42.7-43.1zM448 256a32 32 0 1 0-64 0 32 32 0 1 0 64 0"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.expand", "navigation.top", "navigation.instant", "navigation.instant.progress", "toc.follow", "content.tooltips"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../js/image-wipe.js"></script>
+      
+        <script src="../js/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../js/open_in_new_tab.js"></script>
+      
+    
+  </body>
+</html>

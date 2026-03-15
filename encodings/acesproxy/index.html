@@ -1,0 +1,3581 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive">
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../acescc/">
+      
+      
+        <link rel="next" href="../apd/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>ACESproxy Specification - ACES Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M17%2013h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pontano+Sans:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Pontano Sans";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#acesproxy-an-integer-log-encoding-of-aces-image-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://www.acescentral.com" title="ACES Documentation" class="md-header__button md-logo" aria-label="ACES Documentation" data-md-component="logo">
+      
+  <img src="../../assets/images/aces-acescentral-color.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ACES Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ACESproxy Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c3.87 0 7 3.13 7 7 0 2.38-1.19 4.47-3 5.74V17c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-2.26C3.19 13.47 2 11.38 2 9c0-3.87 3.13-7 7-7M6 21v-1h6v1c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1M9 4C6.24 4 4 6.24 4 9c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58 0-2.76-2.24-5-5-5m10 9h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="aces-light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+  Introduction
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../home-technical/" class="md-tabs__link">
+          
+  
+  
+  Technical Details
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://www.acescentral.com" title="ACES Documentation" class="md-nav__button md-logo" aria-label="ACES Documentation" data-md-component="logo">
+      
+  <img src="../../assets/images/aces-acescentral-color.png" alt="logo">
+
+    </a>
+    ACES Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Introduction
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview of ACES
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview of ACES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encodings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/input-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Output Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/look-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Look Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../amf/guides/user/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Metadata File (AMF)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/organization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clf/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common LUT Format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About ACES 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About ACES 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/about-aces-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/about-rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Background Information
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Background Information
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/v1-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES 1 Feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/listening-tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listening Tour
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Details
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technical Details
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../home-technical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encodings
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Encodings
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aces2065-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES2065-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acescg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScg
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acescct/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScct
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acescc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACESproxy
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACESproxy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color space chromaticities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acesproxy10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACESproxy 10-bit definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acesproxy12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACESproxy 12-bit definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#appendixA" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Encoding of negative values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendixB" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Range of ACES values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendixC" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Convention for use of ACESproxy SMPTE range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix-d-acesproxy-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix D: ACESproxy function derivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APD (Academy Printing Density)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADX (Academy Density Exchange)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../white-point/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivation of the ACES White Point
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_1" id="__nav_2_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Metadata File (AMF)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ACES Metadata File (AMF)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../amf/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../amf/guides/implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_2" id="__nav_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common LUT Format
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Common LUT Format
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clf/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clf/guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_1" id="__nav_2_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Input Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.dropbox.com/scl/fi/o0az9azz833t1sde8apfz/P-2013-001.pdf?rlkey=j7eqd4l0wpvbhpi72ayjvflka&e=1&dl=0" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procedure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/input-transforms/capture-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Output Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Output Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_2_1" id="__nav_2_4_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_4_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Structure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/rendering-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/tone-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tone Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/chroma-compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chroma Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/gamut-compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/white-limiting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    White Limiting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/display-encoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Display Encoding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preset Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/implementer-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementor Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_3" id="__nav_2_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Look Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Look Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/look-transforms/use-cases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/look-transforms/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_4" id="__nav_2_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference Gamut Compression
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/guides/rgc-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/guides/rgc-user/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/transform-id-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transform IDs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.smpte.org/standards/aces-standards" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Standards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Color space chromaticities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acesproxy10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACESproxy 10-bit definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acesproxy12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ACESproxy 12-bit definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#appendixA" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Encoding of negative values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendixB" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Range of ACES values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendixC" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Convention for use of ACESproxy SMPTE range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix-d-acesproxy-function-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix D: ACESproxy function derivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright Contributors to the ACES Documentation -->
+
+<h1 id="acesproxy-an-integer-log-encoding-of-aces-image-data">ACESproxy – An Integer Log Encoding of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Image Data<a class="headerlink" href="#acesproxy-an-integer-log-encoding-of-aces-image-data" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This document specifies a logarithmic-type integer encoding for the Academy Color Encoding System (<abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>) for use in 10-bit and 12-bit hardware systems that need to transmit a representation of an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> floating-point image.</p>
+<p>The Academy Color Encoding Specification prescribes a digital encoding method using the IEEE half-precision floating-point encoding defined in IEEE 754-2008. Many production systems do not support the use of 16-bit-per-color component transmission especially where hardware video systems are utilized. Some systems used for preview, look creation, and color grading are limited to common 10-bit and 12-bit video signals. In some cases, it is still necessary for a user to see a representation of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> image without it having been rendered for the output device using an Output Transform, and where no 16-bit floating-point capability exists in the hardware and software.</p>
+<p>This document specifies an encoding of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> using 10-bit or 12-bit integer data types for compatibility with those systems. This encoding is defined and named herein as ACESproxy.</p>
+<p>10-bit and 12-bit integer data types cannot store the full range of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> data with the same level of precision provided by the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> half-precision floating-point format. To make appropriate use of the limited range of the 10-bit and 12-bit integer data types, the ACESproxy encoding uses a middle portion of the possible range of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values and is encoded using a logarithmic transfer function. To better facilitate on-set look creation, ACESproxy also uses a smaller color gamut. <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values outside of this encoded range cannot be transmitted using ACESproxy and are assumed to be clipped to the maximum and minimum ACESproxy values.</p>
+<p>ACESproxy is appropriate as a working-space encoding for on-set preview and look creation systems since those systems are typically designed to work with other image data encoded in a similar fashion. The ACESproxy encoding is specifically designed to work well when graded using the American Society of Cinematographers Color Decision List (<abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr>).</p>
+<p>The ACESproxy encoding was designed for the transmission of images across transports such as High Definition Serial Digital Interface (HD-<abbr title="Serial Digital Interface">SDI</abbr>), for use within hardware systems limited to 10- or 12-bit operation, and for the creation of look metadata such as <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> values.</p>
+<p>ACESproxy images are designed to be viewed through an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> viewing pipeline as detailed in <a href="#appendixA">Appendix A</a>. When viewed without an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> output transform, ACESproxy images are dim and low in contrast and saturation, but allow all of the sensors image data to be viewed.</p>
+<p>ACESproxy-encoded images are intermediate encodings and are not replacements for <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> image data in postproduction color grading or finishing environments. There is no image file container format specified for use with ACESproxy. ACESproxy encoding is specifically not intended for interchange, mastering finals, or archiving, all of which are better completed using the original <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> files.</p>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p>This document specifies 10-bit and 12-bit integer encodings of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> for use with imaging systems that produce look metadata such as <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr>, and with transport systems such as HD-<abbr title="Serial Digital Interface">SDI</abbr>. The color encoding provided in this format represents <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> relative exposure values as <abbr title="Red, Green, and Blue">RGB</abbr> triplets in a logarithmic encoding, and does not define the interfaces or signals that may carry this encoding.</p>
+<h2 id="specification">Specification<a class="headerlink" href="#specification" title="Permanent link">&para;</a></h2>
+<h3 id="naming-conventions">Naming conventions<a class="headerlink" href="#naming-conventions" title="Permanent link">&para;</a></h3>
+<p>Both the 10-bit and 12-bit logarithmic integer encoding of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> specified in this document shall be known as ACESproxy.</p>
+<p>Systems that are limited to the display of 8 characters for control labels shall use the abbreviation ACESPRXY.</p>
+<p>Systems that are limited to the display of 5 to 7 characters for control labels shall use the abbreviation ACSPX.</p>
+<h3 id="color-space">Color space chromaticities<a class="headerlink" href="#color-space" title="Permanent link">&para;</a></h3>
+<p>ACESporxy uses a different set of primaries than the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <abbr title="Red, Green, and Blue">RGB</abbr> primaries defined in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1. The CIE 1931 colorimetry of the ACESproxy <abbr title="Red, Green, and Blue">RGB</abbr> primaries and white are specified below.</p>
+<h4 id="color-primaries">Color primaries<a class="headerlink" href="#color-primaries" title="Permanent link">&para;</a></h4>
+<p>The chromaticity values of the <abbr title="Red, Green, and Blue">RGB</abbr> primaries (known as AP1) shall be those found below:</p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>R</strong></th>
+<th><strong>G</strong></th>
+<th><strong>B</strong></th>
+<th></th>
+<th><strong>CIE x</strong></th>
+<th><strong>CIE y</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Red</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td></td>
+<td>0.713</td>
+<td>0.293</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td></td>
+<td>0.165</td>
+<td>0.830</td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td></td>
+<td>0.128</td>
+<td>0.044</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption align="center">
+    ACESproxy RGB primaries chromaticity values
+</figcaption>
+
+<h4 id="white-point">White point<a class="headerlink" href="#white-point" title="Permanent link">&para;</a></h4>
+<p>The white point shall be:</p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>R</strong></th>
+<th><strong>G</strong></th>
+<th><strong>B</strong></th>
+<th></th>
+<th><strong>CIE x</strong></th>
+<th><strong>CIE y</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>White</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td></td>
+<td>0.32168</td>
+<td>0.33767</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption align="center">
+    ACESproxy RGB white point chromaticity values
+</figcaption>
+
+<h3 id="acesproxy10">ACESproxy 10-bit definition<a class="headerlink" href="#acesproxy10" title="Permanent link">&para;</a></h3>
+<p>The following functions shall be used to convert between <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values, encoded according to <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1, and 10-bit integer ACESproxy values.</p>
+<h4 id="encoding-function">Encoding Function<a class="headerlink" href="#encoding-function" title="Permanent link">&para;</a></h4>
+<p><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to <span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values using the transformation matrix (<span class="arithmatex">\(TRA_1\)</span>) calculated and applied using the methods provided in Section 4 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.</p>
+<p><span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to ACESproxy10 values according to <a href="#eq-1">Equation 1</a>.</p>
+<p><a name="eq-1"></a></p>
+<div class="arithmatex">\[\begin{equation} 
+    ACESproxy = \left\{ 
+    \begin{array}{l l }
+        64;     &amp; \quad lin_{AP1} \leq 2^{-9.72} \\[10pt]
+        \mathrm{FLOAT2CV10}[(log_{2}(lin_{AP1}) + 2.5) \times 50 + 425];    &amp; \quad lin_{AP1} &gt; 2^{-9.72} \\    
+    \end{array} \right.
+\end{equation}\]</div>
+<p>Where:</p>
+<p><span class="arithmatex">\(\mathrm{FLOAT2CV10}(\mathbf{a})\)</span> returns MAX<span class="arithmatex">\((64,\)</span> MIN<span class="arithmatex">\((940,\)</span> ROUND<span class="arithmatex">\((\mathbf{a})))\)</span></p>
+<p>ROUND(<span class="arithmatex">\(\mathbf{a}\)</span>) returns the integer value closest to the floating point value <span class="arithmatex">\(\mathbf{a}\)</span></p>
+<p>MAX<span class="arithmatex">\((\mathbf{a}, \mathbf{b})\)</span> returns the greater of <span class="arithmatex">\(\mathbf{a}\)</span> or <span class="arithmatex">\(\mathbf{b}\)</span></p>
+<p>MIN<span class="arithmatex">\((\mathbf{a}, \mathbf{b})\)</span> returns the lesser of <span class="arithmatex">\(\mathbf{a}\)</span> or <span class="arithmatex">\(\mathbf{b}\)</span></p>
+<figcaption align="center">
+    <b>Equation 1:</b> Linear AP1 to ACESproxy10
+</figcaption>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a href="#eq-2">Equation 2</a> shows the relationship between <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values and <span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values. <span class="arithmatex">\(TRA_{1}\)</span>, rounded to 10 significant digits, is derived from the product of <span class="arithmatex">\(NPM_{AP1}\)</span> inverse and <span class="arithmatex">\(NPM_{AP0}\)</span> calculated using methods provided in Section 3.3 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.<br>
+AP0 are the primaries of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> specified in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1.<br>
+AP1 are the primaries of ACESproxy specified in <a href="#color-space">Color space chromaticities</a>.</p>
+<p><a name="eq-2"></a></p>
+<div class="arithmatex">\[\begin{equation} 
+\begin{bmatrix}
+    R_{lin_{AP1}}\\
+    G_{lin_{AP1}}\\
+    B_{lin_{AP1}}
+\end{bmatrix}
+=
+TRA_{1}
+\cdot
+\begin{bmatrix}
+    R_{ACES}\\
+    G_{ACES}\\
+    B_{ACES}
+\end{bmatrix} \\
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+TRA_{1} =
+\begin{bmatrix}
+    \phantom{-}1.4514393161 &amp; -0.2365107469 &amp; -0.2149285693 \\
+   -0.0765537734 &amp;  \phantom{-}1.1762296998 &amp; -0.0996759264 \\
+    \phantom{-}0.0083161484 &amp; -0.0060324498 &amp;  \phantom{-}0.9977163014 \\
+\end{bmatrix} \\
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+TRA_{1} = NPM^{-1}_{AP1} \cdot NPM_{AP0}
+\end{equation}\]</div>
+<p><figcaption align="center"> 
+    <b>Equation 2:</b> <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> to linear AP1
+</figcaption></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ACESproxy values encoded using the equation above are not appropriate for storage or for archiving. They are intended for use only with digital transport interfaces unable to carry half-precision floating-point values, and with integer-based grading systems designed to generate look metadata that will guide the color grading applied to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> image data later in the post-production process.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ACESproxy encodes values into the <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> “legal-range” for video systems; grading systems should use this as their nominal range.</p>
+</div>
+<h4 id="decoding-function">Decoding Function<a class="headerlink" href="#decoding-function" title="Permanent link">&para;</a></h4>
+<p>ACESproxy <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to <span class="arithmatex">\(lin_{AP1}\)</span> values using <a href="#eq-3">Equation 3</a>.</p>
+<p><a name="eq-3"></a></p>
+<div class="arithmatex">\[\begin{equation}
+    lin_{AP1} = 2^{\left(\dfrac{ACESproxy10-425}{50}-2.5\right)}
+\end{equation}\]</div>
+<figcaption align="center">
+    <b>Equation 3:</b> ACESproxy10 to linear AP1
+</figcaption>
+
+<p><span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values using the transformation matrix (<span class="arithmatex">\(TRA_{2}\)</span>) calculated and applied using the methods provided in Section 4 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a href="#eq-4">Equation 4</a> shows the relationship between <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values and ACESproxy <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values. <span class="arithmatex">\(TRA_{2}\)</span>, rounded to 10 significant digits, is derived from the product of <span class="arithmatex">\(NPM_{AP0}\)</span> inverse and <span class="arithmatex">\(NPM_{AP1}\)</span> calculated using methods provided in Section 3.3 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.<br>
+AP0 are the primaries of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> specified in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1.<br>
+AP1 are the primaries of ACESproxy specified in <a href="#color-space">Color space chromaticities</a>.</p>
+<p><a name="eq-4"></a></p>
+<div class="arithmatex">\[\begin{equation} 
+    \begin{bmatrix}
+        R_{ACES}\\
+        G_{ACES}\\
+        B_{ACES}
+    \end{bmatrix}
+    =
+    TRA_{2}
+    \cdot
+    \begin{bmatrix}
+        R_{lin_{AP1}}\\
+        G_{lin_{AP1}}\\
+        B_{lin_{AP1}}
+    \end{bmatrix}
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+    TRA_{2} =
+    \begin{bmatrix}
+        \phantom{-}0.6954522414 &amp; 0.1406786965 &amp; 0.1638690622 \\
+        \phantom{-}0.0447945634 &amp; 0.8596711185 &amp; 0.0955343182 \\
+        -0.0055258826 &amp; 0.0040252103 &amp; 1.0015006723 \\
+    \end{bmatrix}
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+    TRA_{2} = NPM^{-1}_{AP0} \cdot NPM_{AP1}
+\end{equation}\]</div>
+<p><figcaption align="center">
+    <b>Equation 4:</b> Linear AP1 to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>
+</figcaption></p>
+</div>
+<h3 id="acesproxy12">ACESproxy 12-bit definition<a class="headerlink" href="#acesproxy12" title="Permanent link">&para;</a></h3>
+<p>The following functions shall be used to convert between <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values, encoded according to <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1, and 10-bit integer ACESproxy values.</p>
+<h4 id="encoding-function_1">Encoding Function<a class="headerlink" href="#encoding-function_1" title="Permanent link">&para;</a></h4>
+<p><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to <span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values using the transformation matrix (<span class="arithmatex">\(TRA_1\)</span>) calculated and applied using the methods provided in Section 4 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.</p>
+<p><span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to ACESproxy12 values according to <a href="#eq-1">Equation 5</a>.</p>
+<p><a name="eq-5"></a></p>
+<div class="arithmatex">\[\begin{equation} 
+    ACESproxy = \left\{ 
+    \begin{array}{l l }
+        256;    &amp; \quad lin_{AP1} \leq 2^{-9.72} \\[10pt]
+        \mathrm{FLOAT2CV12}[(log_{2}(lin_{AP1}) + 2.5) \times 200 + 1700];  &amp; \quad lin_{AP1} &gt; 2^{-9.72} \\    
+    \end{array} \right.
+\end{equation}\]</div>
+<p>Where:</p>
+<p><span class="arithmatex">\(\mathrm{FLOAT2CV12}(\mathbf{a})\)</span> returns MAX<span class="arithmatex">\((256,\)</span> MIN<span class="arithmatex">\((3760,\)</span> ROUND<span class="arithmatex">\((\mathbf{a})))\)</span></p>
+<p>ROUND(<span class="arithmatex">\(\mathbf{a}\)</span>) returns the integer value closest to the floating point value <span class="arithmatex">\(\mathbf{a}\)</span></p>
+<p>MAX<span class="arithmatex">\((\mathbf{a}, \mathbf{b})\)</span> returns the greater of <span class="arithmatex">\(\mathbf{a}\)</span> or <span class="arithmatex">\(\mathbf{b}\)</span></p>
+<p>MIN<span class="arithmatex">\((\mathbf{a}, \mathbf{b})\)</span> returns the lesser of <span class="arithmatex">\(\mathbf{a}\)</span> or <span class="arithmatex">\(\mathbf{b}\)</span></p>
+<figcaption align="center">
+    <b>Equation 5:</b> Linear AP1 to ACESproxy12
+</figcaption>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a href="#eq-6">Equation 6</a> shows the relationship between <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values and <span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values. <span class="arithmatex">\(TRA_{1}\)</span>, rounded to 10 significant digits, is derived from the product of <span class="arithmatex">\(NPM_{AP1}\)</span> inverse and <span class="arithmatex">\(NPM_{AP0}\)</span> calculated using methods provided in Section 3.3 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.<br>
+AP0 are the primaries of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> specified in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1.<br>
+AP1 are the primaries of ACESproxy specified in <a href="#color-space">Color space chromaticities</a>.</p>
+<p><a name="eq-6"></a></p>
+<div class="arithmatex">\[\begin{equation} 
+\begin{bmatrix}
+    R_{lin_{AP1}}\\
+    G_{lin_{AP1}}\\
+    B_{lin_{AP1}}
+\end{bmatrix}
+=
+TRA_{1}
+\cdot
+\begin{bmatrix}
+    R_{ACES}\\
+    G_{ACES}\\
+    B_{ACES}
+\end{bmatrix} \\
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+TRA_{1} =
+\begin{bmatrix}
+    \phantom{-}1.4514393161 &amp; -0.2365107469 &amp; -0.2149285693 \\
+   -0.0765537734 &amp;  \phantom{-}1.1762296998 &amp; -0.0996759264 \\
+    \phantom{-}0.0083161484 &amp; -0.0060324498 &amp;  \phantom{-}0.9977163014 \\
+\end{bmatrix} \\
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+TRA_{1} = NPM^{-1}_{AP1} \cdot NPM_{AP0}
+\end{equation}\]</div>
+<p><figcaption align="center"> 
+    <b>Equation 6:</b> <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> to linear AP1
+</figcaption></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ACESproxy values encoded using the equation above are not appropriate for storage or for archiving. They are intended for use only with digital transport interfaces unable to carry half-precision floating-point values, and with integer-based grading systems designed to generate look metadata that will guide the color grading applied to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> image data later in the post-production process.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ACESproxy encodes values into the <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> “legal-range” for video systems; grading systems should use this as their nominal range.</p>
+</div>
+<h4 id="decoding-function_1">Decoding Function<a class="headerlink" href="#decoding-function_1" title="Permanent link">&para;</a></h4>
+<p>ACESproxy <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to <span class="arithmatex">\(lin_{AP1}\)</span> values using <a href="#eq-7">Equation 7</a>.</p>
+<p><a name="eq-7"></a></p>
+<div class="arithmatex">\[\begin{equation}
+    lin_{AP1} = 2^{\left(\dfrac{ACESproxy12-1700}{200}-2.5\right)}
+\end{equation}\]</div>
+<figcaption align="center">
+    <b>Equation 7:</b> ACESproxy12 to linear AP1
+</figcaption>
+
+<p><span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values using the transformation matrix (<span class="arithmatex">\(TRA_{2}\)</span>) calculated and applied using the methods provided in Section 4 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a href="#eq-8">Equation 8</a> shows the relationship between <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values and ACESproxy <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values. <span class="arithmatex">\(TRA_{2}\)</span>, rounded to 10 significant digits, is derived from the product of <span class="arithmatex">\(NPM_{AP0}\)</span> inverse and <span class="arithmatex">\(NPM_{AP1}\)</span> calculated using methods provided in Section 3.3 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.<br>
+AP0 are the primaries of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> specified in <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> ST 2065-1.<br>
+AP1 are the primaries of ACESproxy specified in <a href="#color-space">Color space chromaticities</a>.</p>
+<p><a name="eq-8"></a></p>
+<div class="arithmatex">\[\begin{equation} 
+    \begin{bmatrix}
+        R_{ACES}\\
+        G_{ACES}\\
+        B_{ACES}
+    \end{bmatrix}
+    =
+    TRA_{2}
+    \cdot
+    \begin{bmatrix}
+        R_{lin_{AP1}}\\
+        G_{lin_{AP1}}\\
+        B_{lin_{AP1}}
+    \end{bmatrix}
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+    TRA_{2} =
+    \begin{bmatrix}
+        \phantom{-}0.6954522414 &amp; 0.1406786965 &amp; 0.1638690622 \\
+        \phantom{-}0.0447945634 &amp; 0.8596711185 &amp; 0.0955343182 \\
+        -0.0055258826 &amp; 0.0040252103 &amp; 1.0015006723 \\
+    \end{bmatrix}
+\end{equation}\]</div>
+<div class="arithmatex">\[\begin{equation}
+    TRA_{2} = NPM^{-1}_{AP0} \cdot NPM_{AP1}
+\end{equation}\]</div>
+<p><figcaption align="center">
+    <b>Equation 8:</b> Linear AP1 to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>
+</figcaption></p>
+</div>
+<h2 id="appendices">Appendices<a class="headerlink" href="#appendices" title="Permanent link">&para;</a></h2>
+<h3 id="appendixA">Appendix A: Encoding of negative values<a class="headerlink" href="#appendixA" title="Permanent link">&para;</a></h3>
+<p>As a part of the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> system, images encoded in ACESproxy form are intended to be decoded into <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values and viewed using an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Output Transform appropriate for an intended viewing device.</p>
+<p>Without such a transform in place, viewed ACESproxy images will appear dim, severely low in contrast and desaturated. However, directly viewing the unrendered log-encoded images is sometimes useful, for example while looking at the wide range of captured image data in the highlights and shadows that are preserved in the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> system.</p>
+<p>ACESproxy has been designed to place scene details into the <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> “legal-range” of video systems. Scene detail from about 7 stops under mid-gray to 10 stops over mid-gray should be visible within normal legal- range monitor setups. No rescaling of the device output signal should be needed for direct viewing, but is required before applying color grading transforms as described in <a href="#appendixC">Appendix C</a>.</p>
+<p>The ACESproxy encoding allows an amount of ‘headroom’ beyond the current dynamic range capabilities of digital motion picture cameras, and it is expected that the range of exposed highlight values seen on a waveform monitor will be lower on a monitors scale than the corresponding range that would be shown if other forms of log encoding were used.</p>
+<p>Specific knowledge of the dynamic range of a camera system and its output encoding can be used to determine the maximum value that will appear on a waveform monitor indicating an exposure has reached full saturation of the sensor.</p>
+<p>On a waveform monitor displaying ACESproxy values in IRE units, a gray card representing an 18% reflectance would appear at a level of 41% IRE under a normal exposure assumption. A perfect white reflector under the same conditions would appear at 55% IRE. A camera which reaches sensor saturation at 7 stops above 18% reflectance would not show any values above 81% IRE.</p>
+<h3 id="appendixB">Appendix B: Range of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values<a class="headerlink" href="#appendixB" title="Permanent link">&para;</a></h3>
+<p>This appendix is intended for developers who wish to validate the accuracy of their implementation.</p>
+<p>The table below contains the results of conversions using exact 16-bit <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> codes. 16-bit <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> has higher precision than either form of ACESproxy so rounding of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values will occur. These numbers are accurate for neutral values where R=G=B.</p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> 16-bit half-float Hex Code</strong></th>
+<th style="text-align: center;"><strong><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr></strong></th>
+<th style="text-align: center;"><strong>ACESproxy 10-bit CV</strong></th>
+<th style="text-align: center;"><strong>ACESproxy 12-bit CV</strong></th>
+<th style="text-align: center;"><strong><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> decoded from 10-bit ACESproxy</strong></th>
+<th style="text-align: center;"><strong><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> decoded from 12-bit ACESproxy</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">14DA</td>
+<td style="text-align: center;">0.001184464</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">256</td>
+<td style="text-align: center;">0.001185417</td>
+<td style="text-align: center;">0.001185417</td>
+</tr>
+<tr>
+<td style="text-align: center;">31C3</td>
+<td style="text-align: center;">0.180053711</td>
+<td style="text-align: center;">426</td>
+<td style="text-align: center;">1705</td>
+<td style="text-align: center;">0.179199219</td>
+<td style="text-align: center;">0.179809570</td>
+</tr>
+<tr>
+<td style="text-align: center;">5AF7</td>
+<td style="text-align: center;">222.875</td>
+<td style="text-align: center;">940</td>
+<td style="text-align: center;">3760</td>
+<td style="text-align: center;">222.875</td>
+<td style="text-align: center;">222.875</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="appendixC">Appendix C: Convention for use of ACESproxy <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> range<a class="headerlink" href="#appendixC" title="Permanent link">&para;</a></h3>
+<p>This appendix defines the equivalent of a [0.0 ... 1.0] range in both 10-bit and 12-bit ACESproxy for use in applications.</p>
+<p>For consistency in using ACESproxy values in video systems designed around the [0.0 . . . 1.0] video range (encoded in 10-bit video as the range 64-940), the following <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values are considered the equivalents to 0.0 and 1.0 for both 10-bit and 12-bit video.</p>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Video normalized scale</strong></th>
+<th style="text-align: center;"><strong>IRE</strong></th>
+<th style="text-align: center;"><strong>10-bit CV</strong></th>
+<th style="text-align: center;"><strong>12-bit CV</strong></th>
+<th style="text-align: center;"><strong><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0.0</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">256</td>
+<td style="text-align: center;">0.001185417</td>
+</tr>
+<tr>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">100%</td>
+<td style="text-align: center;">940</td>
+<td style="text-align: center;">3760</td>
+<td style="text-align: center;">222.875</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> values are applied to values in the range [0.0 ... 1.0] which by this convention are set to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> values 0.001185417 to 222.875. In integer based color grading systems this is typically accomplished by scaling from “legal” to full range before applying <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> transforms. The <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> application is further defined in a separate document.</p>
+<h3 id="appendix-d-acesproxy-function-derivation">Appendix D: ACESproxy function derivation<a class="headerlink" href="#appendix-d-acesproxy-function-derivation" title="Permanent link">&para;</a></h3>
+<p>The ACESproxy 10-bit and 12-bit logarithmic encoding and decoding functions have been derived from the single mathematical function described below. A series of parameters are defined and the values for the parameters specified based on the bit depth of the encoding.</p>
+<h4 id="math-functions">Math functions<a class="headerlink" href="#math-functions" title="Permanent link">&para;</a></h4>
+<p>The following general-use math functions are defined for use within the equations.</p>
+<div style="padding-left: 40px;">
+<dl>
+<dt><span class="arithmatex">\(\mathrm{ROUND}(a)\)</span> </dt>
+<dd>
+<p>Math function taking a floating-point value <span class="arithmatex">\(a\)</span>, and returning the integer value closest to <span class="arithmatex">\(a\)</span> <br></p>
+</dd>
+<dt><span class="arithmatex">\(\mathrm{MAX}(a, b)\)</span></dt>
+<dd>
+<p>Math function returning the greater of <span class="arithmatex">\(a\)</span> or <span class="arithmatex">\(b\)</span> <br></p>
+</dd>
+<dt><span class="arithmatex">\(\mathrm{MIN}(a, b)\)</span></dt>
+<dd>Math function returning the lesser of <span class="arithmatex">\(a\)</span> or <span class="arithmatex">\(b\)</span> <br></dd>
+<dt><span class="arithmatex">\(\mathrm{FLOAT2CV}(a)\)</span></dt>
+<dd>
+<p>Math function returning <span class="arithmatex">\(\mathrm{MAX}(\mathrm{CV_{min}}, \mathrm{MIN}[\mathrm{CV_{max}},\mathrm{ROUND}(a)])\)</span></p>
+</dd>
+</dl>
+</div>
+<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h4>
+<p>The following parameters are defined for each bit-depth.</p>
+<ul>
+<li><span class="arithmatex">\(\mathrm{CV_{min}}\)</span> is the minimum code value available for representation of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> image data</li>
+<li><span class="arithmatex">\(\mathrm{CV_{max}}\)</span> is the maximum code value available for representation of <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> image data</li>
+<li><span class="arithmatex">\(StepsPerStop\)</span> is the number of code values representing a change of 1 stop in exposure</li>
+<li><span class="arithmatex">\(\mathrm{MidCVOffset}\)</span> is the integer code value representing the assigned midpoint of the exposure scale for a particular bit-depth encoding. (e.g. the point to which a mid-grey exposure value would be mapped)</li>
+<li><span class="arithmatex">\(\mathrm{MidLogOffset}\)</span> is the base 2 logarithmic value representing the assigned midpoint of the exposure scale in log space, [e.g. <span class="arithmatex">\(\mathrm{MidLogOffset} = log_{2}(2^{−2.5}) = −2.5\)</span> ]</li>
+</ul>
+<div align="center">
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: center;"><strong>ACESproxy 10-bit CV</strong></th>
+<th style="text-align: center;"><strong>ACESproxy 12-bit CV</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\mathrm{CV_{min}}\)</span></td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">256</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathrm{CV_{max}}\)</span></td>
+<td style="text-align: center;">940</td>
+<td style="text-align: center;">3760</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathrm{StepsPerStop}\)</span></td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">200</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathrm{MidCVOffset}\)</span></td>
+<td style="text-align: center;">425</td>
+<td style="text-align: center;">1700</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathrm{MidLogOffset}\)</span></td>
+<td style="text-align: center;">-2.5</td>
+<td style="text-align: center;">-2.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="arithmatex">\(\mathrm{MidCVOffset}\)</span> is not equal to the ACESproxy value that most closely represents an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> mid-gray value of 0.18. <br><abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> 0.18 is most closely represented by a 10-bit ACESproxy code value of 426 or a 12-bit ACESproxy code value of 1705.</p>
+</div>
+<h4 id="encoding-function_2">Encoding function<a class="headerlink" href="#encoding-function_2" title="Permanent link">&para;</a></h4>
+<p>The following floating-point equation is used to convert linear values to integer code values.</p>
+<div class="arithmatex">\[\begin{equation} 
+    \mathrm{ACESproxy} = \left\{ 
+    \begin{array}{l l}
+        \mathrm{CV_{min}};    &amp; \mathrm{lin} \leq 2^{\left({\frac{(\mathrm{CV_{min}}-\mathrm{MidCVOffset})}{\mathrm{StepsPerStop}}-\mathrm{MidLogOffset}}\right)} \\
+        \mathrm{FLOAT2CV}\left[\left(\log_2(lin)-\mathrm{MidLogOffset}\right)\times \mathrm{StepsPerStop}+\mathrm{MidCVOffset}\right];        &amp; \mathrm{lin} &gt; 2^{\left({\frac{(\mathrm{CV_{min}}-\mathrm{MidCVOffset})}{\mathrm{StepsPerStop}}-\mathrm{MidLogOffset}}\right)} \\
+    \end{array} \right.
+\end{equation}\]</div>
+<p>where <span class="arithmatex">\(\mathrm{ACESproxy}\)</span> is the resulting integer code value in the range of code values from <span class="arithmatex">\(\mathrm{CV_{min}}\)</span> to <span class="arithmatex">\(\mathrm{CV_{max}}\)</span>. </p>
+<p>An implementation may use mathematically equivalent forms of this encoding equation.</p>
+<h4 id="decoding-function_2">Decoding function<a class="headerlink" href="#decoding-function_2" title="Permanent link">&para;</a></h4>
+<p>The following floating-point equation is used to convert ACESproxy integer code values to linear values.</p>
+<div class="arithmatex">\[\begin{equation}
+\mathrm{lin} = 2^{\left( \dfrac{(\mathrm{ACESproxy}-\mathrm{MidCVOffset})}{\mathrm{StepsPerStop}} + \mathrm{MidLogOffset}\right)}
+\end{equation}\]</div>
+<p>The conversion to linear creates the closest value in 16-bit half precision floating-point to the floating-point result of the equation. Linear values resulting from this equation are limited to the range of values that can be encoded in ACESproxy as illustrated in <a href="#appendixB">Appendix B</a>. This decoding function does not produce negative values.</p>
+<p>An implementation may use mathematically equivalent forms of this decoding equation.</p>
+<hr />
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>The following standards, specifications, articles, presentations, and texts are referenced in this text:</p>
+<ul>
+<li><a href="https://doi.org/10.5594/SMPTE.ST2065-1.2021">ST 2065-1:2021 - <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> Standard - Academy Color Encoding Specification (<abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>)</a></li>
+<li><a href="https://doi.org/10.5594/SMPTE.RP177.1993">RP 177:1993 - <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> Recommended Practice - Derivation of Basic Television Color Equations</a></li>
+</ul>
+<!-- Include section numbering -->
+<style>
+    @import "../../../stylesheets/sections.css"
+</style>
+
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright Contributors to the ACES Documentation -->
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 10, 2025 18:41:26 PDT">September 10, 2025</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Academy of Motion Picture Arts & Sciences
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.github.com/ampas" target="_blank" rel="noopener" title="www.github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="assets/pdfs/kodak-grey-card.pdf" target="_blank" rel="noopener" title="The Great Cod" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M180.5 141.5C219.7 108.5 272.6 80 336 80s116.3 28.5 155.5 61.5c39.1 33 66.9 72.4 81 99.8 4.7 9.2 4.7 20.1 0 29.3-14.1 27.4-41.9 66.8-81 99.8-39.2 33.1-92 61.5-155.5 61.5s-116.3-28.5-155.5-61.5c-16.2-13.7-30.5-28.5-42.7-43.1l-89.7 52.3c-12.5 7.3-28.4 5.3-38.7-4.9s-12.4-26-5.3-38.6L50 256 4.2 175.9c-7.2-12.6-5-28.4 5.3-38.6s26.1-12.2 38.7-4.9l89.7 52.3c12.2-14.6 26.5-29.4 42.7-43.1zM448 256a32 32 0 1 0-64 0 32 32 0 1 0 64 0"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.expand", "navigation.top", "navigation.instant", "navigation.instant.progress", "toc.follow", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../js/image-wipe.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/open_in_new_tab.js"></script>
+      
+    
+  </body>
+</html>

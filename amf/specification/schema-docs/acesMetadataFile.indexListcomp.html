@@ -1,0 +1,555 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+<meta name="robots" content="noindex, nofollow, noarchive">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Schema documentation for </title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css" /><script type="text/javascript">
+         <!--
+        
+      
+        var button_prefix = 'button_';
+        
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+    
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updatePageTitle(message) {
+            top.document.title = message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id, isChunked, indexFileLocation, indexFileNamespace, indexFileComponent){
+
+            if (!isChunked) {
+             var selectIds = new Array('toc_group_by_namespace', 'toc_group_by_location', 'toc_group_by_component_type');
+             // Make all the tabs invisible.
+               for (i = 0; i < 3; i++){
+                  var tab = getElementObject(selectIds[i]);
+                  tab.style.display = 'none';
+               }
+               var selTab = getElementObject(id);
+               selTab.style.display = 'block';
+            } else {
+             if (id == 'toc_group_by_namespace') {
+               parent.indexFrame.location = indexFileNamespace;
+             } else  if (id == 'toc_group_by_location') {
+               parent.indexFrame.location = indexFileLocation;
+             } else  if (id == 'toc_group_by_component_type') {
+              parent.indexFrame.location = indexFileComponent;
+             }
+            }
+         }
+          
+
+    
+                        //--></script></head>
+   <body>
+      <h2><a id="INDEX">Table of Contents</a></h2>
+      <p><a href="acesMetadataFile.indexList.html">Components</a><span> | </span><a href="schHierarchy.html">Resource Hierarchy</a></p>
+      <hr />
+      <div class="toc">
+         <form action="none">
+            <div><span> Group by: <select id="selectTOC" onchange="selectTOCGroupBy(this.options[this.selectedIndex].value, true, 'acesMetadataFile.indexList.html', 'acesMetadataFile.indexListns.html', 'acesMetadataFile.indexListcomp.html');">
+                     <option value="toc_group_by_namespace">Namespace</option>
+                     <option value="toc_group_by_location">Location</option>
+                     <option value="toc_group_by_component_type" selected="selected">Component Type</option></select></span></div>
+         </form>
+         <div class="level1" id="toc_group_by_component_type" style="display:block">
+            <div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Main_schema" type="image" value="-" src="img/btM.gif" onclick="switchState('Main_schema');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Main Schema</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Main_schema" class="componentGroup" style="display:block">
+                                          <div><b><a href="acesMetadataFile_xsd_Main_schema_acesMetadataFile_xsd.html#acesMetadataFile.xsd" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component acesMetadataFile.xsd')">acesMetadataFile.xsd</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Element" type="image" value="-" src="img/btM.gif" onclick="switchState('Element');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Elements</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Element" class="componentGroup" style="display:block">
+                                          <div><b><a href="acesMetadataFile_xsd_Element_aces_acesMetadataFile.html#acesMetadataFile" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:acesMetadataFile')">aces:acesMetadataFile</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Element_aces_acesMetadataFile.html#acesMetadataFile_amfInfo" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:acesMetadataFile/aces:amfInfo')">aces:acesMetadataFile/aces:amfInfo</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Element_aces_acesMetadataFile.html#acesMetadataFile_archivedPipeline" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:acesMetadataFile/aces:archivedPipeline')">aces:acesMetadataFile/aces:archivedPipeline</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Element_aces_acesMetadataFile.html#acesMetadataFile_clipId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:acesMetadataFile/aces:clipId')">aces:acesMetadataFile/aces:clipId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Element_aces_acesMetadataFile.html#acesMetadataFile_pipeline" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:acesMetadataFile/aces:pipeline')">aces:acesMetadataFile/aces:pipeline</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_authorType.html#authorType_emailAddress" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:authorType/aces:emailAddress')">aces:authorType/aces:emailAddress</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_authorType.html#authorType_name" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:authorType/aces:name')">aces:authorType/aces:name</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_cdlWorkingSpaceType.html#cdlWorkingSpaceType_fromCdlWorkingSpace" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:cdlWorkingSpaceType/aces:fromCdlWorkingSpace')">aces:cdlWorkingSpaceType/aces:fromCdlWorkingSpace</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_cdlWorkingSpaceType.html#cdlWorkingSpaceType_toCdlWorkingSpace" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:cdlWorkingSpaceType/aces:toCdlWorkingSpace')">aces:cdlWorkingSpaceType/aces:toCdlWorkingSpace</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_clipIdType.html#clipIdType_clipName" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:clipIdType/aces:clipName')">aces:clipIdType/aces:clipName</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_clipIdType.html#clipIdType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:clipIdType/aces:file')">aces:clipIdType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_clipIdType.html#clipIdType_sequence" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:clipIdType/aces:sequence')">aces:clipIdType/aces:sequence</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_clipIdType.html#clipIdType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:clipIdType/aces:uuid')">aces:clipIdType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_dateTimeType.html#dateTimeType_creationDateTime" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:dateTimeType/aces:creationDateTime')">aces:dateTimeType/aces:creationDateTime</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_dateTimeType.html#dateTimeType_modificationDateTime" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:dateTimeType/aces:modificationDateTime')">aces:dateTimeType/aces:modificationDateTime</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_infoType.html#infoType_author" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:infoType/aces:author')">aces:infoType/aces:author</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_infoType.html#infoType_dateTime" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:infoType/aces:dateTime')">aces:infoType/aces:dateTime</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_infoType.html#infoType_description" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:infoType/aces:description')">aces:infoType/aces:description</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_infoType.html#infoType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:infoType/aces:uuid')">aces:infoType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType/aces:file')">aces:inputTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType_inverseOutputDeviceTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType/aces:inverseOutputDeviceTransform')">aces:inputTransformType/aces:inverseOutputDeviceTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType_inverseOutputTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType/aces:inverseOutputTransform')">aces:inputTransformType/aces:inverseOutputTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType_inverseReferenceRenderingTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType/aces:inverseReferenceRenderingTransform')">aces:inputTransformType/aces:inverseReferenceRenderingTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType/aces:transformId')">aces:inputTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType/aces:uuid')">aces:inputTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputDeviceTransformType.html#inverseOutputDeviceTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputDeviceTransformType/aces:file')">aces:inverseOutputDeviceTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputDeviceTransformType.html#inverseOutputDeviceTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputDeviceTransformType/aces:transformId')">aces:inverseOutputDeviceTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputDeviceTransformType.html#inverseOutputDeviceTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputDeviceTransformType/aces:uuid')">aces:inverseOutputDeviceTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputTransformType.html#inverseOutputTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputTransformType/aces:file')">aces:inverseOutputTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputTransformType.html#inverseOutputTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputTransformType/aces:transformId')">aces:inverseOutputTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputTransformType.html#inverseOutputTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputTransformType/aces:uuid')">aces:inverseOutputTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseReferenceRenderingTransformType.html#inverseReferenceRenderingTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseReferenceRenderingTransformType/aces:file')">aces:inverseReferenceRenderingTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseReferenceRenderingTransformType.html#inverseReferenceRenderingTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseReferenceRenderingTransformType/aces:transformId')">aces:inverseReferenceRenderingTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseReferenceRenderingTransformType.html#inverseReferenceRenderingTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseReferenceRenderingTransformType/aces:uuid')">aces:inverseReferenceRenderingTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_lookTransformType.html#lookTransformType_cdlWorkingSpace" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:lookTransformType/aces:cdlWorkingSpace')">aces:lookTransformType/aces:cdlWorkingSpace</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_lookTransformType.html#lookTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:lookTransformType/aces:file')">aces:lookTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_lookTransformType.html#lookTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:lookTransformType/aces:transformId')">aces:lookTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_lookTransformType.html#lookTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:lookTransformType/aces:uuid')">aces:lookTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputDeviceTransformType.html#outputDeviceTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputDeviceTransformType/aces:file')">aces:outputDeviceTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputDeviceTransformType.html#outputDeviceTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputDeviceTransformType/aces:transformId')">aces:outputDeviceTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputDeviceTransformType.html#outputDeviceTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputDeviceTransformType/aces:uuid')">aces:outputDeviceTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputTransformType.html#outputTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputTransformType/aces:file')">aces:outputTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputTransformType.html#outputTransformType_outputDeviceTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputTransformType/aces:outputDeviceTransform')">aces:outputTransformType/aces:outputDeviceTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputTransformType.html#outputTransformType_referenceRenderingTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputTransformType/aces:referenceRenderingTransform')">aces:outputTransformType/aces:referenceRenderingTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputTransformType.html#outputTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputTransformType/aces:transformId')">aces:outputTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputTransformType.html#outputTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputTransformType/aces:uuid')">aces:outputTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineInfoType.html#pipelineInfoType_systemVersion" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineInfoType/aces:systemVersion')">aces:pipelineInfoType/aces:systemVersion</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineType.html#pipelineType_inputTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineType/aces:inputTransform')">aces:pipelineType/aces:inputTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineType.html#pipelineType_lookTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineType/aces:lookTransform')">aces:pipelineType/aces:lookTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineType.html#pipelineType_outputTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineType/aces:outputTransform')">aces:pipelineType/aces:outputTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineType.html#pipelineType_pipelineInfo" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineType/aces:pipelineInfo')">aces:pipelineType/aces:pipelineInfo</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineType.html#pipelineType_workingLocation" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineType/aces:workingLocation')">aces:pipelineType/aces:workingLocation</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_referenceRenderingTransformType.html#referenceRenderingTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:referenceRenderingTransformType/aces:file')">aces:referenceRenderingTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_referenceRenderingTransformType.html#referenceRenderingTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:referenceRenderingTransformType/aces:transformId')">aces:referenceRenderingTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_referenceRenderingTransformType.html#referenceRenderingTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:referenceRenderingTransformType/aces:uuid')">aces:referenceRenderingTransformType/aces:uuid</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_transformType.html#transformType_description" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:transformType/aces:description')">aces:transformType/aces:description</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_transformType.html#transformType_hash" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:transformType/aces:hash')">aces:transformType/aces:hash</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_versionType.html#versionType_majorVersion" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:versionType/aces:majorVersion')">aces:versionType/aces:majorVersion</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_versionType.html#versionType_minorVersion" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:versionType/aces:minorVersion')">aces:versionType/aces:minorVersion</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_versionType.html#versionType_patchVersion" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:versionType/aces:patchVersion')">aces:versionType/aces:patchVersion</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_workingSpaceTransformType.html#workingSpaceTransformType_file" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:workingSpaceTransformType/aces:file')">aces:workingSpaceTransformType/aces:file</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_workingSpaceTransformType.html#workingSpaceTransformType_transformId" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:workingSpaceTransformType/aces:transformId')">aces:workingSpaceTransformType/aces:transformId</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_workingSpaceTransformType.html#workingSpaceTransformType_uuid" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:workingSpaceTransformType/aces:uuid')">aces:workingSpaceTransformType/aces:uuid</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Simple_Type" type="image" value="-" src="img/btM.gif" onclick="switchState('Simple_Type');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Simple Types</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Simple_Type" class="componentGroup" style="display:block">
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_emailAddressType.html#emailAddressType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:emailAddressType')">aces:emailAddressType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_hashAlgoType.html#hashAlgoType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:hashAlgoType')">aces:hashAlgoType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_singleDigitType.html#singleDigitType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:singleDigitType')">aces:singleDigitType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnColorSpaceConversionTransform.html#tnColorSpaceConversionTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnColorSpaceConversionTransform')">aces:tnColorSpaceConversionTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnInputTransform.html#tnInputTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnInputTransform')">aces:tnInputTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnInverseOutputDeviceTransform.html#tnInverseOutputDeviceTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnInverseOutputDeviceTransform')">aces:tnInverseOutputDeviceTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnInverseOutputTransform.html#tnInverseOutputTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnInverseOutputTransform')">aces:tnInverseOutputTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnInverseReferenceRenderingTransform.html#tnInverseReferenceRenderingTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnInverseReferenceRenderingTransform')">aces:tnInverseReferenceRenderingTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnLookTransform.html#tnLookTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnLookTransform')">aces:tnLookTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnOutputDeviceTransform.html#tnOutputDeviceTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnOutputDeviceTransform')">aces:tnOutputDeviceTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnOutputTransform.html#tnOutputTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnOutputTransform')">aces:tnOutputTransform</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Simple_Type_aces_tnReferenceRenderingTransform.html#tnReferenceRenderingTransform" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:tnReferenceRenderingTransform')">aces:tnReferenceRenderingTransform</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Complex_Type" type="image" value="-" src="img/btM.gif" onclick="switchState('Complex_Type');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Complex Types</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Complex_Type" class="componentGroup" style="display:block">
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_authorType.html#authorType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:authorType')">aces:authorType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_cdlWorkingSpaceType.html#cdlWorkingSpaceType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:cdlWorkingSpaceType')">aces:cdlWorkingSpaceType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_clipIdType.html#clipIdType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:clipIdType')">aces:clipIdType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_dateTimeType.html#dateTimeType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:dateTimeType')">aces:dateTimeType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_emptyType.html#emptyType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:emptyType')">aces:emptyType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_hashType.html#hashType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:hashType')">aces:hashType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_infoType.html#infoType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:infoType')">aces:infoType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType')">aces:inputTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputDeviceTransformType.html#inverseOutputDeviceTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputDeviceTransformType')">aces:inverseOutputDeviceTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseOutputTransformType.html#inverseOutputTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseOutputTransformType')">aces:inverseOutputTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inverseReferenceRenderingTransformType.html#inverseReferenceRenderingTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:inverseReferenceRenderingTransformType')">aces:inverseReferenceRenderingTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_lookTransformType.html#lookTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:lookTransformType')">aces:lookTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputDeviceTransformType.html#outputDeviceTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputDeviceTransformType')">aces:outputDeviceTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputTransformType.html#outputTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:outputTransformType')">aces:outputTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineInfoType.html#pipelineInfoType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineInfoType')">aces:pipelineInfoType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_pipelineType.html#pipelineType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:pipelineType')">aces:pipelineType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_referenceRenderingTransformType.html#referenceRenderingTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:referenceRenderingTransformType')">aces:referenceRenderingTransformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_sequenceType.html#sequenceType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:sequenceType')">aces:sequenceType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_transformType.html#transformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:transformType')">aces:transformType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_versionType.html#versionType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:versionType')">aces:versionType</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_workingSpaceTransformType.html#workingSpaceTransformType" target="mainFrame" title="urn:ampas:aces:amf:v2.0" onclick="updatePageTitle('Schema documentation for component aces:workingSpaceTransformType')">aces:workingSpaceTransformType</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div class="horizontalLayout">
+                  <table class="rt">
+                     <tr>
+                        <td class="rt_cornerTopLeft"></td>
+                        <td class="rt_lineTop"></td>
+                        <td class="rt_cornerTopRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_lineLeft"></td>
+                        <td class="rt_content">
+                           <table class="componentGroup">
+                              <tbody>
+                                 <tr>
+                                    <td class="componentGroup"><input id="button_Attribute" type="image" value="-" src="img/btM.gif" onclick="switchState('Attribute');" class="control" /></td>
+                                    <td class="componentGroup">
+                                       <div class="componentGroupTitle">Attributes</div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="componentGroup"></td>
+                                    <td class="componentGroup">
+                                       <div id="Attribute" class="componentGroup" style="display:block">
+                                          <div><b><a href="acesMetadataFile_xsd_Element_aces_acesMetadataFile.html#acesMetadataFile_version" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:acesMetadataFile/@version')">aces:acesMetadataFile/@version</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_hashType.html#hashType_algorithm" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:hashType/@algorithm')">aces:hashType/@algorithm</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_inputTransformType.html#inputTransformType_applied" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:inputTransformType/@applied')">aces:inputTransformType/@applied</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_lookTransformType.html#lookTransformType_applied" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:lookTransformType/@applied')">aces:lookTransformType/@applied</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_outputTransformType.html#outputTransformType_applied" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:outputTransformType/@applied')">aces:outputTransformType/@applied</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_sequenceType.html#sequenceType_idx" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:sequenceType/@idx')">aces:sequenceType/@idx</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_sequenceType.html#sequenceType_max" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:sequenceType/@max')">aces:sequenceType/@max</a></b></div>
+                                          <div><b><a href="acesMetadataFile_xsd_Complex_Type_aces_sequenceType.html#sequenceType_min" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for component aces:sequenceType/@min')">aces:sequenceType/@min</a></b></div>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                        <td class="rt_lineRight"></td>
+                     </tr>
+                     <tr>
+                        <td class="rt_cornerBottomLeft"></td>
+                        <td class="rt_lineBottom"></td>
+                        <td class="rt_cornerBottomRight"></td>
+                     </tr>
+                  </table>
+               </div>
+               <div style="clear:left"></div>
+            </div>
+         </div>
+      </div>
+      <div class="footer">
+         <hr />
+         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com" target="_parent"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor.
+         </div>
+      </div>
+   </body>
+</html>

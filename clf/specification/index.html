@@ -1,0 +1,4851 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive">
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../amf/guides/implementation/">
+      
+      
+        <link rel="next" href="../guides/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+    
+    
+      
+        <title>CLF Specification - ACES Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M17%2013h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10%2010%200%200%200%202%2012a10%2010%200%200%200%2010%2010%2010%2010%200%200%200%2010-10A10%2010%200%200%200%2012%202%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pontano+Sans:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Pontano Sans";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#common-lut-format-clf-a-common-file-format-for-look-up-tables" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://www.acescentral.com" title="ACES Documentation" class="md-header__button md-logo" aria-label="ACES Documentation" data-md-component="logo">
+      
+  <img src="../../assets/images/aces-acescentral-color.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ACES Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLF Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c3.87 0 7 3.13 7 7 0 2.38-1.19 4.47-3 5.74V17c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-2.26C3.19 13.47 2 11.38 2 9c0-3.87 3.13-7 7-7M6 21v-1h6v1c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1M9 4C6.24 4 4 6.24 4 9c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58 0-2.76-2.24-5-5-5m10 9h-2l-3.2 9h1.9l.7-2h3.2l.7 2h1.9zm-2.15 5.65L18 15l1.15 3.65z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="aces-light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+  Introduction
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../home-technical/" class="md-tabs__link">
+          
+  
+  
+  Technical Details
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://www.acescentral.com" title="ACES Documentation" class="md-nav__button md-logo" aria-label="ACES Documentation" data-md-component="logo">
+      
+  <img src="../../assets/images/aces-acescentral-color.png" alt="logo">
+
+    </a>
+    ACES Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Introduction
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview of ACES
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview of ACES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encodings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/input-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Output Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/look-transforms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Look Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../amf/guides/user/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Metadata File (AMF)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/organization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common LUT Format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About ACES 2
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About ACES 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/about-aces-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/about-rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering Transform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Background Information
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Background Information
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/v1-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES 1 Feedback
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../background/listening-tour/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listening Tour
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical Details
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technical Details
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../home-technical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encodings
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Encodings
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/aces2065-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES2065-1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/acescg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScg
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/acescct/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScct
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/acescc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACEScc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/acesproxy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACESproxy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/apd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    APD (Academy Printing Density)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../encodings/adx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADX (Academy Density Exchange)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../white-point/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivation of the ACES White Point
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Formats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    File Formats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_1" id="__nav_2_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Metadata File (AMF)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ACES Metadata File (AMF)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../amf/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../amf/guides/implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_2" id="__nav_2_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common LUT Format
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Common LUT Format
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xml-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XML Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xml-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XML Elements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="XML Elements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProcessList
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processNode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProcessNode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Array
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#substitutes-for-processnode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Substitutes for ProcessNode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Substitutes for ProcessNode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lut1d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LUT1D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lut3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LUT3D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exponent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asc_cdl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASC_CDL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bit Depth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-vs-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required vs Optional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#efficient-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Efficient Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#appendix-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Interpolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix-cineon-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Cineon-style Log Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix-c-changes-between-v20-and-v30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Changes between v2.0 and v3.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_1" id="__nav_2_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Input Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.dropbox.com/scl/fi/o0az9azz833t1sde8apfz/P-2013-001.pdf?rlkey=j7eqd4l0wpvbhpi72ayjvflka&e=1&dl=0" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procedure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/input-transforms/capture-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Output Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Output Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_2_1" id="__nav_2_4_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_4_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Structure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/rendering-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/tone-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tone Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/chroma-compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chroma Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/gamut-compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/white-limiting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    White Limiting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/technical-details/display-encoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Display Encoding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preset Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/output-transforms/implementer-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementor Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_3" id="__nav_2_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Look Transforms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Look Transforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/look-transforms/use-cases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/look-transforms/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4_4" id="__nav_2_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Gamut Compression
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference Gamut Compression
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/guides/rgc-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implementation Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rgc/guides/rgc-user/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../system-components/transform-id-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transform IDs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.smpte.org/standards/aces-standards" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACES Standards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xml-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XML Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xml-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XML Elements
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="XML Elements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProcessList
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processNode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProcessNode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Array
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#substitutes-for-processnode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Substitutes for ProcessNode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Substitutes for ProcessNode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lut1d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LUT1D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lut3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LUT3D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exponent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asc_cdl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASC_CDL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bit Depth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#required-vs-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required vs Optional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#efficient-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Efficient Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#appendix-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Interpolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix-cineon-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Cineon-style Log Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appendix-c-changes-between-v20-and-v30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Changes between v2.0 and v3.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright Contributors to the ACES Documentation -->
+
+<h1 id="common-lut-format-clf-a-common-file-format-for-look-up-tables">Common <abbr title="look-up table">LUT</abbr> Format (<abbr title="Common LUT Format">CLF</abbr>) - A Common File Format for Look-Up Tables<a class="headerlink" href="#common-lut-format-clf-a-common-file-format-for-look-up-tables" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><abbr title="Common LUT Format">CLF</abbr> is in the late stages of standardization through <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> (as of Sept. 2025). This specification of <abbr title="Common LUT Format">CLF</abbr> v3.0 was the foundation for the <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> standard document, but a few small items have been updated and the schema has been enhanced. Backwards compatibility should be maintained once published, the <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> standard will supercede this specification.</p>
+</div>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p>This document defines a human-readable text file format for the interchange of color transformations using an <abbr title="Extensible Markup Language">XML</abbr> schema. The <abbr title="Extensible Markup Language">XML</abbr> format supports Look-Up Tables of several types: 1D <abbr title="look-up tables">LUTs</abbr>, 3D <abbr title="look-up tables">LUTs</abbr>, and 3×1D <abbr title="look-up tables">LUTs</abbr>, as well as additional transformation needs such as matrices, range rescaling, and “shaper <abbr title="look-up tables">LUTs</abbr>.”
+The document defines what is a valid <abbr title="Common LUT Format">CLF</abbr> file. Though it is not intended as a tutorial for users to create their own files, <abbr title="look-up table">LUT</abbr> creators will find it useful to understand the elements and attributes available for use in a <abbr title="Common LUT Format">CLF</abbr> file. The document is also not intended to provide guidance to implementors on how to optimize their implementations, but does provide a few notes on the subject.
+This document assumes the reader has knowledge of basic color transformation operators and <abbr title="Extensible Markup Language">XML</abbr>.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>The following standards, specifications, articles, presentations, and texts are referenced in this text:</p>
+<ul>
+<li><a href="https://www.ietf.org/rfc/rfc3066.txt"><abbr title="Internet Engineering Task Force">IETF</abbr> RFC 3066: <abbr title="Internet Engineering Task Force">IETF</abbr> (Internet Engineering Task Force). RFC 3066: Tags for the Identification of Lan- guages, ed. H. Alvestrand. 2001 IEEE DRAFT Standard P123</a></li>
+<li><a href="http://j.mp/S-2014-002">Academy S-2014-002, Academy Color Encoding System – Versioning System</a></li>
+<li><a href="http://j.mp/TB-2014-002">Academy TB-2014-002, Academy Color Encoding System Version 1.0 User Experience Guidelines</a></li>
+<li><abbr title="American Society of Cinematographers">ASC</abbr> Color Decision List (<abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr>) Transfer Functions and Interchange Syntax. <abbr title="American Society of Cinematographers">ASC</abbr>-<abbr title="Color Decision List">CDL</abbr> Release1.2. Joshua Pines and David Reisner. 2009-05-04.</li>
+</ul>
+<h2 id="specification">Specification<a class="headerlink" href="#specification" title="Permanent link">&para;</a></h2>
+<h3 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h3>
+<p>A Common <abbr title="look-up table">LUT</abbr> Format (<abbr title="Common LUT Format">CLF</abbr>) file shall be written using Extensible Markup Language (<abbr title="Extensible Markup Language">XML</abbr>) and adhere to a defined <abbr title="Extensible Markup Language">XML</abbr> structure. A <abbr title="Common LUT Format">CLF</abbr> file shall have the file extension '<code>.clf</code>'.</p>
+<p>The top level element in a <abbr title="Common LUT Format">CLF</abbr> file defines a <code>ProcessList</code> which represents a sequential set of color transformations. The result of each individual color transformation feeds into the next transform in the list to create a daisy chain of transforms.</p>
+<p>An application reads a <abbr title="Common LUT Format">CLF</abbr> file and initializes a transform engine to perform the operations in the list. The transform engine reads as input a stream of code values of pixels, performs the calculations and/or interpolations, and writes an output stream representing a new set of code values for the pixels.</p>
+<p>In the sequence of transformations described by a <code>ProcessList</code>, each <code>ProcessNode</code> performs a transform on a stream of pixel data, and only one input line (input pixel values) may enter a node and only one output line (output pixel values) may exit a node. A <code>ProcessList</code> may be defined to work on either 1- component or 3-component pixel data, however all transforms in the list must be appropriate, especially in the 1-component case (black-and-white) where only 1D <abbr title="look-up table">LUT</abbr> operations are allowed. Implementation may process 1-component transforms by applying the same processing to R, G, and B.</p>
+<figure align="center">
+<p><img alt="ProcessList" src="images/processList-dark.png#only-dark" width="350" />
+  <img alt="ProcessList" src="images/processList-light.png#only-light" width="350" />
+  </p>
+<figcaption><b>Figure 1.</b> Example of a ProcessList containing a sequence of multiple ProcessNodes</figcaption>
+</figure>
+<p>The file format does not provide a mechanism to assign color transforms to either image sequences or image regions. However, the <abbr title="Extensible Markup Language">XML</abbr> structure defining the <abbr title="look-up table">LUT</abbr> transform, a ProcessList, may be encapsulated in a larger <abbr title="Extensible Markup Language">XML</abbr> structure potentially providing that mechanism. This mechanism is beyond the scope of this document.</p>
+<p>Each <abbr title="Common LUT Format">CLF</abbr> file shall be completely self-contained requiring no external information or metadata. The full content of a color transform must be included in each file and a color transform may not be incorporated by reference to another <abbr title="Common LUT Format">CLF</abbr> file. This restriction ensures that each <abbr title="Common LUT Format">CLF</abbr> file can be an independent archival element.</p>
+<p>Each ProcessList shall be given a unique ID for reference.</p>
+<p>The data for <abbr title="look-up tables">LUTs</abbr> shall be an ordered array that is either all floats or all integers. When three <abbr title="Red, Green, and Blue">RGB</abbr> color components are present, it is assumed that these are red, green, and blue in that order. There is only one order for how the data array elements are specified in a <abbr title="look-up table">LUT</abbr>, which is in general from black to white (from the minimum input value position to the maximum input value position). Arbitrary ordering of list elements is not supported in the format (see <a href="#xml-elements"><abbr title="Extensible Markup Language">XML</abbr> Elements</a> for details).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For 3D <abbr title="look-up tables">LUTs</abbr>, the indexes to the cube are assumed to have regular spacing across the range of input values. To accommodate irregular spacing, a "<code>halfDomain</code>" 1D <abbr title="look-up table">LUT</abbr> or Log node should be used as a shaper function prior to the 3D <abbr title="look-up table">LUT</abbr>.</p>
+</div>
+<h3 id="xml-structure"><abbr title="Extensible Markup Language">XML</abbr> Structure<a class="headerlink" href="#xml-structure" title="Permanent link">&para;</a></h3>
+<h4 id="general_1">General<a class="headerlink" href="#general_1" title="Permanent link">&para;</a></h4>
+<p>A <abbr title="Common LUT Format">CLF</abbr> file shall contain a single occurrence of the <abbr title="Extensible Markup Language">XML</abbr> root element known as the ProcessList. The ProcessList element shall contain one or more elements known as ProcessNodes. The order and number of process nodes is determined by the designer of the <abbr title="Common LUT Format">CLF</abbr> file.</p>
+<p>An example of the overall structure of a simple <abbr title="Common LUT Format">CLF</abbr> file is thus:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;123&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span>data<span class="w"> </span><span class="err">&amp;</span><span class="w"> </span>metadata
+<span class="w">    </span><span class="nt">&lt;/Matrix&gt;</span>
+<span class="w">    </span><span class="nt">&lt;LUT1D</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span>data<span class="w"> </span><span class="err">&amp;</span><span class="w"> </span>metadata
+<span class="w">    </span><span class="nt">&lt;/LUT1D&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span>data<span class="w"> </span><span class="err">&amp;</span><span class="w"> </span>metadata
+<span class="w">    </span><span class="nt">&lt;/Matrix&gt;</span>
+<span class="nt">&lt;/ProcessList&gt;</span>
+</code></pre></div>
+<h4 id="xml-version-and-encoding"><abbr title="Extensible Markup Language">XML</abbr> Version and Encoding<a class="headerlink" href="#xml-version-and-encoding" title="Permanent link">&para;</a></h4>
+<p>A <abbr title="Common LUT Format">CLF</abbr> file shall include a starting line that declares <abbr title="Extensible Markup Language">XML</abbr> version number and character encoding. This line is mandatory once in a file and looks like this:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</code></pre></div>
+<h4 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h4>
+<p>The file may also contain <abbr title="Extensible Markup Language">XML</abbr> comments that may be used to describe the structure of the file or save information that would not normally be exposed to a database or to a user. <abbr title="Extensible Markup Language">XML</abbr> comments are enclosed in brackets like so:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">&lt;!--  This is a comment  --&gt;</span>
+</code></pre></div>
+<h4 id="language">Language<a class="headerlink" href="#language" title="Permanent link">&para;</a></h4>
+<p>It is often useful to identify the natural or formal language in which text strings of <abbr title="Extensible Markup Language">XML</abbr> documents are written. The special attribute named xml:lang may be inserted in <abbr title="Extensible Markup Language">XML</abbr> documents to specify the language used in the contents and attribute values of any element in an <abbr title="Extensible Markup Language">XML</abbr> document. The values of the attribute are language identifiers as defined by <abbr title="Internet Engineering Task Force">IETF</abbr> RFC 3066. In addition, the empty string may be specified.
+The language specified by xml:lang applies to the element where it is specified (including the values of its attributes), and to all elements in its content unless overridden with another instance of xml:lang. In particular, the empty value of xml:lang can be used to override a specification of xml:lang on an enclosing element, without specifying another language.</p>
+<h4 id="white-space">White Space<a class="headerlink" href="#white-space" title="Permanent link">&para;</a></h4>
+<p>Particularly when creating <abbr title="Common LUT Format">CLF</abbr> files containing certain elements (such as <code>Array</code>, <code>LUT1D</code>, or <code>LUT3D</code>) it is desirable that single lines per entry are maintained so that file contents can be scanned more easily by a human reader. There exist some difficulties with maintaining this behavior as <abbr title="Extensible Markup Language">XML</abbr> has some non-specific methods for handling white-space. Especially if files are re-written from an <abbr title="Extensible Markup Language">XML</abbr> parser, white space will not necessarily be maintained. To maintain line layout, <abbr title="Extensible Markup Language">XML</abbr> style sheets may be used for reviewing and checking the <abbr title="Common LUT Format">CLF</abbr> file’s entries.</p>
+<h4 id="newline-control-characters">Newline Control Characters<a class="headerlink" href="#newline-control-characters" title="Permanent link">&para;</a></h4>
+<p>Different end of line conventions, including <code>&lt;CR&gt;</code>, <code>&lt;LF&gt;</code>, and <code>&lt;CRLF&gt;</code>, are utilized between Mac, Unix, and Windows systems. Different newline characters may result in the collapse of values into one long line of text. To maintain intended linebreaks, <abbr title="Common LUT Format">CLF</abbr> specifies that the ‘newline’ string (i.e. the byte(s) to be interpreted as ending each line of text) shall be the single code value <span class="arithmatex">\(10_{10} = 0\textrm{A}_{16}\)</span> (ASCII ‘Line Feed’ character), also indicated <code>&lt;LF&gt;</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Parsers of <abbr title="Common LUT Format">CLF</abbr> files may choose to interpret Microsoft’s <code>&lt;CR&gt;&lt;LF&gt;</code> or older-MacOS’ <code>&lt;CR&gt;</code> newline conventions, but <abbr title="Common LUT Format">CLF</abbr> files should only be generated with the <code>&lt;LF&gt;</code> encoding.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>&lt;LF&gt;</code> is the newline convention native to all *nix operating systems (including Linux and modern macOS).</p>
+</div>
+<h2 id="xml-elements"><abbr title="Extensible Markup Language">XML</abbr> Elements<a class="headerlink" href="#xml-elements" title="Permanent link">&para;</a></h2>
+<figure align="center">
+<p><img alt="ProcessList" src="images/clf-diagram-light.png#only-light" />
+  <img alt="ProcessList" src="images/clf-diagram-dark.png#only-dark" />
+    <figcaption><b>Figure 2.</b> Object Model of <abbr title="Extensible Markup Language">XML</abbr> Elements</figcaption></p>
+</figure>
+<h3 id="processlist">ProcessList<a class="headerlink" href="#processlist" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em> <br>
+The <code>ProcessList</code> is the root element for any <abbr title="Common LUT Format">CLF</abbr> file and is composed of one or more ProcessNodes. A <code>ProcessList</code> is required even if only one <code>ProcessNode</code> will be present.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The last node of the <code>ProcessList</code> is expected to be the final output of the <abbr title="look-up table">LUT</abbr>. A <abbr title="look-up table">LUT</abbr> designer can allow floating-point values to be interpreted by applications and thus delay control of the final encoding through user selections.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If needed, a <code>Range</code> node can be placed at the end of a <code>ProcessList</code> to control minimum and maximum output values and clamping.</p>
+</div>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>id</code> (required)</dt>
+<dd>a string to serve as a unique identifier of the <code>ProcessList</code></dd>
+<dt><code>compCLFversion</code> (required)</dt>
+<dd>a string indicating the minimum compatible <abbr title="Common LUT Format">CLF</abbr> specification version required to read this file <br> 
+The <code>compCLFversion</code> corresponding to this version of the specification is be <code>"3.0"</code>.</dd>
+<dt><code>name</code> (optional)</dt>
+<dd>a concise string used as a text name of the <code>ProcessList</code> for display or selection from an application’s user interface</dd>
+<dt><code>inverseOf</code> (optional)</dt>
+<dd>a string for linking to another ProcessList <code>id</code> (unique) which is the inverse of this one</dd>
+<dt><em>Elements:</em></dt>
+<dt><code>Description</code> (optional)</dt>
+<dd>a string for comments describing the function, usage, or any notes about the <code>ProcessList</code>. A <code>ProcessList</code> can contain zero or more <code>Description</code> elements.</dd>
+<dt><code>InputDescriptor</code> (optional)</dt>
+<dd>an arbitrary string used to describe the intended source code values of the <code>ProcessList</code></dd>
+<dt><code>OutputDescriptor</code> (optional)</dt>
+<dd>an arbitrary string used to describe the intended output target of the <code>ProcessList</code> (e.g. target display)</dd>
+<dt><code>ProcessNode</code> (required)</dt>
+<dd>a generic <abbr title="Extensible Markup Language">XML</abbr> element that in practice is substituted with a particular color operator. The <code>ProcessList</code> must contain at least one <code>ProcessNode</code>. The <code>ProcessNode</code> is described in <a href="#processNode">ProcessNode</a>.</dd>
+<dt><code>Info</code> (optional)</dt>
+<dd>optional element for including additional custom metadata not needed to interpret the transforms. The <code>Info</code> element includes:</dd>
+</dl>
+<div style="padding-left: 30px;">
+<dl>
+<dt><code>AppRelease</code> (optional)</dt>
+<dd>a string used for indicating application software release level</dd>
+<dt><code>Copyright</code> (optional)</dt>
+<dd>a string containing a copyright notice for authorship of the <abbr title="Common LUT Format">CLF</abbr> file</dd>
+<dt><code>Revision</code> (optional)</dt>
+<dd>a string used to track the version of the <abbr title="look-up table">LUT</abbr> itself (e.g. an increased resolution from a previous version of the <abbr title="look-up table">LUT</abbr>)</dd>
+<dt><code>ACEStransformID</code> (optional)</dt>
+<dd>a string containing an <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> transform identifier as described in Academy S-2014-002. If the transform described by the <code>ProcessList</code> is the concatenation of several <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> transforms, this element may contain several <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Transform IDs, separated by white space or line separators. This element is mandatory for <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> transforms and may be referenced from <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Metadata Files.</dd>
+<dt><code>ACESuserName</code> (optional)</dt>
+<dd>a string containing the user-friendly name recommended for use in product user interfaces as described in <a href="http://j.mp/TB-2014-002">Academy TB-2014-002</a></dd>
+<dt><code>CalibrationInfo</code> (optional)</dt>
+<dd>container element for calibration metadata used when making a <abbr title="look-up table">LUT</abbr> for a specific device. <br> <code>CalibrationInfo</code> can contain the following child elements: <ul>
+    <code>DisplayDeviceSerialNum</code><br>
+    <code>DisplayDeviceHostName</code><br>
+    <code>OperatorName</code><br>
+    <code>CalibrationDateTime</code><br>
+    <code>MeasurementProbe</code><br>
+    <code>CalibrationSoftwareName</code><br>
+    <code>CalibrationSoftwareVersion</code>
+</ul></dd>
+</dl>
+</div>
+<h3 id="processNode">ProcessNode<a class="headerlink" href="#processNode" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em> <br>
+A <code>ProcessNode</code> element represents an operation to be applied to the image data. At least one <code>ProcessNode</code> element must be included in a <code>ProcessList</code>. The generic <code>ProcessNode</code> element contains attributes and elements that are common to and inherited by the specific sub-types of the <code>ProcessNode</code> element that can substitute for <code>ProcessNode</code>. All <code>ProcessNode</code> substitutes shall inherit the following attributes.</p>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>id</code> (optional)</dt>
+<dd>a unique identifier for the <code>ProcessNode</code></dd>
+<dt><code>name</code> (optional)</dt>
+<dd>a concise string defining a name for the <code>ProcessNode</code> that can be used by an application for display in a user interface</dd>
+<dt><code>inBitDepth</code> (required)</dt>
+<dd>a string that is used by some ProcessNodes to indicate how array or parameter values have been scaled</dd>
+<dt><code>outBitDepth</code> (required)</dt>
+<dd>a string that is used by some ProcessNodes to indicate how array or parameter values have been scaled The supported values for both <code>inBitDepth</code> and <code>outBitDepth</code> are the same:</dd>
+</dl>
+<ul>
+<li><code>"8i"</code>: 8-bit unsigned integer</li>
+<li><code>"10i"</code>: 10-bit unsigned integer</li>
+<li><code>"12i"</code>: 12-bit unsigned integer</li>
+<li><code>"16i"</code>: 16-bit unsigned integer</li>
+<li><code>"16f"</code>: 16-bit floating point (half-float)</li>
+<li><code>"32f"</code>: 32-bit floating point (single precision)</li>
+</ul>
+<dl>
+<dt><em>Elements:</em></dt>
+<dt><code>Description</code> (optional)</dt>
+<dd>an arbitrary string for describing the function, usage, or notes about the ProcessNode. A ProcessNode can contain one or more Descriptions.</dd>
+</dl>
+<h3 id="array">Array<a class="headerlink" href="#array" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em> <br>
+The <code>Array</code> element contains a table of entries with a single line for each grouping of values. This element is used in the <code>LUT1D</code>, <code>LUT3D</code>, and <code>Matrix</code> ProcessNodes. The <code>dim</code> attribute specifies the dimensions of the array and, depending on context, defines the size of a matrix or the length of a <abbr title="look-up table">LUT</abbr> table. The specific formatting of the <code>dim</code> attribute must match with the type of node in which it is being used. The usages are summarized below but specific requirements for each application of <code>Array</code> are described when it appears as a child element for a particular <code>ProcessNode</code>.</p>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>dim</code> (required)</dt>
+<dd>
+<p>Specifies the dimension of the <abbr title="look-up table">LUT</abbr> or the matrix and the number of color components. The <code>dim</code> attribute provides the dimensionality of the indexes, where:</p>
+</dd>
+<dd>
+<ul>
+<li>4 entries represent the dimensions of a 3D cube and the number of components per entry.<br>    e.g. <code>dim = 17 17 17 3</code> indicates a 17-cubed 3D <abbr title="look-up table">LUT</abbr> with 3 color components </li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>2 entries represent the dimensions of a matrix.<br>
+e.g. <code>dim = 3 3</code> indicates a 3×3 matrix<br>
+e.g. <code>dim = 3 4</code> indicates a 3×4 matrix</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>2 entries represent the length of the <abbr title="look-up table">LUT</abbr> and the component value (1 or 3).<br>
+e.g. <code>dim = 256 3</code> indicates a 256 element 1D <abbr title="look-up table">LUT</abbr> with 3 components (a 3×1D <abbr title="look-up table">LUT</abbr>)<br>
+e.g. <code>dim = 256 1</code> indicates a 256 element 1D <abbr title="look-up table">LUT</abbr> with 1 component (1D <abbr title="look-up table">LUT</abbr>)</li>
+</ul>
+</dd>
+</dl>
+<h2 id="substitutes-for-processnode">Substitutes for <code>ProcessNode</code><a class="headerlink" href="#substitutes-for-processnode" title="Permanent link">&para;</a></h2>
+<h3 id="general_2">General<a class="headerlink" href="#general_2" title="Permanent link">&para;</a></h3>
+<p>The attributes and elements defined for <code>ProcessNode</code> are inherited by the substitutes for <code>ProcessNode</code>. This section defines the available substitutes for the generalized <code>ProcessNode</code> element.</p>
+<p>The <code>inBitDepth</code> of a <code>ProcessNode</code> must match the <code>outBitDepth</code> of the preceding <code>ProcessNode</code> (if any).</p>
+<h3 id="lut1d"><code>LUT1D</code><a class="headerlink" href="#lut1d" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em><br>
+A 1D <abbr title="look-up table">LUT</abbr> transform uses an input pixel value, finds the two nearest index positions in the <abbr title="look-up table">LUT</abbr>, and then interpolates the output value using the entries associated with those positions.</p>
+<p>This node shall contain either a 1D <abbr title="look-up table">LUT</abbr> or a 3x1D <abbr title="look-up table">LUT</abbr> in the form of an <code>Array</code>. If the input to a <code>LUT1D</code> is an <abbr title="Red, Green, and Blue">RGB</abbr> value, the same <abbr title="look-up table">LUT</abbr> shall be applied to all three color components.</p>
+<p>A 3x1D <abbr title="look-up table">LUT</abbr> transform looks up each color component in a separate <code>LUT1D</code> of the same length. In a 3x1D <abbr title="look-up table">LUT</abbr>, by convention, the <code>LUT1D</code> for the first component goes in the first column of <code>Array</code>.</p>
+<p>The scaling of the array values is based on the <code>outBitDepth</code> (the <code>inBitDepth</code> is not considered).</p>
+<p>The length of a 1D <abbr title="look-up table">LUT</abbr> should be limited to at most 65536 entries, and implementations are not required to support <code>LUT1D</code>s longer than 65536 entries.</p>
+<p>Linear interpolation shall be used for <code>LUT1D</code>. More information about linear interpolation can be found in <a href="#appendix-interpolation">Appendix A</a>.</p>
+<dl>
+<dt><em>Elements:</em></dt>
+<dt><code>Array</code> (required)</dt>
+<dd>an array of numeric values that are the output values of the 1D <abbr title="look-up table">LUT</abbr>. <code>Array</code> shall contain the table entries of a <abbr title="look-up table">LUT</abbr> in order from minimum value to maximum value.</dd>
+<dd>For a 1D <abbr title="look-up table">LUT</abbr>, one value per entry is used for all color channels. For a 3x1D <abbr title="look-up table">LUT</abbr>, each line should contain 3 values, creating a table where each column defines a 1D <abbr title="look-up table">LUT</abbr> for each color component. </dd>
+<dd>For <abbr title="Red, Green, and Blue">RGB</abbr>, the first column shall correspond to R’s 1D <abbr title="look-up table">LUT</abbr>, the second column shall correspond to G’s 1D <abbr title="look-up table">LUT</abbr>, and the third column shall correspond to B’s 1D <abbr title="look-up table">LUT</abbr>.</dd>
+</dl>
+<div style="padding-left: 30px;">
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>dim</code> (required)</dt>
+<dd>
+<p>two integers that represent the dimensions of the array. The first value defines the length of the array and shall equal the number of entries (lines) in the <abbr title="look-up table">LUT</abbr>. The second value indicates the number of components per entry and shall equal 1 for a 1D <abbr title="look-up table">LUT</abbr> or 3 for a 3x1D <abbr title="look-up table">LUT</abbr>.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><code>dim = "1024 3"</code> indicates a 1024 element 1D <abbr title="look-up table">LUT</abbr> with 3 component color (a 3x1D <abbr title="look-up table">LUT</abbr>)</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><code>dim = "256 1"</code> indicates a 256 element 1D <abbr title="look-up table">LUT</abbr> with 1 component color (a 1D <abbr title="look-up table">LUT</abbr>)</p>
+</div>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>Array</code> is formatted differently when it is contained in a <code>LUT3D</code> or <code>Matrix</code> element (see <a href="#array">Array</a>).</p>
+</div>
+</div>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>interpolation</code> (optional)</dt>
+<dd>
+<p>a string indicating the preferred algorithm used to interpolate values in the <code>1DLUT</code>. This attribute is optional but, if present, shall be set to <code>"linear"</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Previous versions of this specification allowed for implementations to utilize different types of interpolation but did not define what those interpolation types were or how they should be labeled. For simplicity and to ensure similarity across implementations, 1D <abbr title="look-up table">LUT</abbr> interpolation has been limited to <code>"linear"</code> in this version of the specification. Support for additional interpolation types could be added in future version.</p>
+</div>
+</dd>
+<dt><code>halfDomain</code> (optional)</dt>
+<dd>
+<p>If this attribute is present, its value must equal <code>“true”</code>. When true, the input domain to the node is considered to be all possible 16-bit floating-point values, and there must be exactly 65536 entries in the <code>Array</code> element.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For example, the unsigned integer 15360 has the same bit-pattern (0011110000000000) as the half-float value 1.0, so the 15360th entry (zero-indexed) in the <code>Array</code> element is the output value corresponding to an input value of 1.0.</p>
+</div>
+</dd>
+<dt><code>rawHalfs</code> (optional)</dt>
+<dd>
+<p>If this attribute is present, its value must equal <code>“true”</code>. When true, the <code>rawHalfs</code> attribute indicates that the output array values in the form of unsigned 16-bit integers are interpreted as the equivalent bit pattern, half floating-point values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For example, to represent the value 1.0, one would use the integer 15360 in the <code>Array</code> element because it has the same bit-pattern. This allows the specification of exact half-float values without relying on conversion from decimal text strings.</p>
+</div>
+</dd>
+</dl>
+<p><em>Examples:</em>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;LUT1D</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;lut-23&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;4 Value Lut&quot;</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;12i&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;12i&quot;</span><span class="nt">&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>1D<span class="w"> </span>LUT<span class="w"> </span>-<span class="w"> </span>Turn<span class="w"> </span>4<span class="w"> </span>grey<span class="w"> </span>levels<span class="w"> </span>into<span class="w"> </span>4<span class="w"> </span>inverted<span class="w"> </span>codes<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;4 1&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span>3
+<span class="w">        </span>2
+<span class="w">        </span>1
+<span class="w">        </span>0
+<span class="w">    </span><span class="nt">&lt;/Array&gt;</span>
+<span class="nt">&lt;/LUT1D&gt;</span>
+</code></pre></div></p>
+<figcaption align="center">
+<p><b>Example 1.</b> Example of a very simple <code>LUT1D</code></p>
+</figcaption>
+<h3 id="lut3d"><code>LUT3D</code><a class="headerlink" href="#lut3d" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em><br>
+This node shall contain a 3D <abbr title="look-up table">LUT</abbr> in the form of an Array. In a LUT3D, the 3 color components of the input value are used to find the nearest indexed values along each axis of the 3D cube. The 3-component output value is calculated by interpolating within the volume defined by the nearest corresponding positions in the <abbr title="look-up table">LUT</abbr>.
+LUT3Ds have the same dimension on all axes (i.e. Array dimensions are of the form “n n n 3”). A LUT3D with axial dimensions greater than 128x128x128 should be avoided.
+The scaling of the array values is based on the outBitDepth (the inBitDepth is not considered). </p>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>interpolation</code> (optional)</dt>
+<dd>
+<p>a string indicating the preferred algorithm used to interpolate values in the 3DLUT. This attribute is optional with a default of <code>"trilinear"</code> if the attribute is not present. <br>
+Supported values are:</p>
+<ul>
+<li><code>"trilinear"</code>: perform trilinear interpolation</li>
+<li><code>"tetrahedral"</code>: perform tetrahedral interpolation </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Interpolation methods are specified in <a href="#appendix-interpolation">Appendix A</a>.</p>
+</div>
+</dd>
+<dt><em>Elements:</em></dt>
+<dt><code>Array</code> (required)</dt>
+<dd>an array of numeric values that are the output values of the 3D <abbr title="look-up table">LUT</abbr>. The <code>Array</code> shall contain the table entries for the <code>LUT3D</code> from the minimum to the maximum input values, with the third component index changing fastest.</dd>
+</dl>
+<div style="padding-left: 30px;">
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>dim</code> (required)</dt>
+<dd>
+<p>four integers that reperesent the dimensions of the 3D <abbr title="look-up table">LUT</abbr> and the number of color components. The first three values define the dimensions of the <abbr title="look-up table">LUT</abbr> and if multiplied shall equal the number of entries actually present in the array. The fourth value indicates the number of components per entry. <br>
+4 entries have the dimensions of a 3D cube plus the number of components per entry.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><code>dim = "17 17 17 3"</code> indicates a 17-cubed 3D lookup table with 3 component color</p>
+</div>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>Array</code> is formatted differently when it is contained in a <code>LUT1D</code> or <code>Matrix</code> element (see <a href="#array">Array</a>).</p>
+</div>
+</div>
+<p><em>Examples:</em>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;LUT3D</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;lut-24&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;green look&quot;</span><span class="w"> </span><span class="na">interpolation=</span><span class="s">&quot;trilinear&quot;</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;12i&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>3D<span class="w"> </span>LUT<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;2 2 2 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span>0.0<span class="w"> </span>0.0<span class="w"> </span>0.0
+<span class="w">        </span>0.0<span class="w"> </span>0.0<span class="w"> </span>1.0
+<span class="w">        </span>0.0<span class="w"> </span>1.0<span class="w"> </span>0.0
+<span class="w">        </span>0.0<span class="w"> </span>1.0<span class="w"> </span>1.0
+<span class="w">        </span>1.0<span class="w"> </span>0.0<span class="w"> </span>0.0
+<span class="w">        </span>1.0<span class="w"> </span>0.0<span class="w"> </span>1.0
+<span class="w">        </span>1.0<span class="w"> </span>1.0<span class="w"> </span>0.0
+<span class="w">        </span>1.0<span class="w"> </span>1.0<span class="w"> </span>1.0
+<span class="w">    </span><span class="nt">&lt;/Array&gt;</span>
+<span class="nt">&lt;/LUT3D&gt;</span>
+</code></pre></div></p>
+<figcaption align="center">
+<p><b>Example 2.</b> Example of a simple <code>LUT3D</code></p>
+</figcaption>
+<h3 id="matrix"><code>Matrix</code><a class="headerlink" href="#matrix" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em><br>
+This node specifies a matrix transformation to be applied to the input values. The input and output of a <code>Matrix</code> are always 3-component values.</p>
+<p>All matrix calculations should be performed in floating point, and input bit depths of integer type should be treated as scaled floats. If the input bit depth and output bit depth do not match, the coefficients in the matrix must incorporate the results of the ‘scale’ factor that will convert the input bit depth to the output bit depth (e.g. input of <code>10i</code> with an output of <code>12i</code> requires the matrix coefficients already have a factor of <span class="arithmatex">\(4095/1023\)</span> applied). Changing the input or output bit depth requires creation of a new set of coefficients for the matrix.</p>
+<p>The output values are calculated using row-order convention: </p>
+<div class="arithmatex">\[
+    \begin{bmatrix}
+        a_{11} &amp; a_{12} &amp; a_{13} \\
+        a_{21} &amp; a_{22} &amp; a_{23} \\
+        a_{31} &amp; a_{32} &amp; a_{33} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        r_1\\
+        g_1\\
+        b_1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        r_2\\
+        g_2\\
+        b_2
+    \end{bmatrix}
+\]</div>
+<p>which is equivalent in functionality to the following:</p>
+<div class="arithmatex">\[
+    \begin{aligned}
+        r_2 = (r_1 \cdot a_{11}) + (g_1 \cdot a_{12}) + (b_1 \cdot a_{13}) \\
+        g_2 = (r_1 \cdot a_{21}) + (g_1 \cdot a_{22}) + (b_1 \cdot a_{23}) \\
+        b_2 = (r_1 \cdot a_{31}) + (g_1 \cdot a_{32}) + (b_1 \cdot a_{33})
+    \end{aligned}    
+\]</div>
+<p>Matrices using an offset calculation will have one more column than rows. An offset matrix may be defined using a 3x4 <code>Array</code>, wherein the fourth column is used to specify offset terms, <span class="arithmatex">\(k_1\)</span>, <span class="arithmatex">\(k_2\)</span>, <span class="arithmatex">\(k_3\)</span>: </p>
+<div class="arithmatex">\[
+    \begin{bmatrix}
+        a_{11} &amp; a_{12} &amp; a_{13} &amp; k_1\\
+        a_{21} &amp; a_{22} &amp; a_{23} &amp; k_2\\
+        a_{31} &amp; a_{32} &amp; a_{33} &amp; k_3\\
+    \end{bmatrix}
+    \begin{bmatrix}
+        r_1\\
+        g_1\\
+        b_1\\
+        1.0
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        r_2\\
+        g_2\\
+        b_2
+    \end{bmatrix}
+\]</div>
+<p>Expanded out, this means that the offset terms <span class="arithmatex">\(k_1\)</span>, <span class="arithmatex">\(k_2\)</span>, and <span class="arithmatex">\(k_3\)</span> are added to each of the normal matrix calculations:</p>
+<div class="arithmatex">\[
+    \begin{aligned}
+    r_2 = (r_1 \cdot a_{11}) + (g_1 \cdot a_{12}) + (b_1 \cdot a_{13}) + k_1\\
+    g_2 = (r_1 \cdot a_{21}) + (g_1 \cdot a_{22}) + (b_1 \cdot a_{23}) + k_2\\
+    b_2 = (r_1 \cdot a_{31}) + (g_1 \cdot a_{32}) + (b_1 \cdot a_{33}) + k_3
+    \end{aligned}    
+\]</div>
+<dl>
+<dt><em>Elements:</em></dt>
+<dt><code>Array</code> (required)</dt>
+<dd>a table that provides the coefficients of the transformation matrix. The matrix dimensions are either 3x3 or 3x4. The matrix is serialized row by row from top to bottom and from left to right, <br>i.e., "<span class="arithmatex">\(a_{11}\ a_{12}\ a_{13}\ a_{21}\ a_{22}\ a_{23}\ \ldots\)</span>" for a 3x3 matrix.</dd>
+</dl>
+<div class="arithmatex">\[
+    \begin{bmatrix}
+        a_{11} &amp; a_{12} &amp; a_{13} \\
+        a_{21} &amp; a_{22} &amp; a_{23} \\
+        a_{31} &amp; a_{32} &amp; a_{33} \\
+    \end{bmatrix}
+\]</div>
+<div style="padding-left: 30px;">
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>dim</code> (required)</dt>
+<dd>
+<p>two integers that describe the dimensions of the matrix array. The first value define the number of rows and the second is the number of columns. <br>
+2 entries have the dimensions of a matrix</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><code>dim = "3 3"</code> indicates a 3x3 matrix</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p><code>dim = "3 4"</code> indicates a 3x4 matrix</p>
+</div>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Previous versions of this specification used three integers for the <code>dim</code> attribute, rather than the current two. In order to facilitate backwards compatibility, implementations should allow a third value for the <code>dim</code> attribute and may simply ignore it.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>Array</code> is formatted differently when it is contained in a LUT1D or LUT3D element (see <a href="#array">Array</a>)</p>
+</div>
+</div>
+<p><em>Examples:</em>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;lut-28&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;AP0 to AP1&quot;</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>3x3<span class="w"> </span>color<span class="w"> </span>space<span class="w"> </span>conversion<span class="w"> </span>from<span class="w"> </span>AP0<span class="w"> </span>to<span class="w"> </span>AP1<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">         </span>1.45143931614567<span class="w">     </span>-0.236510746893740<span class="w">    </span>-0.214928569251925
+<span class="w">        </span>-0.0765537733960204<span class="w">    </span>1.17622969983357<span class="w">     </span>-0.0996759264375522
+<span class="w">         </span>0.00831614842569772<span class="w">  </span>-0.00603244979102103<span class="w">   </span>0.997716301365324
+<span class="w">    </span><span class="nt">&lt;/Array&gt;</span>
+<span class="nt">&lt;/Matrix&gt;</span>
+</code></pre></div></p>
+<figcaption align="center">
+<p><b>Example 3.</b> Example of a <code>Matrix</code> node with <code>dim="3 3 3"</code></p>
+</figcaption>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;lut-25&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;colorspace conversion&quot;</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;10i&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;10i&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span><span class="w"> </span>3x4<span class="w"> </span>Matrix<span class="w"> </span>,<span class="w"> </span>4th<span class="w"> </span>column<span class="w"> </span>is<span class="w"> </span>offset<span class="w"> </span><span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 4&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span>1.2<span class="w">     </span>0.0<span class="w">     </span>0.0<span class="w">     </span>0.002
+<span class="w">        </span>0.0<span class="w">     </span>1.03<span class="w">    </span>0.001<span class="w">   </span>-0.005
+<span class="w">        </span>0.004<span class="w">   </span>-0.007<span class="w">  </span>1.004<span class="w">   </span>0.0
+<span class="w">    </span><span class="nt">&lt;/Array&gt;</span>
+<span class="nt">&lt;/Matrix&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 4.</b> Example of a <code>Matrix</code> node</p>
+</figcaption>
+<h3 id="range"><code>Range</code><a class="headerlink" href="#range" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em><br>
+This node maps the input domain to the output range by scaling and offsetting values. The <code>Range</code> element can also be used to clamp values.</p>
+<p>Unless otherwise specified, the node’s default behavior is to scale and offset with clamping. If clamping is not desired, the <code>style</code> attribute can be set to <code>"noClamp"</code>.</p>
+<p>To achieve scale and/or offset of values, all of <code>minInValue</code>, <code>minOutValue</code>, <code>maxInValue</code>, and <code>maxOutValue</code> must be present. In this explicit case, the formula for <code>Range</code> shall be: </p>
+<p><a name="eq-range"></a></p>
+<div class="arithmatex">\[
+    out = in \times scale + \texttt{minOutValue} - \texttt{minInValue} \times scale
+\]</div>
+<p>where: <br></p>
+<center>$scale = \dfrac{(\texttt{maxOutValue} - \texttt{minOutValue})}{(\texttt{maxInValue} - \texttt{minInValue})}$</center>
+
+<p>The scaling of <code>minInValue</code> and <code>maxInValue</code> depends on the input bit-depth, and the scaling of <code>minOutValue</code> and <code>maxOutValue</code> depends on the output bit-depth.</p>
+<p>If <code>style="Clamp"</code>, the output value of <span class="arithmatex">\(out\)</span> from the above equation is furthur modified as follows:</p>
+<p><a name="eq-range-2"></a></p>
+<div class="arithmatex">\[
+    out_{clamped} = \mathrm{MIN}(\texttt{maxOutValue}, \mathrm{MAX}( \texttt{minOutValue}, out))
+\]</div>
+<p>where: <br></p>
+<center>$\mathrm{MAX}(a,b)$ returns $a$ if $a > b$ and $b$ if $b \geq a$<br>
+$\mathrm{MIN}(a,b)$ returns $a$ if $a < b$ and $b$ if $b \leq a$</center>
+
+<p>The <code>Range</code> element can also be used to clamp values on only the top or bottom end. In such instances, no offset is applied, and the formula simplifies because only one pair of min or max values are required. (The <code>style</code> shall not be <code>"noClamp"</code> for this use-case.)</p>
+<p>If only the minimum value pair is provided, then the result shall be clamping at the low end, according to:</p>
+<div class="arithmatex">\[
+    out = \mathrm{MAX}( \texttt{minOutValue}, in \times bitDepthScale)
+\]</div>
+<p>Values must be set such that <span class="arithmatex">\(\texttt{minOutValue} = \texttt{minInValue} \times bitDepthScale\)</span>.</p>
+<p>Likewise, if only the maximum values pairs are provided, the result shall be clamping at the high end, according to:</p>
+<div class="arithmatex">\[
+    out = \mathrm{MIN}( \texttt{maxOutValue}, in \times bitDepthScale)
+\]</div>
+<p>And values must be set such that <span class="arithmatex">\(\texttt{maxOutValue} = \texttt{maxInValue} \times bitDepthScale\)</span>.</p>
+<p>The following formulas are used in the above equations:</p>
+<div class="arithmatex">\[
+bitDepthScale = \dfrac{\mathrm{scaleFactor}(\texttt{outBitDepth})}{\mathrm{scaleFactor}(\texttt{inBitDepth})}
+\]</div>
+<div class="arithmatex">\[
+\mathrm{scaleFactor}(a) =
+\begin{cases}
+    2^{bitDepth}-1 &amp; \text{when }a \in \{\texttt{"8i"},\texttt{"10i"},\texttt{"12i"},\texttt{"16i"}\} \\
+    1.0 &amp; \text{when }a \in \{\texttt{"16f"},\texttt{"32f"}\}
+\end{cases}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The bit depth scale factor intentionally uses <span class="arithmatex">\(2^{bitDepth}−1\)</span> and not <span class="arithmatex">\(2^{bitDepth}\)</span>. This means that the scale factor created for scaling between different bit depths is "non-integer" and is slightly different depending on the bit depths being scaled between. While instinct might be that this scale should be a clean bit-shift factor (i.e. <span class="arithmatex">\(2\times\)</span> or <span class="arithmatex">\(4\times\)</span> scale), testing with a few example values plugged into the formula will show that the resulting non-integer scale is the correct and intended behavior.</p>
+</div>
+<p>At least one pair of either minimum or maximum values, or all four values, must be provided.</p>
+<dl>
+<dt><em>Elements:</em></dt>
+<dt><code>minInValue</code> (optional)</dt>
+<dd>The minimum input value. Required if <code>minOutValue</code> is present.</dd>
+<dt><code>maxInValue</code> (optional)</dt>
+<dd>The maximum input value. Required if <code>maxOutValue</code> is present.<br>
+The <code>maxInValue</code> shall be greater than the <code>minInValue</code>.</dd>
+<dt><code>minOutValue</code> (optional)</dt>
+<dd>The minimum output value. Required if <code>minInValue</code> is present.</dd>
+<dt><code>maxOutValue</code> (optional)</dt>
+<dd>The maximum output value. Required if <code>maxInValue</code> is present. <br>
+The <code>maxOutValue</code> shall be greater than or equal to the <code>minOutValue</code>.</dd>
+<dt><em>Attributes:</em></dt>
+<dt><code>style</code> (optional)</dt>
+<dd>Describes the preferred handling of the scaling calculation of the <code>Range</code> node. If the style attribute is not present, clamping is performed.<br>
+The options for <code>style</code> are:</dd>
+</dl>
+<div style="padding-left: 30px;">
+<dl>
+<dt><code>"noClamp"</code></dt>
+<dd>If present, scale and offset is applied <a href="#eq-range">without clamping</a> (i.e. values below <code>minOutValue</code> or above <code>maxOutValue</code> are preserved)</dd>
+<dt><code>"Clamp"</code></dt>
+<dd>If present, <a href="#eq-range-2">clamping</a> is applied upon the result of the scale and offset expressed by the result of the non-clamping <code>Range</code> equation</dd>
+</dl>
+</div>
+<p><em>Examples:</em>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Range</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;10i&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;10i&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>10-bit<span class="w"> </span>full<span class="w"> </span>range<span class="w"> </span>to<span class="w"> </span>SMPTE<span class="w"> </span>range<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;minInValue&gt;</span>0<span class="nt">&lt;/minInValue&gt;</span>
+<span class="w">    </span><span class="nt">&lt;maxInValue&gt;</span>1023<span class="nt">&lt;/maxInValue&gt;</span>
+<span class="w">    </span><span class="nt">&lt;minOutValue&gt;</span>64<span class="nt">&lt;/minOutValue&gt;</span>
+<span class="w">    </span><span class="nt">&lt;maxOutValue&gt;</span>940<span class="nt">&lt;/maxOutValue&gt;</span>
+<span class="nt">&lt;/Range&gt;</span>
+</code></pre></div></p>
+<figcaption align="center">
+<p><b>Example 5.</b> Using <code>"Range"</code> for scaling 10-bit full range to 10-bit <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> (legal) range.</p>
+</figcaption>
+<h3 id="log"><code>Log</code><a class="headerlink" href="#log" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em><br>
+This node contains parameters for processing pixels through a logarithmic or anti-logarithmic function. A couple of main formulations are supported. The most basic formula follows a pure logarithm or anti-logarithm of either base 2 or base 10. Another supported formula allows for a logarithmic function with a gain factor and offset. This formulation can be used to convert from linear to Cineon. Another style of log formula follows a piece-wise function consisting of a logarithmic function with a gain factor, an offset, and a linear segment. This style can be used to implement many common “camera-log” encodings.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The equations for the <code>Log</code> node assume integer data is normalized to floating-point scaling. <code>LogParams</code> do not change based on the input and output bit-depths.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On occasion it may be necessary to transform a logarithmic function specified in terms of traditional Cineon-style parameters to the parameters used by <abbr title="Common LUT Format">CLF</abbr>. Guidance on how to do this is provided in <a href="#appendix-cineon-style">Appendix B</a>.</p>
+</div>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>style</code> (required)</dt>
+<dd>
+<p>specifies the form of the of log function to be applied<br>
+Supported values for ”style” are:</p>
+<ul>
+<li><code>"log10"</code></li>
+<li><code>"antiLog10"</code></li>
+<li><code>"log2"</code></li>
+<li><code>"antiLog2"</code></li>
+<li><code>"linToLog"</code></li>
+<li><code>"logToLin"</code></li>
+<li><code>"cameraLinToLog"</code></li>
+<li><code>"cameraLogToLin"</code></li>
+</ul>
+</dd>
+<dd>
+<p>The formula to be applied for each style is described by the equations below, for all of which:</p>
+<div class="arithmatex">\[
+\texttt{FLT_MIN} = 1.175494 \times 10^{-38}
+\]</div>
+<p><center><span class="arithmatex">\(\textrm{MAX}(a, b)\)</span> returns <span class="arithmatex">\(a\)</span> if <span class="arithmatex">\(a \gt b\)</span> and <span class="arithmatex">\(b\)</span> if <span class="arithmatex">\(b \geq a\)</span></center></p>
+<ul>
+<li><code>"log10"</code>: applies a base 10 logarithm according to  </li>
+</ul>
+<div class="arithmatex">\[
+y = log_{10}(\textrm{MAX}(x,\texttt{FLT_MIN}))
+\]</div>
+<ul>
+<li><code>"antiLog10"</code>: applies a base 10 anti-logarithm according to</li>
+</ul>
+<div class="arithmatex">\[ 
+x = 10^{y}
+\]</div>
+<ul>
+<li><code>"log2"</code>: applies a base 2 logarithm according to</li>
+</ul>
+<div class="arithmatex">\[ 
+y = log_{2}(\textrm{MAX}(x,\texttt{FLT_MIN}))
+\]</div>
+<ul>
+<li><code>"antiLog2"</code>: applies a base 2 anti-logarithm according to</li>
+</ul>
+<div class="arithmatex">\[ 
+x = 2^{y}
+\]</div>
+<ul>
+<li><code>"linToLog"</code>: applies a logarithm according to</li>
+</ul>
+<div class="arithmatex">\[ 
+y = \text{logSideSlope} \times \text{log}_\text{base}(\textrm{MAX}(\text{linSideSlope} \times x + \text{linSideOffset}, \texttt{FLT_MIN}))+\text{logSideOffset}
+\]</div>
+<ul>
+<li><code>"logToLin"</code>: applies an anti-logarithm according to</li>
+</ul>
+<div class="arithmatex">\[
+x = \frac{\left(\text{base}^{\frac{y-\text{logSideOffset}}{\text{logSideSlope}}} - \text{linSideOffset}\right)}{\text{linSideSlope}}
+\]</div>
+<ul>
+<li><code>"cameraLinToLog"</code>: applies a piecewise function with logarithmic and linear segments on linear values, converting them to non-linear values</li>
+</ul>
+<p><a name="eq-linToLog"></a></p>
+<div class="arithmatex">\[
+y = \begin{cases} 
+\text{linearSlope} \times x + \text{linearOffset} &amp; \text{if } x \leq \text{linSideBreak}\\
+\text{logSideSlope} \times \text{log}_{\text{base}}(\mathrm{MAX}(\text{linSideSlope} \times x + \text{linSideOffset},\texttt{FLT_MIN})) + \text{logSideOffset} &amp; \text{otherwise} \\
+\end{cases} \\
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The calculation of <a href="#eq-linearSlope"><span class="arithmatex">\(\text{linearSlope}\)</span></a>, and <a href="#eq-linearOffset"><span class="arithmatex">\(\text{linearOffset}\)</span></a> is described in <a href="#solving-logParams">Solving for <code>LogParams</code></a></p>
+</div>
+<ul>
+<li><code>"cameraLogToLin"</code>: applies a piecewise function with logarithmic and linear segments on non-linear values, converting them to linear values</li>
+</ul>
+<div class="arithmatex">\[
+x = \begin{cases}
+\frac{(y - \text{linearOffset})}{\text{linearSlope}} &amp; \text{if } y \leq \text{logSideBreak} \\                    \frac{\left(\text{base}^{\frac{y-\text{logSideOffset}}{\text{logSideSlope}}} - \text{linSideOffset}\right)}{\text{linSideSlope}} &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The calculation of <a href="#eq-logSideBreak"><span class="arithmatex">\(\text{logSideBreak}\)</span></a>, <a href="#eq-linearSlope"><span class="arithmatex">\(\text{linearSlope}\)</span></a>, and <a href="#eq-linearOffset"><span class="arithmatex">\(\text{linearOffset}\)</span></a> is described in <a href="#solving-logParams">Solving for <code>LogParams</code></a></p>
+</div>
+</dd>
+<dt><em>Elements:</em></dt>
+<dt><code>LogParams</code> (required - if <code>"style"</code> is not a basic logarithm)</dt>
+<dd>
+<p>contains the attributes that control the <code>"linToLog"</code>, <code>"logToLin"</code>, <code>"cameraLinToLog"</code>,
+or <code>"cameraLogToLin"</code> functions <br>
+This element is required if <code>style</code> is of type <code>"linToLog"</code>, <code>"logToLin"</code>, <code>"cameraLinToLog"</code>, or <code>"cameraLogToLin"</code>. <br>
+<em>Attributes:</em></p>
+<dl>
+<dt><code>"base"</code> (optional)</dt>
+<dd>the base of the logarithmic function <br>
+Default is 2.</dd>
+<dt><code>"logSideSlope"</code> (optional)</dt>
+<dd>"slope" (or gain) applied to the log side of the logarithmic segment.<br>
+Default is 1.</dd>
+<dt><code>"logSideOffset"</code> (optional)</dt>
+<dd>offset applied to the log side of the logarithmic segment.<br>
+Default is 0.</dd>
+<dt><code>"linSideSlope"</code> (optional)</dt>
+<dd>slope of the linear side of the logarithmic segment. <br>
+Default is 1.</dd>
+<dt><code>"linSideOffset"</code> (optional)</dt>
+<dd>offset applied to the linear side of the logarithmic segment. <br>
+Default is 0.</dd>
+<dt><code>"linSideBreak"</code> (optional)</dt>
+<dd>the break-point, defined in linear space, at which the piece-wise function transitions between the logarithmic and linear segments.<br>
+This is required if <code>style="cameraLinToLog"</code> or <code>"cameraLogToLin"</code></dd>
+<dt><code>"linearSlope"</code> (optional)</dt>
+<dd>the slope of the linear segment of the piecewise function. This attribute does not need to be provided unless the formula being implemented requires it. The default is to calculate using <code>linSideBreak</code> such that the linear portion is continuous in value with the logarithmic portion of the curve, by using the value of the logarithmic portion of the curve at the break-point. This is described in the following note below.</dd>
+<dt><code>"channel"</code> (optional)</dt>
+<dd>the color channel to which the exponential function is applied. Possible values are <code>"R"</code>, <code>"G"</code>, <code>"B"</code>. If this attribute is utilized to target different adjustments per channel, then up to three <code>LogParams</code> elements may be used, provided that <code>"channel"</code> is set differently in each. However, the same value of base must be used for all channels. If this attribute is not otherwise specified, the logarithmic function is applied identically to all three color channels.</dd>
+</dl>
+</dd>
+</dl>
+<p><a name="solving-logParams"></a></p>
+<div class="admonition note">
+<p class="admonition-title">Solving for <code>LogParams</code></p>
+<p><span class="arithmatex">\(\text{linearOffset}\)</span> is the offset of the linear segment of the piecewise function. This value is calculated using the position of the break-point and the linear slope in order to ensure continuity of the two segments. The following steps describe how  to calculate <span class="arithmatex">\(\text{linearOffset}\)</span>.</p>
+<p>First, the value of the break-point on the log-axis is calculated using the value of <span class="arithmatex">\(\text{linSideBreak}\)</span> as input to the logarithmic segment of the <a href="#eq-linToLog">piecewise function</a>, as below:</p>
+<p><a name="eq-logSideBreak"></a></p>
+<div class="arithmatex">\[
+\text{logSideBreak} = \text{logSideSlope} × \text{log}_{base}(\text{linSideSlope} × \textbf{linSideBreak} + \text{linSideOffset}) + \text{logSideOffset}
+\]</div>
+<p>Then, if <span class="arithmatex">\(\text{linearSlope}\)</span> was not provided, the value of <span class="arithmatex">\(\text{linSideBreak}\)</span> is used again to solve for the derivative of the logarithmic function. The value of <span class="arithmatex">\(\text{linearSlope}\)</span> is set to equal the instantaneous slope at the break-point, or derivative, as shown below:</p>
+<p><a name="eq-linearSlope"></a></p>
+<div class="arithmatex">\[ 
+\text{linearSlope} = \text{logSideSlope} \times \left(\frac{\text{linSideSlope}}{(\text{linSideSlope} \times \textbf{linSideBreak} + \text{linSideOffset}) \times \text{ln}(\text{base})}\right)
+\]</div>
+<p>Finally, the value of <span class="arithmatex">\(\text{linearOffset}\)</span> can be solved for by rearranging the linear segment of of the <a href="#eq-linToLog">piecewise function</a> and using the values of <span class="arithmatex">\(\text{logSideBreak}\)</span> and <span class="arithmatex">\(\text{linearSlope}\)</span>, as below:</p>
+<p><a name="eq-linearOffset"></a></p>
+<div class="arithmatex">\[
+\text{linearOffset} = \textbf{logSideBreak} - \textbf{ linearSlope} \times \text{linSideBreak}
+\]</div>
+</div>
+<p><em>Examples:</em>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Log</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;log10&quot;</span><span class="nt">&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>Base<span class="w"> </span>10<span class="w"> </span>Logarithm<span class="nt">&lt;/Description&gt;</span>
+<span class="nt">&lt;/Log&gt;</span>
+</code></pre></div></p>
+<figcaption align="center">
+<p><b>Example 6.</b> <code>Log</code> node applying a base 10 logarithm.</p>
+</figcaption>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Log</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;cameraLinToLog&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>Linear<span class="w"> </span>to<span class="w"> </span>DJI<span class="w"> </span>D-Log<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;LogParams</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;10&quot;</span><span class="w"> </span><span class="na">logSideSlope=</span><span class="s">&quot;0.256663&quot;</span><span class="w"> </span><span class="na">logSideOffset=</span><span class="s">&quot;0.584555&quot;</span>
+<span class="w">        </span><span class="na">linSideSlope=</span><span class="s">&quot;0.9892&quot;</span><span class="w"> </span><span class="na">linSideOffset=</span><span class="s">&quot;0.0108&quot;</span><span class="w"> </span><span class="na">linSideBreak=</span><span class="s">&quot;0.0078&quot;</span>
+<span class="w">        </span><span class="na">linearSlope=</span><span class="s">&quot;6.025&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Log&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 7.</b> <code>Log</code> node applying the DJI D-Log formula.</p>
+</figcaption>
+<h3 id="exponent"><code>Exponent</code><a class="headerlink" href="#exponent" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em>
+This node contains parameters for processing pixels through a power law function. Two main formulations are supported. The first follows a pure power law. The second is a piecewise function that follows a power function for larger values and has a linear segment that is followed for small and negative values. The latter formulation can be used to represent the Rec. 709, sRGB, and CIE L* equations.</p>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>style</code> (required)</dt>
+<dd>
+<p>specifies the form of the exponential function to be applied. Supported values are:</p>
+<ul>
+<li><code>"basicFwd"</code></li>
+<li><code>"basicRev"</code></li>
+<li><code>"basicMirrorFwd"</code></li>
+<li><code>"basicMirrorRev"</code></li>
+<li><code>"basicPassThruFwd"</code></li>
+<li><code>"basicPassThruRev"</code></li>
+<li><code>"monCurveFwd"</code></li>
+<li><code>"monCurveRev"</code></li>
+<li><code>"monCurveMirrorFwd"</code></li>
+<li><code>"monCurveMirrorRev"</code></li>
+</ul>
+<p>Each of these supported styles are described in detail below, and for all of which the following definitions apply:
+<div style="padding-left: 150px;" markdown="1">
+<span class="arithmatex">\(g =\)</span> <code>exponent</code> <br>
+<span class="arithmatex">\(k =\)</span> <code>offset</code> <br>
+<span class="arithmatex">\(\textrm{MAX}(a, b)\)</span> returns <span class="arithmatex">\(a\)</span> if <span class="arithmatex">\(a \gt b\)</span> and <span class="arithmatex">\(b\)</span> if <span class="arithmatex">\(b \geq a\)</span>
+</div></p>
+<dl>
+<dt><code>"basicFwd"</code></dt>
+<dd>applies a power law using the exponent value specified in the <code>ExponentParams</code> element. <br>
+Values less than zero are clamped.</dd>
+</dl>
+<div class="arithmatex">\[
+    \text{basicFwd}(x) = [\textrm{MAX}(0,x)]^g
+\]</div>
+<dl>
+<dt><code>"basicRev"</code></dt>
+<dd>applies power law using the exponent value specified in the <code>ExponentParams</code> element. <br>
+Values less than zero are clamped.</dd>
+</dl>
+<div class="arithmatex">\[
+    \text{basicRev}(y) = [\textrm{MAX}(0,y)]^{1/g}
+\]</div>
+<dl>
+<dt><code>"basicMirrorFwd"</code></dt>
+<dd>applies a basic power law using the exponent value specified in the <code>ExponentParams</code> element for values greater than or equal to zero and mirrors the function for values less than zero (i.e. rotationally symmetric around the origin):</dd>
+</dl>
+<div class="arithmatex">\[
+\text{basicMirrorFwd}(x) = \begin{cases}
+x^{g} &amp; \text{if } x \geq 0 \\ [6pt]
+-\Big[(-x)^{g}\Big] &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<dl>
+<dt><code>"basicMirrorRev"</code></dt>
+<dd>applies a basic power law using the exponent value specified in the <code>ExponentParams</code> element for values greater than or equal to zero and mirrors the function for values less than zero (i.e. rotationally symmetric around the origin):</dd>
+</dl>
+<div class="arithmatex">\[
+\text{basicMirrorRev}(y) = \begin{cases}
+y^{1/g} &amp; \text{if } y \geq 0 \\[6pt]
+-\Big[(-y)^{1/g}\Big] &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<dl>
+<dt><code>"basicPassThruFwd"</code></dt>
+<dd>applies a basic power law using the exponent value specified in the <code>ExponentParams</code>
+element for values greater than or equal to zero and passes values less than zero unchanged:</dd>
+</dl>
+<div class="arithmatex">\[
+\text{basicPassThruFwd}(x) = \begin{cases}
+x^{g} &amp; \text{if } x \geq 0 \\[6pt]
+x &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<dl>
+<dt><code>"basicPassThruRev"</code></dt>
+<dd>applies a basic power law using the exponent value specified in the <code>ExponentParams</code> element for values greater than or equal to zero and and passes values less than zero un- changed:</dd>
+</dl>
+<div class="arithmatex">\[
+\text{basicPassThruRev}(y) = \begin{cases}
+y^{1/g} &amp; \text{if } y \geq 0 \\[6pt]
+y &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<dl>
+<dt><code>"monCurveFwd"</code></dt>
+<dd>applies a power law function with a linear segment near the origin</dd>
+</dl>
+<p><a name="eq-monCurveFwd"></a></p>
+<div class="arithmatex">\[
+\text{monCurveFwd}(x) = \begin{cases}
+\left( \frac{x\:+\:k}{1\:+\:k} \right)^{g} &amp; \text{if } x \geq xBreak \\[8pt]
+x\:s &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<dl>
+<dd>where: <br>
+<center><span class="arithmatex">\(xBreak = \dfrac{k}{g-1}\)</span></center></dd>
+<dd>and, for the <span class="arithmatex">\(\text{monCurveFwd}\)</span> (<a href="#eq-monCurveFwd">above</a>) and <span class="arithmatex">\(\text{monCurveRev}\)</span> (<a href="#eq-monCurveRev">below</a>) equations: <br>
+<center><span class="arithmatex">\(s = \left(\dfrac{g-1}{k}\right)  \left(\dfrac{k g}{(g-1)(1+k)}\right)^{g}\)</span></center></dd>
+<dt><code>"monCurveRev"</code></dt>
+<dd>applies a power law function with a linear segment near the origin</dd>
+</dl>
+<p><a name="eq-monCurveRev"></a></p>
+<div class="arithmatex">\[
+\text{monCurveRev}(y) = \begin{cases}
+(1 + k)\:y^{(1/g)} - k &amp; \text{if } y \geq yBreak \\[8pt]
+\dfrac{y}{s} &amp; \text{otherwise}
+\end{cases}
+\]</div>
+<dl>
+<dd>where: <br>
+<center><span class="arithmatex">\(yBreak = \left(\dfrac{k g}{(g-1)(1+k)}\right)^g\)</span></center></dd>
+<dt><code>"monCurveMirrorFwd"</code></dt>
+<dd>applies a power law function with a linear segment near the origin and mirrors the function for values less than zero (i.e. rotationally symmetric around the origin):</dd>
+</dl>
+<div class="arithmatex">\[
+\text{monCurveMirrorFwd}(x) = \begin{cases}
+\text{monCurveFwd}(x) &amp; \text{if } x \geq 0 \\[8pt]
+-[\text{monCurveFwd}(-x)] &amp; \text{otherwise}
+\end{cases}    
+\]</div>
+<dl>
+<dt><code>"monCurveMirrorRev"</code></dt>
+<dd>applies a power law function with a linear segment near the origin and mirrors the function for values less than zero (i.e. rotationally symmetric around the origin):</dd>
+</dl>
+<div class="arithmatex">\[
+\text{monCurveMirrorRev}(y) = \begin{cases}
+\text{monCurveRev}(y) &amp; \text{if } y \geq 0 \\[8pt]
+-[\text{monCurveRev}(-y)] &amp; \text{otherwise}
+\end{cases}
+\]</div>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The above equations assume that the input and output bit-depths are floating-point. Integer values are normalized to the range <span class="arithmatex">\([0.0, 1.0]\)</span>.</p>
+</div>
+<dl>
+<dt><em>Elements:</em></dt>
+<dt><code>ExponentParams</code> (required)</dt>
+<dd>
+<p>contains one or more attributes that provide the values to be used by the enclosing <code>Exponent</code> element. <br>
+If <code>style</code> is any of the “basic” types, then only <code>exponent</code> is required. <br>
+If <code>style</code> is any of the “monCurve” types, then <code>exponent</code> and <code>offset</code> are required.</p>
+<dl>
+<dt><em>Attributes:</em></dt>
+<dt><code>"exponent"</code> (required)</dt>
+<dd>the power to which the value is to be raised <br>
+If style is any of the “monCurve” types, the valid range is <span class="arithmatex">\([1.0, 10.0]\)</span>. The nominal value is 1.0.</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using a “monCurve” style, a value of 1.0 assigned to <code>exponent</code> could result in a divide-by-zero error. Implementors should protect against this case.</p>
+</div>
+<dl>
+<dt><code>"offset"</code> (optional)</dt>
+<dd>the offset value to use <br>
+If offset is used, the enclosing <code>Exponent</code> element’s style attribute must be set to one of the “monCurve” types. Offset is not allowed when <code>style</code> is any of the “basic” types. <br>
+The valid range is <span class="arithmatex">\([0.0, 0.9]\)</span>. The nominal value is 0.0.</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If zero is provided as a value for <code>offset</code>, the calculation of <span class="arithmatex">\(xBreak\)</span> or <span class="arithmatex">\(yBreak\)</span> could result in a divide-by-zero error. Implementors should protect against this case.</p>
+</div>
+<dl>
+<dt><code>"channel"</code> (optional)</dt>
+<dd>the color channel to which the exponential function is applied. <br>
+Possible values are <code>"R"</code>, <code>"G"</code>, <code>"B"</code>. <br>
+If this attribute is utilized to target different adjustments per channel, up to three <code>ExponentParams</code> elements may be used, provided that <code>"channel"</code> is set differently in each. If this attribute is not otherwise specified, the exponential function is applied identically to all three color channels.</dd>
+</dl>
+</dd>
+</dl>
+<p><em>Examples:</em>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Exponent</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;basicFwd&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>Basic<span class="w"> </span>2.2<span class="w"> </span>Gamma<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ExponentParams</span><span class="w"> </span><span class="na">exponent=</span><span class="s">&quot;2.2&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Exponent&gt;</span>
+</code></pre></div></p>
+<figcaption align="center">
+<p><b>Example 8.</b> Using <code>Exponent</code> node for applying a 2.2 gamma.</p>
+</figcaption>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Exponent</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;monCurveFwd&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>EOTF<span class="w"> </span>(sRGB)<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ExponentParams</span><span class="w"> </span><span class="na">exponent=</span><span class="s">&quot;2.4&quot;</span><span class="w"> </span><span class="na">offset=</span><span class="s">&quot;0.055&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Exponent&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 9.</b> Using <code>Exponent</code> node for applying the intended EOTF found in IEC 61966-2-1:1999 (sRGB).</p>
+</figcaption>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Exponent</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;monCurveRev&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>CIE<span class="w"> </span>L*<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ExponentParams</span><span class="w"> </span><span class="na">exponent=</span><span class="s">&quot;3.0&quot;</span><span class="w"> </span><span class="na">offset=</span><span class="s">&quot;0.16&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Exponent&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 10.</b> Using <code>Exponent</code> node to apply CIE L* formula.</p>
+</figcaption>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;Exponent</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;monCurveRev&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>Rec.<span class="w"> </span>709<span class="w"> </span>OETF<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ExponentParams</span><span class="w"> </span><span class="na">exponent=</span><span class="s">&quot;2.2222222222222222&quot;</span><span class="w"> </span><span class="na">offset=</span><span class="s">&quot;0.099&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/Exponent&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 11.</b> Using <code>Exponent</code> node to apply Rec. 709 OETF.</p>
+</figcaption>
+<h3 id="asc_cdl"><code>ASC_CDL</code><a class="headerlink" href="#asc_cdl" title="Permanent link">&para;</a></h3>
+<p><em>Description:</em><br>
+This node processes values according to the American Society of Cinematographers’ Color Decision List (<abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr>) equations. Color correction using <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> is an industry-wide method of recording and exchanging basic color correction adjustments via parameters that set particular color processing equations.</p>
+<p>The <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> equations are designed to work on an input domain of floating-point values of [0 to 1.0] although values greater than 1.0 can be present. The output data may or may not be clamped depending on the processing style used. </p>
+<p>If the <code>style</code>attribute is not specified, the node shall default to <code>"Fwd"</code> - i.e. the classic implementation of the v1.2 <abbr title="American Society of Cinematographers">ASC</abbr>-<abbr title="Color Decision List">CDL</abbr> equations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Equations 4.31-4.34 assume that <span class="arithmatex">\(in\)</span> and <span class="arithmatex">\(out\)</span> are scaled to normalized floating-point range. If the <code>ASC_CDL</code> node has <code>inBitDepth</code> or <code>outBitDepth</code> that are integer types, then the input or output values must be normalized to or from 0-1 scaling. In other words, the slope, offset, power, and saturation values stored in the <code>ProcessNode</code> do not depend on <code>inBitDepth</code> and <code>outBitDepth</code>; they are always interpreted as if the bit depths were float.</p>
+</div>
+<p><em>Attributes:</em></p>
+<dl>
+<dt><code>id</code> (optional)</dt>
+<dd>This should match the id attribute of the ColorCorrection element in the <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> <abbr title="Extensible Markup Language">XML</abbr> format.</dd>
+<dt><code>style</code></dt>
+<dd>
+<p>Determines the formula applied by the operator. The valid options are:</p>
+<dl>
+<dt>`"Fwd"</dt>
+<dd>implementation of v1.2 <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> equation (default)</dd>
+<dt><code>"Rev"</code></dt>
+<dd>inverse equation</dd>
+<dt><code>"FwdNoClamp"</code></dt>
+<dd>similar to the Fwd equation, but without clamping</dd>
+<dt><code>"RevNoClamp"</code></dt>
+<dd>inverse equation, without clamping</dd>
+</dl>
+<p>The first two implement the math provided in version 1.2 of the <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> specification. The second two omit the clamping step and are intended to provide compatibility with the many applications that take that alternative approach.</p>
+</dd>
+</dl>
+<p><em>Elements:</em></p>
+<dl>
+<dt><code>SOPNode</code> (optional)</dt>
+<dd>
+<p>The <code>SOPNode</code> is optional, and if present, must contain each of the following sub-elements:</p>
+<dl>
+<dt><code>Slope</code></dt>
+<dd>three decimal values representing the R, G, and B slope values, which is similar to gain, but changes the slope of the transfer function without shifting the black level established by <code>offset</code> <br>
+Valid values for slope must be greater than or equal to zero (<span class="arithmatex">\(\geq\)</span> 0).<br>
+The nominal value is 1.0 for all channels.</dd>
+<dt><code>Offset</code></dt>
+<dd>three decimal values representing the R, G, and B offset values, which raise or lower overall brightness of a color component by shifting the transfer function up or down while holding the slope constant <br>
+The nominal value is 0.0 for all channels.</dd>
+<dt><code>Power</code></dt>
+<dd>three decimal values representing the R, G, and B power values, which change the intermediate shape of the transfer function <br>
+Valid values for power must be greater than zero (<span class="arithmatex">\(\gt\)</span> 0). <br>
+The nominal value is 1.0 for all channels.</dd>
+</dl>
+</dd>
+<dt><code>SatNode</code> (optional)</dt>
+<dd>
+<p>The <code>SatNode</code> is optional, but if present, must contain one of the following sub-element:</p>
+<dl>
+<dt><code>Saturation</code></dt>
+<dd>a single decimal value applied to all color channels <br>
+Valid values for saturation must be greater than or equal to zero (<span class="arithmatex">\(\geq\)</span> 0). <br>
+The nominal value is 1.0.</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If either element is not specified, values  should default to the nominal values for each element. If using the <code>"noClamp"</code> style, the result of the defaulting to the nominal values is a no-op.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The structure of this <code>ProcessNode</code> matches the structure of the <abbr title="Extensible Markup Language">XML</abbr> format described in the v1.2 <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> specification. However, unlike the <abbr title="American Society of Cinematographers">ASC</abbr> <abbr title="Color Decision List">CDL</abbr> <abbr title="Extensible Markup Language">XML</abbr> format, there are no alternate spellings allowed for these elements.</p>
+</div>
+<p>The math for <code>style="Fwd"</code> is:</p>
+<div class="arithmatex">\[
+out_{\textrm{SOP}} = \textrm{CLAMP}(in \times \textrm{slope} + \textrm{offset})^{\textrm{power}}
+\]</div>
+<div class="arithmatex">\[
+\begin{aligned}
+luma &amp;= 0.2126 \times out_{\textrm{SOP,R}} + 0.7152 \times out_{\textrm{SOP,G}} + 0.0722 \times out_{\textrm{SOP,B}} \\
+out &amp;= \textrm{CLAMP}\Big[luma + \textrm{saturation} \times (out_{\textrm{SOP}} − luma)\Big]
+\end{aligned}
+\]</div>
+<div style="padding-left: 150px;">
+<p>Where: <br>
+<span class="arithmatex">\(\textrm{CLAMP()}\)</span> clamps the argument to <span class="arithmatex">\([0,1]\)</span></p>
+</div>
+<p>The math for <code>style="FwdNoClamp"</code> is the same as for <code>"Fwd"</code> but the two clamp() functions are omitted. <br>
+Also, if <span class="arithmatex">\((in \times \textrm{slope} + \textrm{offset}) &lt; 0\)</span>, then no power function is applied.</p>
+<p>The math for <code>style="Rev"</code> is:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+in_{\textrm{clamp}} &amp;= \mathrm{CLAMP}(in) \\
+luma &amp;= 0.2126 \times in_{\textrm{clamp,R}} + 0.7152 \times in_{\textrm{clamp,G}} + 0.0722 \times in_{\textrm{clamp,B}} \\
+out_{\textrm{SAT}} &amp;= luma + \frac{(in_{\textrm{clamp}} - luma)}{\textrm{saturation}}
+\end{aligned}
+\]</div>
+<div class="arithmatex">\[
+out = \mathrm{CLAMP}\left(\frac{\mathrm{CLAMP}(out_{\textrm{SAT}})^{\frac{1}{\textrm{power}}} - \textrm{offset}}{\textrm{slope}}\right) \\
+\]</div>
+<div style="padding-left: 150px;">
+<p>Where: <br>
+<span class="arithmatex">\(\textrm{CLAMP()}\)</span> clamps the argument to <span class="arithmatex">\([0,1]\)</span></p>
+</div>
+<p>The math for <code>style="RevNoClamp"</code> is the same as for <code>"Rev"</code> but the <span class="arithmatex">\(\textrm{CLAMP}()\)</span> functions are omitted. <br>
+Also, if <span class="arithmatex">\(out_{\textrm{SAT}} \lt 0\)</span>, then no power function is applied.</p>
+<p><em>Examples:</em>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;ASC_CDL</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;cc01234&quot;</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;Fwd&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>scene<span class="w"> </span>1<span class="w"> </span>exterior<span class="w"> </span>look<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;SOPNode&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Slope&gt;</span>1.000000<span class="w"> </span>1.000000<span class="w"> </span>0.900000<span class="nt">&lt;/Slope&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Offset&gt;</span>-0.030000<span class="w"> </span>-0.020000<span class="w"> </span>0.000000<span class="nt">&lt;/Offset&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Power&gt;</span>1.2500000<span class="w"> </span>1.000000<span class="w"> </span>1.000000<span class="nt">&lt;/Power&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/SOPNode&gt;</span>
+<span class="w">    </span><span class="nt">&lt;SatNode&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Saturation&gt;</span>1.700000<span class="nt">&lt;/Saturation&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/SatNode&gt;</span>
+<span class="nt">&lt;/ASC_CDL&gt;</span>
+</code></pre></div></p>
+<figcaption align="center">
+<p><b>Example 12.</b> Example of an <code>ASC_CDL</code> node.</p>
+</figcaption>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<h3 id="bit-depth">Bit Depth<a class="headerlink" href="#bit-depth" title="Permanent link">&para;</a></h3>
+<h4 id="precision">Processing Precision<a class="headerlink" href="#precision" title="Permanent link">&para;</a></h4>
+<p>All processing shall be performed using 32-bit floating-point values. The values of the <code>inBitDepth</code> and <code>outBitDepth</code> attributes shall not affect the quantization of color values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For some hardware devices, 32-bit float processing might not be possible. In such instances, processing should be performed at the highest precision available. Because <abbr title="Common LUT Format">CLF</abbr> permits complex series of discrete operations, <abbr title="Common LUT Format">CLF</abbr> <abbr title="look-up table">LUT</abbr> files are unlikely to run on hardware devices without some form of pre-processing. Any pre-processing to prepare a <abbr title="Common LUT Format">CLF</abbr> for more limited hardware applications should adhere to the processing precision requirements.</p>
+</div>
+<h4 id="in-out-processlist">Input To and Output From a ProcessList<a class="headerlink" href="#in-out-processlist" title="Permanent link">&para;</a></h4>
+<p>Applications often support multiple pixel formats (e.g. 8i, 10i, 16f, 32f, etc.). Often the actual pixel format to be processed may not agree with the <code>inBitDepth</code> of the first ProcessNode or the <code>outBitDepth</code> of the last ProcessNode. (Note that the <code>ProcessList</code> element itself does not contain global <code>inBitDepth</code> or <code>outBitDepth</code> attributes.) Therefore, in some cases an application may need to rescale a given <code>ProcessNode</code> to be appropriate for the actual image data being processed.</p>
+<p>For example, if the last ProcessNode in a ProcessList is a <code>LUT1D</code> with an <code>outBitDepth</code> of 12i, it indicates that the <abbr title="look-up table">LUT</abbr> Array values are scaled relative to 4095. If the application wants to produce floating-point pixel values, it should therefore divide the <abbr title="look-up table">LUT</abbr> Array values by 4095 before processing the pixels (according to <a href="#scaling">Conversion</a>). Likewise, if the <code>outBitDepth</code> was instead 32f and the application wants to produce 12i pixel values, it should multiply the <abbr title="look-up table">LUT</abbr> Array values by 4095. (Note that in this case, since the result of the computations may exceed 4095 and the application wants to produce 12-bit integer output, the application would want to clamp, round, and quantize the value.)</p>
+<h4 id="in-out-processnode">Input To and Output From a ProcessNode<a class="headerlink" href="#in-out-processnode" title="Permanent link">&para;</a></h4>
+<p>In order to ensure the scaling of parameter values of all ProcessNodes in a ProcessList are consistent, the <code>inBitDepth</code> of each ProcessNode must match the <code>outBitDepth</code> of the previous ProcessNode (if any).</p>
+<p>Please note that an integer <code>inBitDepth</code> or <code>outBitDepth</code> of a ProcessNode does not indicate that any clamping or quantization should be done. These attributes are strictly used to indicate the scaling of parameter and array values. As discussed <a href="#precision">above</a>, processing precision shall be floating-point.</p>
+<p>Furthermore, because the processing precision is intended to be floating-point, the <code>inBitDepth</code> and <code>outBitDepth</code> only control the scaling of parameter and array values and do not impose range limits. For example, even if the <code>outBitDepth</code> of a <abbr title="look-up table">LUT</abbr> Array is 12i, it does not mean that the Array values must be limited to <span class="arithmatex">\([0,4095]\)</span> or that they must be integer values. It simply means that in order to rescale to 32f that a scale factor of 1/4095 should be used (as per <a href="#scaling">Conversion</a>).</p>
+<p>Because processing within a ProcessList should be done at floating-point precision, applications may optionally want to rescale the interfaces all ProcessNodes “interior” to a ProcessList to be 32f according to <a href="#scaling">Conversion</a>. As discussed in <a href="#in-out-processlist">Input To and Output From a ProcessList</a>, applications may want to rescale the “exterior” interfaces of the ProcessList based on the type of pixel data being processed.</p>
+<p>For some applications, it may be easiest to simply rescale all ProcessNodes to 32f input and output bit-depth when parsing the file. That way, the ProcessList may be considered a purely 32f set of operations and the implementation therefore does not need to track or deal with bit-depth differences at the ProcessNode level.</p>
+<h4 id="scaling">Conversion Between Integer and Normalized Float Scaling<a class="headerlink" href="#scaling" title="Permanent link">&para;</a></h4>
+<p>As discussed above, the <code>inBitDepth</code> or <code>outBitDepth</code> of a ProcessNode may need to be rescaled in order to accommodate the pixel data type being processed by the application.</p>
+<p>The scale factor associated with the bit-depths 8i, 10i, 12i, and 16i is <span class="arithmatex">\(2^n − 1\)</span>, where <span class="arithmatex">\(n\)</span> is the bit-depth. </p>
+<p>The scale factor associated with the bit-depths 16f and 32f is 1.0.</p>
+<p>To rescale Matrix, LUT1D, or LUT3D <code>Array</code> values when the <code>outBitDepth</code> changes, the scale factor is equal to <span class="arithmatex">\(\frac{\textrm{newScale}}{\textrm{oldScale}}\)</span>. For example, to convert from 12i to 10i, multiply array values by <span class="arithmatex">\(1023/4095\)</span>.</p>
+<p>To rescale Matrix <code>Array</code> values when the <code>inBitDepth</code> changes, the scale factor is equal to <span class="arithmatex">\(\frac{\textrm{oldScale}}{\textrm{newScale}}\)</span>. For example, to convert from 32f to 10i, multiply array values by <span class="arithmatex">\(1/1023\)</span>.</p>
+<p>To rescale Range parameters when the <code>inBitDepth</code> changes, the scale factor for <code>minInValue</code> and <code>maxInValue</code> is <span class="arithmatex">\(\frac{\textrm{newScale}}{\textrm{oldScale}}\)</span>. To rescale Range parameters when the <code>outBitDepth</code> changes, the scale factor for <code>minOutValue</code> and <code>maxOutValue</code> is <span class="arithmatex">\(\frac{\textrm{newScale}}{\textrm{oldScale}}\)</span>.</p>
+<p>Please note that in all cases, the conversion shall be only a scale factor. In none of the above cases should clamping or quantization be applied.</p>
+<p>Aside from the specific cases listed above, changes to <code>inBitDepth</code> and <code>outBitDepth</code> do not affect the parameter or array values of a given ProcessNode.</p>
+<p>If an application needs to convert between different integer pixel formats or between integer and float (or vice versa) on the way into or out of a ProcessList, the same scale factors should be used. Note that when converting from floating-point to integer at the application level that values should be clamped, rounded, and quantized.</p>
+<h3 id="required-vs-optional">Required vs Optional<a class="headerlink" href="#required-vs-optional" title="Permanent link">&para;</a></h3>
+<p>The required or optional indicated in parentheses throughout this specification indicate the requirement for an element or attribute to be present for a valid <abbr title="Common LUT Format">CLF</abbr> file. In the spirit of a <abbr title="look-up table">LUT</abbr> format to be used commonly across different software and hardware, none of the elements or attributes should be considered optional for implementors to support. All elements and attributes, if present, should be recognized and supported by an implementation.</p>
+<p>If, due to hardware or software limitations, a particular element or attribute is not able to be supported, a warning should be issued to the user of a <abbr title="look-up table">LUT</abbr> that contains one of the offending elements. The focus shall be on the user and maintaining utmost compatibility with the specification so that <abbr title="look-up tables">LUTs</abbr> can be interchanged seamlessly.</p>
+<h3 id="efficient-processing">Efficient Processing<a class="headerlink" href="#efficient-processing" title="Permanent link">&para;</a></h3>
+<p>The transform engine may merge some ProcessNodes in order to obtain better performance. For example, adjacent <code>Matrix</code> operators may be combined into a single matrix. However, in general, combining operators in a way that preserves accuracy is difficult and should be avoided.</p>
+<p>Hardware implementations may need to convert all ProcessNodes into some other form that is consistent with what the hardware supports. For example, all ProcessNodes might need to be combined into a single 3D <abbr title="look-up table">LUT</abbr>. Using a grid size of 64 or larger is recommended to preserve as much accuracy as possible. Implementors should be aware that the success of such approximations varies greatly with the nature of the input and output color spaces. For example, if the input color space is scene-linear in nature, it may be necessary to use a “shaper <abbr title="look-up table">LUT</abbr>” or similar non-linearity before the 3D <abbr title="look-up table">LUT</abbr> in order to convert values into a more perceptually uniform representation.</p>
+<h3 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link">&para;</a></h3>
+<p>It is recommended that implementors of <abbr title="Common LUT Format">CLF</abbr> file readers protect against unrecognized elements or attributes that are not defined in this specification. Unrecognized elements that are not children of the <code>Info</code> element should either raise an error or at least provide a warning message to the user to indicate that there is an operator present that is not recognized by the reader. Applications that need to add custom metadata should place it under the <code>Info</code> element rather than at the top level of the ProcessList.</p>
+<p>One or more <code>Description</code> elements in the ProcessList can and should be used for metadata that does not fit into a provided field in the <code>Info</code> element and/or is unlikely to be recognized by other applications.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;ACEScsc.ACES_to_ACEScg.a1.0.3&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ACES2065-1 to ACEScg&quot;</span><span class="w"> </span>
+<span class="w">    </span><span class="na">compCLFversion=</span><span class="s">&quot;3.0&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Info&gt;</span>
+<span class="w">        </span><span class="nt">&lt;ACEStransformID&gt;</span>ACEScsc.ACES_to_ACEScg.a1.0.3<span class="nt">&lt;/ACEStransformID&gt;</span>
+<span class="w">        </span><span class="nt">&lt;ACESuserName&gt;</span>ACES2065-1<span class="w"> </span>to<span class="w"> </span>ACEScg<span class="nt">&lt;/ACESuserName&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Info&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>ACES2065-1<span class="w"> </span>to<span class="w"> </span>ACEScg<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;InputDescriptor&gt;</span>ACES2065-1<span class="nt">&lt;/InputDescriptor&gt;</span>
+<span class="w">    </span><span class="nt">&lt;OutputDescriptor&gt;</span>ACEScg<span class="nt">&lt;/OutputDescriptor&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">             </span>1.451439316146<span class="w"> </span>-0.236510746894<span class="w"> </span>-0.214928569252
+<span class="w">            </span>-0.076553773396<span class="w">  </span>1.176229699834<span class="w"> </span>-0.099675926438
+<span class="w">             </span>0.008316148426<span class="w"> </span>-0.006032449791<span class="w">  </span>0.997716301365
+<span class="w">        </span><span class="nt">&lt;/Array&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Matrix&gt;</span>
+<span class="nt">&lt;/ProcessList&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 13.</b> ACES2065-1 to ACEScg</p>
+</figcaption>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;ACEScsc.ACES_to_ACEScct.a1.0.3&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ACES2065-1 to ACEScct&quot;</span><span class="w"> </span>
+<span class="w">    </span><span class="na">compCLFversion=</span><span class="s">&quot;3.0&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>ACES2065-1<span class="w"> </span>to<span class="w"> </span>ACEScct<span class="w"> </span>Log<span class="w"> </span>working<span class="w"> </span>space<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;InputDescriptor&gt;</span>Academy<span class="w"> </span>Color<span class="w"> </span>Encoding<span class="w"> </span>Specification<span class="w"> </span>(ACES2065-1)<span class="nt">&lt;/InputDescriptor&gt;</span>
+<span class="w">    </span><span class="nt">&lt;OutputDescriptor&gt;</span>ACEScct<span class="w"> </span>Log<span class="w"> </span>working<span class="w"> </span>space<span class="nt">&lt;/OutputDescriptor&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Info&gt;</span>
+<span class="w">        </span><span class="nt">&lt;ACEStransformID&gt;</span>ACEScsc.ACES_to_ACEScct.a1.0.3<span class="nt">&lt;/ACEStransformID&gt;</span>
+<span class="w">        </span><span class="nt">&lt;ACESuserName&gt;</span>ACES2065-1<span class="w"> </span>to<span class="w"> </span>ACEScct<span class="nt">&lt;/ACESuserName&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Info&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">             </span>1.451439316146<span class="w"> </span>-0.236510746894<span class="w"> </span>-0.214928569252
+<span class="w">            </span>-0.076553773396<span class="w">  </span>1.176229699834<span class="w"> </span>-0.099675926438
+<span class="w">             </span>0.008316148426<span class="w"> </span>-0.006032449791<span class="w">  </span>0.997716301365
+<span class="w">        </span><span class="nt">&lt;/Array&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Matrix&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Log</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;cameraLinToLog&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;LogParams</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;2&quot;</span><span class="w"> </span><span class="na">logSideSlope=</span><span class="s">&quot;0.05707762557&quot;</span><span class="w"> </span><span class="na">logSideOffset=</span><span class="s">&quot;0.5547945205&quot;</span><span class="w"> </span>
+<span class="w">            </span><span class="na">linSideBreak=</span><span class="s">&quot;0.0078125&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Log&gt;</span>
+<span class="nt">&lt;/ProcessList&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 14.</b> ACES2065-1 to ACEScct</p>
+</figcaption>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;5ac02dc7-1e02-4f87-af46-fa5a83d5232d&quot;</span><span class="w"> </span><span class="na">compCLFversion=</span><span class="s">&quot;3.0&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Description&gt;</span>CIE-XYZ<span class="w"> </span>D65<span class="w"> </span>to<span class="w"> </span>CIELAB<span class="w"> </span>L*,<span class="w"> </span>a*,<span class="w"> </span>b*<span class="w"> </span>(scaled<span class="w"> </span>by<span class="w"> </span>1/100,<span class="w"> </span>neutrals<span class="w"> </span>at<span class="w"> </span>
+<span class="w">        </span>0.0<span class="w"> </span>chroma)<span class="nt">&lt;/Description&gt;</span>
+<span class="w">    </span><span class="nt">&lt;InputDescriptor&gt;</span>CIE-XYZ,<span class="w"> </span>D65<span class="w"> </span>white<span class="w"> </span>(scaled<span class="w"> </span>[0,1])<span class="nt">&lt;/InputDescriptor&gt;</span>
+<span class="w">    </span><span class="nt">&lt;OutputDescriptor&gt;</span>CIELAB<span class="w"> </span>L*,<span class="w"> </span>a*,<span class="w"> </span>b*<span class="w"> </span>(scaled<span class="w"> </span>by<span class="w"> </span>1/100,<span class="w"> </span>neutrals<span class="w"> </span>at<span class="w"> </span>0.0<span class="w"> </span>
+<span class="w">        </span>chroma)<span class="nt">&lt;/OutputDescriptor&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span>1.052126639<span class="w"> </span>0.000000000<span class="w"> </span>0.000000000
+<span class="w">            </span>0.000000000<span class="w"> </span>1.000000000<span class="w"> </span>0.000000000
+<span class="w">            </span>0.000000000<span class="w"> </span>0.000000000<span class="w"> </span>0.918224951
+<span class="w">        </span><span class="nt">&lt;/Array&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Matrix&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Exponent</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;monCurveRev&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;ExponentParams</span><span class="w"> </span><span class="na">exponent=</span><span class="s">&quot;3.0&quot;</span><span class="w"> </span><span class="na">offset=</span><span class="s">&quot;0.16&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Exponent&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;16f&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span>0.00000000<span class="w">  </span>1.00000000<span class="w">  </span>0.00000000
+<span class="w">            </span>4.31034483<span class="w"> </span>-4.31034483<span class="w">  </span>0.00000000
+<span class="w">            </span>0.00000000<span class="w">  </span>1.72413793<span class="w"> </span>-1.72413793
+<span class="w">        </span><span class="nt">&lt;/Array&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Matrix&gt;</span>
+<span class="nt">&lt;/ProcessList&gt;</span>
+</code></pre></div>
+<figcaption align="center">
+<p><b>Example 15.</b> CIE XYZ to CIELAB</p>
+</figcaption>
+<h2 id="appendices">Appendices<a class="headerlink" href="#appendices" title="Permanent link">&para;</a></h2>
+<h3 id="appendix-interpolation">Appendix A: Interpolation<a class="headerlink" href="#appendix-interpolation" title="Permanent link">&para;</a></h3>
+<p>When an input value falls between sampled positions in a <abbr title="look-up table">LUT</abbr>, the output value must be calculated as a proportion of the distance along some function that connects the nearest surrounding values in the <abbr title="look-up table">LUT</abbr>. There are many different types of interpolation possible, but only three types of interpolation are currently specified for use with the Common <abbr title="look-up table">LUT</abbr> Format (<abbr title="Common LUT Format">CLF</abbr>). </p>
+<p>The first interpolation type, <a href="#lin-interp">linear</a>, is specified for use with a <code>LUT1D</code> node. The other two, <a href="#trilinear-interp">trilinear</a> and <a href="#tetrahedral-interp">tetrahedral</a> interpolation, are specified for use with a <code>LUT3D</code> node.</p>
+<p><a name="lin-interp"></a></p>
+<h4 id="linear-interpolation">Linear Interpolation<a class="headerlink" href="#linear-interpolation" title="Permanent link">&para;</a></h4>
+<p>With a table of the sampled input values in <span class="arithmatex">\(inValue[i]\)</span> where <span class="arithmatex">\(i\)</span> ranges from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\((n-1)\)</span>, and a table of the corresponding output values in <span class="arithmatex">\(outValue[j]\)</span> where <span class="arithmatex">\(j\)</span> is equal to <span class="arithmatex">\(i\)</span>,</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">index <span class="arithmatex">\(i\)</span></th>
+<th style="text-align: center;">inValue</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">index <span class="arithmatex">\(j\)</span></th>
+<th style="text-align: center;">outValue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\vdots\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="arithmatex">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\vdots\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span class="arithmatex">\(n - 1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="arithmatex">\(n - 1\)</span></td>
+<td style="text-align: center;">1000</td>
+</tr>
+</tbody>
+</table>
+<p>the <span class="arithmatex">\(output\)</span> resulting from <span class="arithmatex">\(input\)</span> can be calculated after finding the nearest <span class="arithmatex">\(inValue[i] &lt; input\)</span>. </p>
+<p>When <span class="arithmatex">\(inValue[i] = input\)</span>, the result is evaluated directly.</p>
+<div class="arithmatex">\[
+output = \dfrac{input-inValue[i]}{inValue[i+1]-inValue[i]} \times (outValue[j+1]-outValue[j])+outValue[j]
+\]</div>
+<p><a name="trilinear-interp"></a></p>
+<h4 id="trilinear-interpolation">Trilinear Interpolation<a class="headerlink" href="#trilinear-interpolation" title="Permanent link">&para;</a></h4>
+<p>Trilinear interpolation implements linear interpolation in three-dimensions by successively interpolating each direction. </p>
+<figure>
+<p><img alt="Points in Mesh" src="images/interp-pointsInMesh-light.png#only-light" />
+  <img alt="Points in Mesh" src="images/interp-pointsInMesh-dark.png#only-dark" />
+  </p>
+<figcaption><br>Figure 3 - Illustration of a sampled point located within a basic 3D LUT mesh grid (left) and the same point but with only the vertices surrounding the sampled point (right).</figcaption>
+</figure>
+<figure>
+<p><img alt="Labeled Cubelet" src="images/interp-labeledCubelet-light.png#only-light" width="65%" />
+  <img alt="Labeled Cubelet" src="images/interp-labeledCubelet-dark.png#only-dark" width="65%" />
+  </p>
+<figcaption><br>Figure 4 - Labeling the mesh points surrounding the sampled point (r,g,b).</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The convention used for notation is uppercase variables for mesh points and lowercase variables for points on the grid.</p>
+</div>
+<p>Consider a sampled point as depicted in Figure 4. Let <span class="arithmatex">\(V(r,g,b)\)</span> represent the value at the point with coordinate <span class="arithmatex">\((r,g,b)\)</span>. The distance between each node per color coordinate shows the proportion of each mesh point's color coordinate values that contribute to the sampled point.</p>
+<div class="arithmatex">\[
+\Delta_r = \frac{r - R_0}{R_1 - R_0} \hspace{0.25in}
+\Delta_g = \frac{g - G_0}{G_1 - G_0} \hspace{0.25in}
+\Delta_b = \frac{b - B_0}{B_1 - B_0}
+\]</div>
+<p>The general expression for trilinear interpolation can be expressed as:</p>
+<div class="arithmatex">\[
+V(r,g,b) = c_0 + c_1\Delta_b + c_2\Delta_r + c_3\Delta_g + c_4\Delta_b\Delta_r + c_5\Delta_r\Delta_g + c_6\Delta_g\Delta_b + c_7\Delta_r\Delta_g\Delta_b
+\]</div>
+<div style="padding-left: 40px;">
+<p>where: <br></p>
+<div class="arithmatex">\[
+\begin{aligned}
+c_0 &amp;= V(R_0, G_0, B_0) \\
+c_1 &amp;= V(R_0, G_0, B_1) - V(R_0, G_0, B_0) \\
+c_2 &amp;= V(R_1, G_0, B_0) - V(R_0, G_0, B_0) \\
+c_3 &amp;= V(R_0, G_1, B_0) - V(R_0, G_0, B_0) \\
+c_4 &amp;= V(R_1, G_1, B_1) - V(R_1, G_0, B_0) - V(R_0, G_0, B_1) + V(R_0, G_0, B_0) \\
+c_5 &amp;= V(R_1, G_1, B_0) - V(R_0, G_1, B_0) - V(R_1, G_0, B_0) + V(R_0, G_0, B_0) \\
+c_6 &amp;= V(R_0, G_1, B_1) - V(R_1, G_1, B_0) - V(R_0, G_0, B_1) + V(R_0, G_0, B_0) \\
+c_7 &amp;= V(R_1, G_1, B_1) - V(R_1, G_1, B_0) - V(R_0, G_1, B_1) - V(R_1, G_0, B_1) \\ 
+&amp;+ V(R_0, G_0, B_1) + V(R_0, G_1, B_0) + V(R_1, G_0, B_0) - V(R_0, G_0, B_0) 
+\end{aligned}
+\]</div>
+</div>
+<p>Expressed in matrix form:</p>
+<div class="arithmatex">\[
+\begin{gather}
+\mathbf{C} = [c_0 \enspace c_1 \enspace c_2 \enspace c_3 \enspace c_4 \enspace c_5 \enspace c_6 \enspace c_7]^T \\
+\mathbf{\Delta} = [1 \quad \Delta_b \quad \Delta_r \quad \Delta_g \quad \Delta_b\Delta_r \quad \Delta_r\Delta_g \quad \Delta_g\Delta_b \quad \Delta_r\Delta_g\Delta_b]^T \\
+V(r,g,b) = \mathbf{C}^T \mathbf{\Delta}
+\end{gather}
+\]</div>
+<div class="arithmatex">\[
+\begin{bmatrix}
+c_0 \\ c_1 \\ c_2 \\ c_3 \\ c_4 \\ c_5 \\ c_6 \\ c_7
+\end{bmatrix} =
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; -1 &amp; 0 &amp; -1 &amp; 0 &amp; 1 &amp; 0 \\
+1 &amp; -1 &amp; -1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+1 &amp; -1 &amp; 0 &amp; 0 &amp; -1 &amp; 1 &amp; 0 &amp; 0 \\
+-1 &amp; 1 &amp; 1 &amp; -1 &amp; 1 &amp; -1 &amp; -1 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+V(R_0, G_0, B_0) \\
+V(R_0, G_1, B_0) \\
+V(R_1, G_0, B_0) \\
+V(R_1, G_1, B_0) \\
+V(R_0, G_0, B_1) \\
+V(R_0, G_1, B_1) \\
+V(R_1, G_0, B_1) \\
+V(R_1, G_1, B_1)
+\end{bmatrix}    
+\]</div>
+<p>The expression in above can be written as: <span class="arithmatex">\(\mathbf{C} = \mathbf{A}\mathbf{V}\)</span>.</p>
+<p>Trilinear interpolation shall be done according to <span class="arithmatex">\(V(r,g,b) = \mathbf{C}^T \mathbf{\Delta} = \mathbf{V}^T \mathbf{A}^T \mathbf{\Delta}\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The term <span class="arithmatex">\(\mathbf{V}^T \mathbf{A}^T\)</span> does not depend on the variable <span class="arithmatex">\((r,g,b)\)</span> and thus can be computed in advance for optimization. Each sub-cube can have the values of the vector <span class="arithmatex">\(\mathbf{C}\)</span> already stored in memory. Therefore the algorithm can be summarized as:</p>
+<ol>
+<li>Find the sub-cube containing the point <span class="arithmatex">\((r,g,b)\)</span></li>
+<li>Select the vector <span class="arithmatex">\(\mathbf{C}\)</span> corresponding to that sub-cube</li>
+<li>Compute <span class="arithmatex">\(\Delta_r\)</span>, <span class="arithmatex">\(\Delta_g\)</span>, <span class="arithmatex">\(\Delta_b\)</span></li>
+<li>Return <span class="arithmatex">\(V(r,g,b) = \mathbf{C}^T \mathbf{\Delta}\)</span></li>
+</ol>
+</div>
+<p><a name="tetrahedral-interp"></a></p>
+<h4 id="tetrahedral-interpolation">Tetrahedral Interpolation}<a class="headerlink" href="#tetrahedral-interpolation" title="Permanent link">&para;</a></h4>
+<p>Tetrahedral interpolation subdivides the cubelet defined by the vertices surrounding a sampled point into six tetrahedra by segmenting along the main (and usually neutral) diagonal (Figure 5). </p>
+<figure>
+<p><img alt="Tetrahedra" src="images/interp-tetrahedrons-light.png#only-light" />
+  <img alt="Tetrahedra" src="images/interp-tetrahedrons-dark.png#only-dark" />
+  </p>
+<figcaption><br>Figure 5 - Illustration of the six subdivided tetrahedra.</figcaption>
+</figure>
+<p>To find the tetrahedron containing the point <span class="arithmatex">\((r,g,b)\)</span>:</p>
+<ul>
+<li>if <span class="arithmatex">\(\Delta_b &gt; \Delta_r &gt; \Delta_g\)</span>, then use the first tetrahedron, <span class="arithmatex">\(t1\)</span></li>
+<li>if <span class="arithmatex">\(\Delta_b &gt; \Delta_g &gt; \Delta_r\)</span>, then use the first tetrahedron, <span class="arithmatex">\(t2\)</span></li>
+<li>if <span class="arithmatex">\(\Delta_g &gt; \Delta_b &gt; \Delta_r\)</span>, then use the first tetrahedron, <span class="arithmatex">\(t3\)</span></li>
+<li>if <span class="arithmatex">\(\Delta_r &gt; \Delta_b &gt; \Delta_g\)</span>, then use the first tetrahedron, <span class="arithmatex">\(t4\)</span></li>
+<li>if <span class="arithmatex">\(\Delta_r &gt; \Delta_g &gt; \Delta_b\)</span>, then use the first tetrahedron, <span class="arithmatex">\(t5\)</span></li>
+<li>else, use the sixth tetrahedron, <span class="arithmatex">\(t6\)</span></li>
+</ul>
+<p>The matrix notation is:</p>
+<div class="arithmatex">\[
+\mathbf{V} = \begin{bmatrix}
+V(R_0, G_0, B_0) \\
+V(R_0, G_1, B_0) \\
+V(R_1, G_0, B_0) \\
+V(R_1, G_1, B_0) \\
+V(R_0, G_0, B_1) \\
+V(R_0, G_1, B_1) \\
+V(R_1, G_0, B_1) \\
+V(R_1, G_1, B_1)
+\end{bmatrix}\\ \\
+\]</div>
+<div class="arithmatex">\[
+\mathbf{\Delta_t} = [1 \enspace \Delta_b \enspace \Delta_r \enspace \Delta_g]^T
+\]</div>
+<div class="arithmatex">\[
+\begin{aligned}
+\mathbf{T}_1 = \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 1
+\end{bmatrix} \hspace{0.5in}
+\mathbf{T}_2 = \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 1 &amp; 0 &amp; 0
+\end{bmatrix} \\
+\mathbf{T}_3 = \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 1 \\
+-1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix} \hspace{0.5in}
+\mathbf{T}_4 = \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+-1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 1
+\end{bmatrix} \\
+\mathbf{T}_5 = \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+-1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; -1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix} \hspace{0.5in}
+\mathbf{T}_6 = \begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; -1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+-1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}
+\end{aligned}
+\]</div>
+<p>Trilinear interpolation shall be done according to:</p>
+<div class="arithmatex">\[
+\begin{gather}
+V(r,g,b)_{t1} = \mathbf{\Delta}^T_t \mathbf{T}_1 \mathbf{V}\\
+V(r,g,b)_{t2} = \mathbf{\Delta}^T_t \mathbf{T}_2 \mathbf{V}\\
+V(r,g,b)_{t3} = \mathbf{\Delta}^T_t \mathbf{T}_3 \mathbf{V}\\
+V(r,g,b)_{t4} = \mathbf{\Delta}^T_t \mathbf{T}_4 \mathbf{V}\\
+V(r,g,b)_{t5} = \mathbf{\Delta}^T_t \mathbf{T}_5 \mathbf{V}\\
+V(r,g,b)_{t6} = \mathbf{\Delta}^T_t \mathbf{T}_6 \mathbf{V}
+\end{gather}
+\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The vectors <span class="arithmatex">\(\mathbf{T}_i \mathbf{V}\)</span> for <span class="arithmatex">\(i = 1,2,3,4,5,6\)</span> does not depend on the variable <span class="arithmatex">\((r,g,b)\)</span> and thus can be computed in advance for optimization.</p>
+</div>
+<h3 id="appendix-cineon-style">Appendix B: Cineon-style Log Parameters<a class="headerlink" href="#appendix-cineon-style" title="Permanent link">&para;</a></h3>
+<p>When using a <code>Log</code> node, it might be desirable to conform an existing logarithmic function that uses Cineon style parameters to the parameters used by <abbr title="Common LUT Format">CLF</abbr>. A translation from Cineon-style parameters to those used by <abbr title="Common LUT Format">CLF</abbr>'s <code>LogParams</code> element is quite straightforward using the following steps.</p>
+<p>Traditionally, <span class="arithmatex">\(\textrm{refWhite}\)</span> and <span class="arithmatex">\(\textrm{refBlack}\)</span> are provided as 10-bit quantities, and if they indeed are, first normalize them to floating point by dividing by 1023:</p>
+<div class="arithmatex">\[
+\begin{align}
+\textrm{refWhite} = \frac{\textrm{refWhite}_{10i}}{1023.0} \\[12pt]
+\textrm{refBlack} = \frac{\textrm{refBlack}_{10i}}{1023.0}
+\end{align}
+\]</div>
+<p>where subscript 10<span class="arithmatex">\(i\)</span> indicates a 10-bit quantity.</p>
+<p>The density range is assumed to be:</p>
+<div class="arithmatex">\[
+\textrm{range} = 0.002 \times 1023.0
+\]</div>
+<p>Then solve the following quantities:</p>
+<div class="arithmatex">\[
+\begin{align}
+\textrm{multFactor} =&amp; \frac{\textrm{range}}{\textrm{gamma}} \\
+\textrm{gain} =&amp; \frac{\textrm{highlight} - \textrm{shadow}}{1.0 - 10^{( MIN( \textrm{multFactor} \times (\textrm{refBlack}-\textrm{refWhite}), -0.0001)}} \\[6pt]
+\textrm{offset} =&amp; \ \textrm{gain} - (\textrm{highlight} - \textrm{shadow}) \\
+\end{align}
+\]</div>
+<p>Where <span class="arithmatex">\(MIN(x,y)\)</span> returns <span class="arithmatex">\(x\)</span> if <span class="arithmatex">\(x&lt;y\)</span>, otherwise returns <span class="arithmatex">\(y\)</span></p>
+<p>The parameters for the <code>LogParams</code> element are then:</p>
+<div class="arithmatex">\[\begin{align}
+    \texttt{base} =&amp; \ 10.0 \\[6pt]
+    \texttt{logSlope} =&amp; \ \frac{1}{\textrm{multFactor}} \\[6pt]
+    \texttt{logOffset} =&amp; \ \textrm{refWhite} \\[6pt]
+    \texttt{linSlope} =&amp; \ \frac{1}{\textrm{gain}} \\[6pt]
+    \texttt{linOffset} =&amp; \ \frac{\textrm{offset}-\textrm{shadow}}{\textrm{gain}}
+\end{align}\]</div>
+<h3 id="appendix-c-changes-between-v20-and-v30">Appendix C: Changes between v2.0 and v3.0<a class="headerlink" href="#appendix-c-changes-between-v20-and-v30" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add <code>Log</code> ProcessNode</li>
+<li>Add <code>Exponent</code> ProcessNode</li>
+<li>Revise formulas for defining use of <code>Range</code> ProcessNode to clamp at the low or high end.</li>
+<li><code>IndexMaps</code> removed. Use a <code>halfDomain</code> <abbr title="look-up table">LUT</abbr> to achieve reshaping of input to a <abbr title="look-up table">LUT</abbr>.</li>
+<li>Move <code>ACEStransform</code> elements to <code>Info</code> element of ProcessList in main spec</li>
+<li>Changed syntax for <code>dim</code> attribute of <code>Array</code> when contained in a <code>Matrix</code>. Two integers are now used to define the dimensions of the matrix instead of the previous three values which defined the dimensions of the matrix and the number of color components.</li>
+</ul>
+<!-- Include section numbering -->
+<style>
+    @import "../../stylesheets/sections.css"
+</style>
+
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<!-- Copyright Contributors to the ACES Documentation -->
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 10, 2025 18:41:26 PDT">September 10, 2025</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Academy of Motion Picture Arts & Sciences
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.github.com/ampas" target="_blank" rel="noopener" title="www.github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="assets/pdfs/kodak-grey-card.pdf" target="_blank" rel="noopener" title="The Great Cod" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M180.5 141.5C219.7 108.5 272.6 80 336 80s116.3 28.5 155.5 61.5c39.1 33 66.9 72.4 81 99.8 4.7 9.2 4.7 20.1 0 29.3-14.1 27.4-41.9 66.8-81 99.8-39.2 33.1-92 61.5-155.5 61.5s-116.3-28.5-155.5-61.5c-16.2-13.7-30.5-28.5-42.7-43.1l-89.7 52.3c-12.5 7.3-28.4 5.3-38.7-4.9s-12.4-26-5.3-38.6L50 256 4.2 175.9c-7.2-12.6-5-28.4 5.3-38.6s26.1-12.2 38.7-4.9l89.7 52.3c12.2-14.6 26.5-29.4 42.7-43.1zM448 256a32 32 0 1 0-64 0 32 32 0 1 0 64 0"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.expand", "navigation.top", "navigation.instant", "navigation.instant.progress", "toc.follow", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../js/image-wipe.js"></script>
+      
+        <script src="../../js/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../js/open_in_new_tab.js"></script>
+      
+    
+  </body>
+</html>
