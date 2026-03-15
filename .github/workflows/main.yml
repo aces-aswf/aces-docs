@@ -32,6 +32,16 @@ jobs:
       - name: Build MkDocs
         run: mkdocs build
 
+      - name: Inject No-Index for Staging
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          # Add a robots.txt that blocks all crawlers
+          echo "User-agent: *" > site/robots.txt
+          echo "Disallow: /" >> site/robots.txt
+          
+          # Add a meta tag to every HTML file as a backup
+          find site -name "*.html" -exec sed -i '/<head>/a <meta name="robots" content="noindex, nofollow, noarchive">' {} +
+
       - name: Deploy to Staging (from dev)
         if: github.ref == 'refs/heads/dev'
         uses: peaceiris/actions-gh-pages@v4
