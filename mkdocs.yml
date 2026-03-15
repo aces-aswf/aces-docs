@@ -2,7 +2,7 @@
 # Copyright Contributors to the ACES Documentation
 
 site_name: ACES Documentation
-copyright: Copyright &copy; 2024 Academy of Motion Picture Arts & Sciences
+copyright: Distributed under CC BY 4.0
 
 site_dir: site
 docs_dir: docs
@@ -12,7 +12,7 @@ extra:
   homepage: https://www.acescentral.com
   social:
     - icon: fontawesome/brands/github
-      link: https://www.github.com/ampas
+      link: https://www.github.com/aces-aswf/aces-docs
     - icon: fontawesome/solid/fish
       link: assets/pdfs/kodak-grey-card.pdf
       name: The Great Cod
