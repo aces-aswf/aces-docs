@@ -173,15 +173,15 @@ $$
 Tracking
 ----------------
 
-The Reference Gamut Compression is defined as a [Look Transform (LMT) in CTL](https://github.com/ampas/aces-core/blob/v1.3/transforms/ctl/lmt/LMT.Academy.GamutCompress.ctl) and has the following ACES Transform ID:
+The Reference Gamut Compression is defined as a Look Transform (LMT) in CTL and has the following ACES Transform ID:
 
 ```
-<ACEStransformID>urn:ampas:aces:transformId:v1.5:LMT.Academy.GamutCompress.a1.3.0</ACEStransformID>
+<ACEStransformID>urn:ampas:aces:transformId:v2.0:Look.Academy.ReferenceGamutCompress.a2.v1</ACEStransformID>
 ```
 
-This is trackable via a lookTransform element in an AMF file. If the RCG is used in the viewing pipeline, the lookTransform will be listed in the associated AMF. If the AMF is accompanying rendered media, the applied flag should be used to track whether or not the RGC has been “baked in”.
+This is trackable via a `lookTransform` element in an AMF file. If the RCG is used in the viewing pipeline, the `lookTransform` will be listed in the associated AMF. If the AMF is accompanying rendered media, the applied flag should be used to track whether or not the RGC has been “baked in”.
 
-If using the RGC in a viewing pipeline, this lookTransform should appear directly after the IDT, first in the list of any LMTs, to make sure other operations benefit from the gamut compression. 
+If using the RGC in a viewing pipeline, this `lookTransform` should appear directly after the IDT, first in the list of any LMTs, to make sure other operations benefit from the gamut compression. 
 
 The Transform ID should be included in any exported AMFs, with the applied flag set as appropriate, and the description set to the ACESuserName to enable proper tracking. Currently, only the Reference (i.e. static) Gamut Compression is trackable via AMF.
 

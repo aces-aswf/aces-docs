@@ -66,15 +66,18 @@ Reference Implementation Specifications
 
 ### Versioning and Naming
 
-The Reference Gamut Compression published in ACES 1.3 uses the following ACES
-Transform ID and ACES User Name in the
-[CTL](https://github.com/ampas/aces-core/blob/v1.3/transforms/ctl/lmt/LMT.Academy.GamutCompress.ctl):
+The Reference Gamut Compression should use the ACES Transform ID and ACES User Name from the
+reference CTL in the current ACES version. 
 
+In ACES 2.0, the Transform ID and User Name are:
 
 ```
-<ACEStransformID>urn:ampas:aces:transformId:v1.5:LMT.Academy.ReferenceGamutCompress.a1.v1.0</ACEStransformID>
-<ACESuserName>ACES 1.3 Look - Reference Gamut Compress</ACESuserName>
+<ACEStransformID>urn:ampas:aces:transformId:v2.0:Look.Academy.ReferenceGamutCompress.a2.v1</ACEStransformID>
+<ACESuserName>Reference Gamut Compress</ACESuserName>
 ```
+
+!!! note
+    Though the URN changed since it was first introduced in v1.3, the transform math has not. Therefore, it is recommended to version up any AMFs that reference the old Transform ID to utilize the Transform ID from the current version, as you would for other equivalent Transform IDs from prior releases.
 
 Implementers should only make the RGC available in the UI when their application
 has the ACES version set to 1.3 or higher.
