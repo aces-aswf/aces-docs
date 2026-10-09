@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -4279,10 +4279,10 @@ Transform operators:
    &lt;simpleType&gt;This does not require a line break.&lt;/simpleType&gt;
    &lt;complexType&gt;
       &lt;simpleType&gt;This is a simpleType in a complexType.&lt;/simpleType&gt;
-      &lt;simpleType&gt;Here&#39;s a long text line that shouldn&#39;t be wrapped in the CLF since the app will decide where to wrap it.&lt;/simpleType&gt;
+      &lt;simpleType&gt;Here's a long text line that shouldn't be wrapped in the CLF since the app will decide where to wrap it.&lt;/simpleType&gt;
    &lt;/complexType&gt;
    &lt;simpleTypeWithParam param=0.5 /&gt;
-   &lt;Array dim=&quot;3 4&quot;&gt;
+   &lt;Array dim="3 4"&gt;
 1.0  0.0  0.0  -0.3
 0.0  1.0  0.0  -0.5
 0.0  0.0  1.0  -0.5
@@ -4910,7 +4910,7 @@ Transform operators:
 <p>Integer-based implementations in the Preview Tier will typically be processing video or logarithmic color space encodings. So for example, if the documentation suggests avoiding use of CLFs expecting scene-linear color spaces on input, that is probably fine since (hopefully!) no one will be trying to send raw scene-linear values through an integer connection such as <abbr title="Serial Digital Interface">SDI</abbr> video.</p>
 <p>The accuracy of the baking process may be judged by sending images through both the original <abbr title="Common LUT Format">CLF</abbr> and the baked <abbr title="Common LUT Format">CLF</abbr> and comparing them. OpenColorIO or any product that passes the Finishing Tier tests could be used for this type of comparison. But keep in mind that the result will depend on many factors, including the input and output color spaces and the internal structure of the original <abbr title="Common LUT Format">CLF</abbr>. So even though one <abbr title="Common LUT Format">CLF</abbr> may bake accurately through a given baking process, it certainly does not mean that all of them will. Testing with a range of user transforms is essential.</p>
 <p>OpenColorIO may be used to experiment with baking CLFs using the command-line tool <code>ociobakelut</code>. For example, here is a command that takes an original <abbr title="Common LUT Format">CLF</abbr> named <code>complicated.clf</code> and bakes it into a single <code>LUT3D</code> with a cube dimension of 33x33x33 called <code>simple.clf</code>:</p>
-<div class="highlight"><pre><span></span><code>$ ociobakelut --lut complicated.clf --cubesize 33 --format &quot;Academy/ASC Common LUT Format&quot; --v simple.clf
+<div class="highlight"><pre><span></span><code>$ ociobakelut --lut complicated.clf --cubesize 33 --format "Academy/ASC Common LUT Format" --v simple.clf
 </code></pre></div>
 <p>You may edit the resulting <abbr title="Common LUT Format">CLF</abbr> <abbr title="Extensible Markup Language">XML</abbr> file in a text editor to add the <code>interpolation="tetrahedral"</code> attribute to the <code>LUT3D</code> and any desired metadata.</p>
 <p>For CLFs that convert from one perceptually uniform color space to another (i.e., between most logarithmic and video color spaces), this will often be reasonably accurate for Preview Tier devices. Increasing the cube size will improve accuracy (the default <code>cubesize</code> is 64x64x64).</p>
@@ -4929,8 +4929,8 @@ Transform operators:
 <div class="highlight"><pre><span></span><code>$ ociomakeclf OpenColorIO/tests/data/files/cdl_test2.cc LMT.clf --csc ACEScct
 </code></pre></div></p>
 <p>This generates the following <abbr title="Common LUT Format">CLF</abbr>:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">compCLFversion=</span><span class="s">&quot;3&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;669980ac1ecd97ab18c1707250a13d20&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">compCLFversion=</span><span class="s">"3"</span><span class="w"> </span><span class="na">id=</span><span class="s">"669980ac1ecd97ab18c1707250a13d20"</span><span class="nt">&gt;</span>
 
 <span class="cm">&lt;!-- Header metadata --&gt;</span>
 <span class="w">    </span><span class="nt">&lt;Description&gt;</span>ACES<span class="w"> </span>LMT<span class="w"> </span>transform<span class="w"> </span>built<span class="w"> </span>from<span class="w"> </span>a<span class="w"> </span>look<span class="w"> </span>LUT<span class="w"> </span>expecting<span class="w"> </span>color<span class="w"> </span>space:<span class="w"> </span>ACEScct<span class="nt">&lt;/Description&gt;</span>
@@ -4939,19 +4939,19 @@ Transform operators:
 <span class="w">    </span><span class="nt">&lt;OutputDescriptor&gt;</span>ACES2065-1<span class="nt">&lt;/OutputDescriptor&gt;</span>
 
 <span class="cm">&lt;!-- Convert from ACES2065-1 to ACEScct --&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">"32f"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">"3 3"</span><span class="nt">&gt;</span>
 <span class="w"> </span>1.45143931614567<span class="w">    </span>-0.23651074689374<span class="w">   </span>-0.214928569251925
 -0.0765537733960206<span class="w"> </span>1.17622969983357<span class="w">   </span>-0.0996759264375522
 <span class="w"> </span>0.00831614842569772<span class="w"> </span>-0.00603244979102103<span class="w"> </span>0.997716301365323
 <span class="w">            </span><span class="nt">&lt;/Array&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/Matrix&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Log</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;cameraLinToLog&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;LogParams</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;2&quot;</span><span class="w"> </span><span class="na">linSideSlope=</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="na">linSideOffset=</span><span class="s">&quot;0&quot;</span><span class="w"> </span><span class="na">logSideSlope=</span><span class="s">&quot;0.0570776255707763&quot;</span><span class="w"> </span><span class="na">logSideOffset=</span><span class="s">&quot;0.554794520547945&quot;</span><span class="w"> </span><span class="na">linSideBreak=</span><span class="s">&quot;0.0078125&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Log</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">style=</span><span class="s">"cameraLinToLog"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;LogParams</span><span class="w"> </span><span class="na">base=</span><span class="s">"2"</span><span class="w"> </span><span class="na">linSideSlope=</span><span class="s">"1"</span><span class="w"> </span><span class="na">linSideOffset=</span><span class="s">"0"</span><span class="w"> </span><span class="na">logSideSlope=</span><span class="s">"0.0570776255707763"</span><span class="w"> </span><span class="na">logSideOffset=</span><span class="s">"0.554794520547945"</span><span class="w"> </span><span class="na">linSideBreak=</span><span class="s">"0.0078125"</span><span class="w"> </span><span class="nt">/&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/Log&gt;</span>
 
-<span class="cm">&lt;!-- Apply the user&#39;s CDL look in the ACEScct working space --&gt;</span>
-<span class="w">    </span><span class="nt">&lt;ASC_CDL</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;cc0001&quot;</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;FwdNoClamp&quot;</span><span class="nt">&gt;</span>
+<span class="cm">&lt;!-- Apply the user's CDL look in the ACEScct working space --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;ASC_CDL</span><span class="w"> </span><span class="na">id=</span><span class="s">"cc0001"</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">style=</span><span class="s">"FwdNoClamp"</span><span class="nt">&gt;</span>
 <span class="w">        </span><span class="nt">&lt;SOPNode&gt;</span>
 <span class="w">            </span><span class="nt">&lt;Slope&gt;</span>1.0<span class="w"> </span>1.0<span class="w"> </span>0.9<span class="nt">&lt;/Slope&gt;</span>
 <span class="w">            </span><span class="nt">&lt;Offset&gt;</span>-0.03<span class="w"> </span>-0.02<span class="w"> </span>0.0<span class="nt">&lt;/Offset&gt;</span>
@@ -4963,11 +4963,11 @@ Transform operators:
 <span class="w">    </span><span class="nt">&lt;/ASC_CDL&gt;</span>
 
 <span class="cm">&lt;!-- Convert from ACEScct back to ACES2065-1 --&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Log</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;cameraLogToLin&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;LogParams</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;2&quot;</span><span class="w"> </span><span class="na">linSideSlope=</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="na">linSideOffset=</span><span class="s">&quot;0&quot;</span><span class="w"> </span><span class="na">logSideSlope=</span><span class="s">&quot;0.0570776255707763&quot;</span><span class="w"> </span><span class="na">logSideOffset=</span><span class="s">&quot;0.554794520547945&quot;</span><span class="w"> </span><span class="na">linSideBreak=</span><span class="s">&quot;0.0078125&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Log</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">style=</span><span class="s">"cameraLogToLin"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;LogParams</span><span class="w"> </span><span class="na">base=</span><span class="s">"2"</span><span class="w"> </span><span class="na">linSideSlope=</span><span class="s">"1"</span><span class="w"> </span><span class="na">linSideOffset=</span><span class="s">"0"</span><span class="w"> </span><span class="na">logSideSlope=</span><span class="s">"0.0570776255707763"</span><span class="w"> </span><span class="na">logSideOffset=</span><span class="s">"0.554794520547945"</span><span class="w"> </span><span class="na">linSideBreak=</span><span class="s">"0.0078125"</span><span class="w"> </span><span class="nt">/&gt;</span>
 <span class="w">    </span><span class="nt">&lt;/Log&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">"32f"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">"3 3"</span><span class="nt">&gt;</span>
 <span class="w">  </span>0.695452241357452<span class="w">    </span>0.140678696470294<span class="w">    </span>0.163869062172254
 <span class="w">  </span>0.0447945633720377<span class="w">   </span>0.859671118456422<span class="w">    </span>0.0955343181715404
 <span class="w"> </span>-0.00552588255811354<span class="w">  </span>0.00402521030597866<span class="w">  </span>1.00150067225213
@@ -4984,11 +4984,11 @@ Transform operators:
 <h3 id="annexH">Annex H: Identity (no-op) <abbr title="Common LUT Format">CLF</abbr> example<a class="headerlink" href="#annexH" title="Permanent link">&para;</a></h3>
 <p>To avoid doubt in cases where <abbr title="Common LUT Format">CLF</abbr> files are exchanged as “sidecar” files to batches of media, it may be desirable to use a standard <abbr title="Common LUT Format">CLF</abbr> form even when no transform or color modification has been assigned to certain media clips / files. In these cases it may be useful that a “No-Op” <abbr title="Common LUT Format">CLF</abbr> file be included as the associated sidecar file to communicate to downstream users that no transform is assigned. This may be preferred to not providing a sidecar <abbr title="Common LUT Format">CLF</abbr> file, as the absence of <abbr title="Common LUT Format">CLF</abbr> files for a subset of a larger media batch often raises questions in certain workflows about whether an expected file is missing.</p>
 <p>For this situation, implementers may generate a minimal <abbr title="Common LUT Format">CLF</abbr> file like that shown below, where the <code>ProcessList</code> has a single <code>ProcessNode</code> of the <code>Matrix</code> type with a 3x3 identity matrix. (Implementers do not need to copy this exactly, for example there are other operators that also give an identity and details like the <code>id</code> string will differ.)</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;37efa85b-5bc8-40dc-8ffe-b488a3c013ea&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;No-Op&quot;</span><span class="w"> </span><span class="na">compCLFversion=</span><span class="s">&quot;3.0&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;ProcessList</span><span class="w"> </span><span class="na">id=</span><span class="s">"37efa85b-5bc8-40dc-8ffe-b488a3c013ea"</span><span class="w"> </span><span class="na">name=</span><span class="s">"No-Op"</span><span class="w"> </span><span class="na">compCLFversion=</span><span class="s">"3.0"</span><span class="nt">&gt;</span>
 <span class="w">    </span><span class="nt">&lt;Description&gt;</span>No-Op<span class="w"> </span>CLF<span class="nt">&lt;/Description&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;identity matrix&quot;</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">&quot;32f&quot;</span><span class="nt">&gt;</span>
-<span class="w">        </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">&quot;3 3&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Matrix</span><span class="w"> </span><span class="na">name=</span><span class="s">"identity matrix"</span><span class="w"> </span><span class="na">inBitDepth=</span><span class="s">"32f"</span><span class="w"> </span><span class="na">outBitDepth=</span><span class="s">"32f"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Array</span><span class="w"> </span><span class="na">dim=</span><span class="s">"3 3"</span><span class="nt">&gt;</span>
 <span class="w">          </span>1.0<span class="w"> </span>0.0<span class="w"> </span>0.0
 <span class="w">          </span>0.0<span class="w"> </span>1.0<span class="w"> </span>0.0
 <span class="w">          </span>0.0<span class="w"> </span>0.0<span class="w"> </span>1.0
@@ -5029,9 +5029,9 @@ Transform operators:
 <span class="c1"># At this point, gr is a 35937 x 3 array with min=0 and max=1.</span>
 
 <span class="c1"># Build transforms to convert from ACEScct to Rec.709 using an ACES Output Transform.</span>
-<span class="n">bt1</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">BuiltinTransform</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;ACEScct_to_ACES2065-1&#39;</span><span class="p">)</span>
-<span class="n">bt2</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">BuiltinTransform</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;ACES-OUTPUT - ACES2065-1_to_CIE-XYZ-D65 - SDR-VIDEO_1.0&#39;</span><span class="p">)</span>
-<span class="n">bt3</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">BuiltinTransform</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;DISPLAY - CIE-XYZ-D65_to_REC.1886-REC.709&#39;</span><span class="p">)</span>
+<span class="n">bt1</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">BuiltinTransform</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">'ACEScct_to_ACES2065-1'</span><span class="p">)</span>
+<span class="n">bt2</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">BuiltinTransform</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">'ACES-OUTPUT - ACES2065-1_to_CIE-XYZ-D65 - SDR-VIDEO_1.0'</span><span class="p">)</span>
+<span class="n">bt3</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">BuiltinTransform</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">'DISPLAY - CIE-XYZ-D65_to_REC.1886-REC.709'</span><span class="p">)</span>
 <span class="n">dvt</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">GroupTransform</span><span class="p">(</span> <span class="p">[</span><span class="n">bt1</span><span class="p">,</span> <span class="n">bt2</span><span class="p">,</span> <span class="n">bt3</span><span class="p">]</span> <span class="p">)</span>
 
 <span class="c1"># Set up an OCIO Processor and process the values.</span>
@@ -5066,7 +5066,7 @@ Transform operators:
 <span class="n">lut</span><span class="o">.</span><span class="n">setFileOutputBitDepth</span><span class="p">(</span><span class="n">ocio</span><span class="o">.</span><span class="n">BIT_DEPTH_UINT10</span><span class="p">)</span>
 <span class="n">lut</span><span class="o">.</span><span class="n">setInterpolation</span><span class="p">(</span><span class="n">ocio</span><span class="o">.</span><span class="n">INTERP_TETRAHEDRAL</span><span class="p">)</span>
 <span class="n">fmd</span> <span class="o">=</span> <span class="n">lut</span><span class="o">.</span><span class="n">getFormatMetadata</span><span class="p">()</span>
-<span class="n">fmd</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">&#39;Description&#39;</span><span class="p">,</span><span class="s1">&#39;This LUT is an ACEScct to Rec.709 Output Transform, clamped to [4,1019]&#39;</span><span class="p">)</span>
+<span class="n">fmd</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">'Description'</span><span class="p">,</span><span class="s1">'This LUT is an ACEScct to Rec.709 Output Transform, clamped to [4,1019]'</span><span class="p">)</span>
 <span class="c1"># print(lut)</span>
 <span class="c1"># &lt;Lut3DTransform direction=forward, fileoutdepth=10ui, interpolation=tetrahedral, </span>
 <span class="c1">#  gridSize=33, minrgb=[0.00391007 0.00391007 0.00391007], maxrgb=[0.99609 0.99609 </span>
@@ -5076,18 +5076,18 @@ Transform operators:
 <span class="n">grp</span> <span class="o">=</span> <span class="n">ocio</span><span class="o">.</span><span class="n">GroupTransform</span><span class="p">()</span>
 <span class="n">grp</span><span class="o">.</span><span class="n">appendTransform</span><span class="p">(</span><span class="n">lut</span><span class="p">)</span>
 <span class="n">fmdg</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">getFormatMetadata</span><span class="p">()</span>
-<span class="n">fmdg</span><span class="o">.</span><span class="n">setID</span><span class="p">(</span><span class="s1">&#39;00001&#39;</span><span class="p">)</span>
-<span class="n">fmdg</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s1">&#39;Preview-tier Lut3D test&#39;</span><span class="p">)</span>
-<span class="n">fmdg</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">&#39;Description&#39;</span><span class="p">,</span><span class="s1">&#39;Test LUT for Preview-tier CLF validation test suite&#39;</span><span class="p">)</span>
-<span class="n">fmdg</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">&#39;InputDescriptor&#39;</span><span class="p">,</span><span class="s1">&#39;ACEScct&#39;</span><span class="p">)</span>
-<span class="n">fmdg</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">&#39;OutputDescriptor&#39;</span><span class="p">,</span><span class="s1">&#39;Rec.1886 / Rec.709 video&#39;</span><span class="p">)</span>
+<span class="n">fmdg</span><span class="o">.</span><span class="n">setID</span><span class="p">(</span><span class="s1">'00001'</span><span class="p">)</span>
+<span class="n">fmdg</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s1">'Preview-tier Lut3D test'</span><span class="p">)</span>
+<span class="n">fmdg</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">'Description'</span><span class="p">,</span><span class="s1">'Test LUT for Preview-tier CLF validation test suite'</span><span class="p">)</span>
+<span class="n">fmdg</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">'InputDescriptor'</span><span class="p">,</span><span class="s1">'ACEScct'</span><span class="p">)</span>
+<span class="n">fmdg</span><span class="o">.</span><span class="n">addChildElement</span><span class="p">(</span><span class="s1">'OutputDescriptor'</span><span class="p">,</span><span class="s1">'Rec.1886 / Rec.709 video'</span><span class="p">)</span>
 <span class="c1"># print(grp)</span>
 <span class="c1"># &lt;GroupTransform direction=forward, transforms=</span>
 <span class="c1">#       &lt;Lut3DTransform direction=forward, fileoutdepth=10ui, interpolation=tetrahedral, </span>
 <span class="c1">#       gridSize=33, minrgb=[0.00391007 0.00391007 0.00391007], </span>
 <span class="c1">#       maxrgb=[0.99609 0.99609 0.99609]&gt;&gt;</span>
 
-<span class="n">grp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">formatName</span><span class="o">=</span><span class="s1">&#39;Academy/ASC Common LUT Format&#39;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">fileName</span><span class="o">=</span><span class="s1">&#39;/tmp/lut3d_preview_tier_test.clf&#39;</span><span class="p">)</span>
+<span class="n">grp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">formatName</span><span class="o">=</span><span class="s1">'Academy/ASC Common LUT Format'</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">fileName</span><span class="o">=</span><span class="s1">'/tmp/lut3d_preview_tier_test.clf'</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="annexK">Annex K: Generation of the reference images<a class="headerlink" href="#annexK" title="Permanent link">&para;</a></h3>
 <p>The processed reference images may be downloaded from the URL provided in <a href="#annexC">Annex C</a> and <a href="#annexD">D</a> above. This section documents how those images were generated.</p>
@@ -5233,7 +5233,7 @@ replacing <code>&lt;OUTPUT-DIR&gt;</code> with a directory that you want to writ
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.expand", "navigation.top", "navigation.instant", "navigation.instant.progress", "toc.follow", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../js/image-wipe.js"></script>
       

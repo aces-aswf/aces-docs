@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -3849,7 +3849,7 @@ requires three different attributes to fully define a sequence of files:</p>
 part of the sequence (included).</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:clipId&gt;</span>
 <span class="w">    </span><span class="nt">&lt;aces:clipName&gt;</span>vfx_shot_001<span class="nt">&lt;/aces:clipName&gt;</span>
-<span class="w">    </span><span class="nt">&lt;aces:sequence</span><span class="w"> </span><span class="na">idx=</span><span class="s">&quot;#&quot;</span><span class="w"> </span><span class="na">min=</span><span class="s">&quot;1001&quot;</span><span class="w"> </span><span class="na">max=</span><span class="s">&quot;1048&quot;</span><span class="nt">&gt;</span>vfx_shot_001.########.exr<span class="nt">&lt;/aces:sequence&gt;</span>
+<span class="w">    </span><span class="nt">&lt;aces:sequence</span><span class="w"> </span><span class="na">idx=</span><span class="s">"#"</span><span class="w"> </span><span class="na">min=</span><span class="s">"1001"</span><span class="w"> </span><span class="na">max=</span><span class="s">"1048"</span><span class="nt">&gt;</span>vfx_shot_001.########.exr<span class="nt">&lt;/aces:sequence&gt;</span>
 <span class="nt">&lt;/aces:clipId&gt;</span>
 </code></pre></div>
 <h5 id="acesuuid"><code>aces:uuid</code><a class="headerlink" href="#acesuuid" title="Permanent link">&para;</a></h5>
@@ -3979,7 +3979,7 @@ executed.</p>
 <h5 id="cdl-file-linking"><abbr title="Color Decision List">CDL</abbr> File Linking<a class="headerlink" href="#cdl-file-linking" title="Permanent link">&para;</a></h5>
 <p>Look Transforms can reference <abbr title="Color Decision List">CDL</abbr> values from external <code>.ccc</code> files using the <code>&lt;file&gt;</code> element
 to specify the file and <code>&lt;ColorCorrectionRef&gt;</code> to identify the specific <abbr title="Color Decision List">CDL</abbr> within it:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:lookTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:lookTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">"false"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;aces:cdlWorkingSpace&gt;</span>
 <span class="w">    </span><span class="nt">&lt;aces:toCdlWorkingSpace&gt;</span>
 <span class="w">      </span><span class="nt">&lt;aces:transformId&gt;</span>urn:ampas:aces:transformId:v1.5:ACEScsc.Academy.ACES_to_ACEScct.a1.0.3<span class="nt">&lt;/aces:transformId&gt;</span>
@@ -4004,12 +4004,12 @@ it can include an <code>applied</code> attribute:</p>
 </ul>
 <p>This supports two usage patterns:</p>
 <p><strong>Recipe Pattern</strong> - Output Transform describes viewing pipeline to apply:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:outputTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:outputTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">"false"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;aces:transformId&gt;</span>urn:ampas:aces:transformId:v2.0:Output.Academy.P3D60_48nits.a1.v1<span class="nt">&lt;/aces:transformId&gt;</span>
 <span class="nt">&lt;/aces:outputTransform&gt;</span>
 </code></pre></div>
 <p><strong>Receipt Pattern</strong> - Output Transform documents already-applied rendering (e.g., baked dailies):</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:outputTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:outputTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">"true"</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;aces:transformId&gt;</span>urn:ampas:aces:transformId:v2.0:Output.Academy.Rec2020_1000nits.a1.v1<span class="nt">&lt;/aces:transformId&gt;</span>
 <span class="nt">&lt;/aces:outputTransform&gt;</span>
 </code></pre></div>
@@ -4036,7 +4036,7 @@ defined within the <abbr title="Academy Color Encoding System or Academy Color E
 <p>The simplest way to reference external LMTs is to use the <code>aces:file</code> element.
 However, some care must be taken, depending on the workflow and also on the
 system or device generating the <abbr title="ACES Metadata File">AMF</abbr> document.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:lookTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;aces:lookTransform</span><span class="w"> </span><span class="na">applied=</span><span class="s">"false"</span><span class="nt">&gt;</span>
 <span class="w">    </span><span class="nt">&lt;aces:file&gt;</span>MyLook.clf<span class="nt">&lt;/aces:file&gt;</span>
 <span class="nt">&lt;/aces:lookTransform&gt;</span>
 </code></pre></div>
@@ -4123,7 +4123,7 @@ the HTTP security features</p>
 </code></pre></div>
 <abbr title="Common LUT Format">CLF</abbr>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;ProcessList</span>
-<span class="na">xmlns=</span><span class="s">&quot;urn:AMPAS:CLF:v3.0&quot;</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;urn:uuid:1258F89C-0ED7-4A79-B0E2-36F97E8FF9F1&quot;</span><span class="w"> </span><span class="na">compCLFversion=</span><span class="s">&quot;3.0&quot;</span><span class="nt">&gt;</span>
+<span class="na">xmlns=</span><span class="s">"urn:AMPAS:CLF:v3.0"</span><span class="w"> </span><span class="na">id=</span><span class="s">"urn:uuid:1258F89C-0ED7-4A79-B0E2-36F97E8FF9F1"</span><span class="w"> </span><span class="na">compCLFversion=</span><span class="s">"3.0"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;/ProcessList&gt;</span>
 </code></pre></div>
 The <abbr title="Common LUT Format">CLF</abbr> files can be located anywhere and the product supporting <abbr title="ACES Metadata File">AMF</abbr>+<abbr title="Common LUT Format">CLF</abbr> must
@@ -4403,7 +4403,7 @@ of the product/tool processing the <abbr title="Edit Decision List">EDL</abbr>+<
       <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.expand", "navigation.top", "navigation.instant", "navigation.instant.progress", "toc.follow", "content.tooltips"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../../js/image-wipe.js"></script>
       
