@@ -105,6 +105,10 @@ plugins:
           - index.md
       enabled: true
   - open-in-new-tab
+  - redirects:
+      redirect_maps:
+        # 'old/file/path.md': 'new/file/path.md'
+        'specifications/acescg/index.md': 'encodings/acescg.md'      
 
 nav:
   - 'Introduction':
