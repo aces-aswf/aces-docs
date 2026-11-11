@@ -2970,10 +2970,16 @@
 <div class="arithmatex">\[\begin{equation} 
     ACEScct = \left\{ 
     \begin{array}{l l }
-        10.5402377416545 \times lin_{AP1} + 0.0729055341958355;    &amp; \quad lin_{AP1} \leq 0.0078125 \\[10pt]
-        \dfrac{\log_{2}(lin_{AP1}) + 9.72}{17.52}; &amp; \quad lin_{AP1} &gt; 0.0078125 \\    
+        A \times lin_{AP1} + B    &amp; \quad lin_{AP1} \leq X_{break} \\[8pt]
+        \dfrac{\log_{2}(lin_{AP1}) + 9.72}{17.52} &amp; \quad lin_{AP1} &gt; X_{break} \\    
     \end{array} \right.
 \end{equation}\]</div>
+<p>where:  </p>
+<ul>
+<li><span class="arithmatex">\(X_{break} = 0.0078125\)</span></li>
+<li><span class="arithmatex">\(A = 10.5402377416545\)</span></li>
+<li><span class="arithmatex">\(B = 0.0729055341958355\)</span></li>
+</ul>
 <figcaption align="center">
     <b>Equation 1:</b> Linear AP1 to ACEScct
 </figcaption>
@@ -3020,24 +3026,24 @@ TRA_{1} = NPM^{-1}_{AP1} \cdot NPM_{AP0}
 <div class="arithmatex">\[\begin{equation}
     lin_{AP1} = \left\{ 
     \begin{aligned}
-        &amp;\dfrac{\left(ACEScct-0.0729055341958355\right)}{10.5402377416545}; &amp; ACEScct \leq Y_{break} \\
-        &amp;2^{(ACEScct \times 17.52-9.72)}; Y_{break} \lt &amp; ACEScct &lt; \dfrac{\log_{2}(65504)+9.72}{17.52} \\
-        &65504; &amp; ACEScct \geq \dfrac{\log_{2}(65504)+9.72}{17.52} \\    
+        &amp;\dfrac{\left(ACEScct-B\right)}{A} &amp; ACEScct \leq Y_{break} \\[8pt]
+        &amp;2^{(ACEScct \times 17.52-9.72)} &amp; Y_{break} \lt ACEScct \\
     \end{aligned} \right.   
 \end{equation}\]</div>
+<p>where:  </p>
 <ul>
-<li>where:    <ul>
+<li><span class="arithmatex">\(Y_{break} = 0.155251141552511\)</span></li>
 <li><span class="arithmatex">\(A = 10.5402377416545\)</span></li>
 <li><span class="arithmatex">\(B = 0.0729055341958355\)</span></li>
-</ul>
-</li>
-<li><span class="arithmatex">\(X_{break} = 0.0078125\)</span></li>
-<li><span class="arithmatex">\(Y_{break} = 0.155251141552511\)</span></li>
 </ul>
 <figcaption align="center">
     <b>Equation 3:</b> ACEScct to linear AP1
 </figcaption>
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The decoding function is mathematically unbounded. However, implementations writing to 16-bit half-float containers should clamp output values to <code>HALF_MAX</code> (<span class="arithmatex">\(65504.0\)</span>) to prevent overflow, unless handled automatically by the file writer.</p>
+</div>
 <p><span class="arithmatex">\(lin_{AP1}\)</span> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values shall be converted to <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> <span class="arithmatex">\(R\)</span>, <span class="arithmatex">\(G\)</span>, and <span class="arithmatex">\(B\)</span> values using the transformation matrix (<span class="arithmatex">\(TRA_{2}\)</span>) calculated and applied using the methods provided in Section 4 of <abbr title="Society of Motion Picture and Television Engineers">SMPTE</abbr> RP 177:1993.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3140,7 +3146,7 @@ AP1 are the primaries of ACEScct specified in <a href="#color-space">Color space
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 10, 2025 18:42:21 PDT">September 10, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 11, 2026 13:48:41 PST">November 11, 2026</span>
   </span>
 
     
