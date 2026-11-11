@@ -76,10 +76,16 @@ Linear AP1 $R$, $G$, and $B$ values shall be converted to ACEScct values accordi
 \begin{equation} 
     ACEScct = \left\{ 
     \begin{array}{l l }
-        10.5402377416545 \times lin_{AP1} + 0.0729055341958355;    & \quad lin_{AP1} \leq 0.0078125 \\[10pt]
-        \dfrac{\log_{2}(lin_{AP1}) + 9.72}{17.52}; & \quad lin_{AP1} > 0.0078125 \\    
+        A \times lin_{AP1} + B    & \quad lin_{AP1} \leq X_{break} \\[8pt]
+        \dfrac{\log_{2}(lin_{AP1}) + 9.72}{17.52} & \quad lin_{AP1} > X_{break} \\    
     \end{array} \right.
 \end{equation}
+
+where:	
+
+  *	$X_{break} = 0.0078125$
+  * $A = 10.5402377416545$
+  * $B = 0.0729055341958355$
 
 <figcaption align="center">
 	<b>Equation 1:</b> Linear AP1 to ACEScct
@@ -133,21 +139,23 @@ ACEScct $R$, $G$, and $B$ values shall be converted to $lin_{AP1}$ values using 
 \begin{equation}
     lin_{AP1} = \left\{ 
     \begin{aligned}
-        &\dfrac{\left(ACEScct-0.0729055341958355\right)}{10.5402377416545}; & ACEScct \leq Y_{break} \\
-        &2^{(ACEScct \times 17.52-9.72)}; Y_{break} \lt & ACEScct < \dfrac{\log_{2}(65504)+9.72}{17.52} \\
-        &65504; & ACEScct \geq \dfrac{\log_{2}(65504)+9.72}{17.52} \\    
+        &\dfrac{\left(ACEScct-B\right)}{A} & ACEScct \leq Y_{break} \\[8pt]
+        &2^{(ACEScct \times 17.52-9.72)} & Y_{break} \lt ACEScct \\
     \end{aligned} \right.	
 \end{equation}
 
-* where:	
-    * $A = 10.5402377416545$
-    * $B = 0.0729055341958355$
-  *	$X_{break} = 0.0078125$
+where:	
+
   *	$Y_{break} = 0.155251141552511$
+  * $A = 10.5402377416545$
+  * $B = 0.0729055341958355$
 
 <figcaption align="center">
     <b>Equation 3:</b> ACEScct to linear AP1
 </figcaption>
+
+!!! note
+	The decoding function is mathematically unbounded. However, implementations writing to 16-bit half-float containers should clamp output values to `HALF_MAX` ($65504.0$) to prevent overflow, unless handled automatically by the file writer.
 
 $lin_{AP1}$ $R$, $G$, and $B$ values shall be converted to ACES $R$, $G$, and $B$ values using the transformation matrix ($TRA_{2}$) calculated and applied using the methods provided in Section 4 of SMPTE RP 177:1993.
 
