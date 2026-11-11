@@ -100,7 +100,7 @@ Examples:
 
 * `URN:Output.Academy.P3-D65_100nit_in_P3-D65_Gamma2pt2.a2.v1`
 * `URN:Output.Academy.P3-D65_500nit_in_Rec2100-D65_ST2084.a2.v1`
-* `URN:Output.Academy.P3-D60_300nit_in_XYZ-E_ST2084.ctl.a2.v1`
+* `URN:Output.Academy.P3-D60_300nit_in_XYZ-E_ST2084.a2.v1`
 
 #### CSC Transforms
 For Color Space Conversion (CSC) Transforms, `Name` shall describe the device. If the creator of the transforms is the same as the camera manufacturer, then the Name need not repeat the manufacturer name because it should already be in the Namespace. If the Input Transform creator is not the camera manufacturer, then the manufacturer name shall be prepended to the device name in the Name field.
