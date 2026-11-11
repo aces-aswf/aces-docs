@@ -3006,12 +3006,16 @@ production, as outlined in the flow chart above. For further workflow
 specifications, please refer to the <a href="../rgc-user/">User Guide</a>.</p>
 <h2 id="reference-implementation-specifications">Reference Implementation Specifications<a class="headerlink" href="#reference-implementation-specifications" title="Permanent link">&para;</a></h2>
 <h3 id="versioning-and-naming">Versioning and Naming<a class="headerlink" href="#versioning-and-naming" title="Permanent link">&para;</a></h3>
-<p>The Reference Gamut Compression published in <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> 1.3 uses the following <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr>
-Transform ID and <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> User Name in the
-<a href="https://github.com/ampas/aces-core/blob/v1.3/transforms/ctl/lmt/LMT.Academy.GamutCompress.ctl"><abbr title="Color Transform Language">CTL</abbr></a>:</p>
-<div class="highlight"><pre><span></span><code>&lt;ACEStransformID&gt;urn:ampas:aces:transformId:v1.5:LMT.Academy.ReferenceGamutCompress.a1.v1.0&lt;/ACEStransformID&gt;
-&lt;ACESuserName&gt;ACES 1.3 Look - Reference Gamut Compress&lt;/ACESuserName&gt;
+<p>The Reference Gamut Compression should use the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> Transform ID and <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> User Name from the
+reference <abbr title="Color Transform Language">CTL</abbr> in the current <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> version. </p>
+<p>In <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> 2.0, the Transform ID and User Name are:</p>
+<div class="highlight"><pre><span></span><code>&lt;ACEStransformID&gt;urn:ampas:aces:transformId:v2.0:Look.Academy.ReferenceGamutCompress.a2.v1&lt;/ACEStransformID&gt;
+&lt;ACESuserName&gt;Reference Gamut Compress&lt;/ACESuserName&gt;
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Though the <abbr title="Uniform Resource Name">URN</abbr> changed since it was first introduced in v1.3, the transform math has not. Therefore, it is recommended to version up any AMFs that reference the old Transform ID to utilize the Transform ID from the current version, as you would for other equivalent Transform IDs from prior releases.</p>
+</div>
 <p>Implementers should only make the <abbr title="Reference Gamut Compression">RGC</abbr> available in the UI when their application
 has the <abbr title="Academy Color Encoding System or Academy Color Encoding Specification (depending on usage)">ACES</abbr> version set to 1.3 or higher.</p>
 <h3 id="project-and-clip-level-setting">Project and Clip Level Setting<a class="headerlink" href="#project-and-clip-level-setting" title="Permanent link">&para;</a></h3>
@@ -3210,7 +3214,7 @@ referenced in this text:</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 10, 2025 18:42:21 PDT">September 10, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="November 11, 2026 13:57:08 PST">November 11, 2026</span>
   </span>
 
     
